@@ -34,7 +34,11 @@ namespace Block_s_Quest
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            graphics.PreferredBackBufferHeight = 1000;
+            graphics.PreferredBackBufferWidth = 1800;
+            graphics.ApplyChanges();
+            this.Window.AllowUserResizing = true;
+            IsMouseVisible = true;
             base.Initialize();
         }
 
