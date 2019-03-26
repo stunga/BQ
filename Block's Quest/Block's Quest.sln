@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Block_s_Quest", "Block's Quest\Block_s_Quest\Block_s_Quest.csproj", "{FA796806-B32F-4933-B8D1-930F9354E639}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Block_s_QuestContent", "Block's Quest\Block_s_QuestContent\Block_s_QuestContent.contentproj", "{40A97076-1B7C-4B5F-BDF2-EF12654294B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA796806-B32F-4933-B8D1-930F9354E639}.Debug|x86.ActiveCfg = Debug|x86
+		{FA796806-B32F-4933-B8D1-930F9354E639}.Debug|x86.Build.0 = Debug|x86
+		{FA796806-B32F-4933-B8D1-930F9354E639}.Release|x86.ActiveCfg = Release|x86
+		{FA796806-B32F-4933-B8D1-930F9354E639}.Release|x86.Build.0 = Release|x86
+		{40A97076-1B7C-4B5F-BDF2-EF12654294B4}.Debug|x86.ActiveCfg = Debug|x86
+		{40A97076-1B7C-4B5F-BDF2-EF12654294B4}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
