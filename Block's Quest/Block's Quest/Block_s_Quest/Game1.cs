@@ -37,7 +37,6 @@ namespace Block_s_Quest
             graphics.PreferredBackBufferHeight = 1000;
             graphics.PreferredBackBufferWidth = 1800;
             graphics.ApplyChanges();
-            this.Window.AllowUserResizing = true;
             IsMouseVisible = true;
             base.Initialize();
         }
