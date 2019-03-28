@@ -15,11 +15,12 @@ namespace Block_s_Quest
     {
         Rectangle rec;
         Texture2D tex;
+        List<Bullet> bullet = new List<Bullet>();
         float vel;
 
         public Dwayne(Texture2D t)
         {
-            rec = new Rectangle(950, 875, 50, 50);
+            rec = new Rectangle(950, 875, 100, 100);
             tex = t;
         }
 
@@ -35,12 +36,7 @@ namespace Block_s_Quest
 
         private void Shoot()
         {
-
-        }
-
-        public void Shooting()
-        {
-            Bullet shot = new Bullet(rec.X, rec.Y);
+            bullet.Add(new Bullet(rec.X+50, rec.Y-50));
         }
 
     }
