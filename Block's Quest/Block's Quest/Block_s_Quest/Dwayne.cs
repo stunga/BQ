@@ -15,6 +15,7 @@ namespace Block_s_Quest
     {
         Rectangle rec;
         Texture2D tex;
+        float vel;
 
         public Dwayne(Texture2D t)
         {
@@ -35,6 +36,11 @@ namespace Block_s_Quest
         private void Shoot()
         {
 
+        }
+
+        public void Shooting()
+        {
+            Bullet shot = new Bullet(rec.X, rec.Y);
         }
 
     }
