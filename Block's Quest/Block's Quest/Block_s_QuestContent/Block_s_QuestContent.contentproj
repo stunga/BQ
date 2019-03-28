@@ -37,10 +37,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Diamonds.png">
-      <Name>Diamonds</Name>
+    <Compile Include="Bullet.png">
+      <Name>Bullet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Levels\Level1.txt">
+      <Name>Level1</Name>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
