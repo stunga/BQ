@@ -19,7 +19,7 @@ namespace Block_s_Quest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Dwayne dwayne;
-        Texture2D dwaynet;
+        Texture2D dwaynet, bulletT;
         KeyboardState kb;
 
         public Game1()
@@ -55,7 +55,8 @@ namespace Block_s_Quest
 
             // TODO: use this.Content to load your game content here
             dwaynet = this.Content.Load<Texture2D>("Dwayne Angry Face");
-            dwayne = new Dwayne(dwaynet);
+            bulletT = this.Content.Load<Texture2D>("Bullet");
+            dwayne = new Dwayne(dwaynet, bulletT);
         }
 
         /// <summary>

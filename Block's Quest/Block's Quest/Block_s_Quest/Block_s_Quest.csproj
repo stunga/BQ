@@ -73,12 +73,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bullet.cs" />
+    <Compile Include="Diamond.cs" />
     <Compile Include="Dwayne.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Wallet.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
