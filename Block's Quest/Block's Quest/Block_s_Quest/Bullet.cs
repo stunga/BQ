@@ -18,7 +18,12 @@ namespace Block_s_Quest
 
         public Bullet(int x, int y)
         {
+            bulletRec = new Rectangle(x, y, 50, 50);
+        }
 
+        public void Update(GameTime gametime)
+        {
+            bulletRec.Y += 2;
         }
     }
 }
