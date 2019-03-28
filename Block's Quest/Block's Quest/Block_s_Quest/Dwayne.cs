@@ -26,9 +26,9 @@ namespace Block_s_Quest
 
         private void checkAction(KeyboardState kb)
         {
-            if (kb.IsKeyDown(Keys.A) || kb.IsKeyDown(Keys.Left))
+            if ((kb.IsKeyDown(Keys.A) || kb.IsKeyDown(Keys.Left)) && rec.X > 0)
                 rec.X -= 20;
-            if (kb.IsKeyDown(Keys.D) || kb.IsKeyDown(Keys.Right))
+            if ((kb.IsKeyDown(Keys.D) || kb.IsKeyDown(Keys.Right)) && rec.X + rec.Width < 1800)
                 rec.X += 20;
             if (kb.IsKeyDown(Keys.Space))
                 Shoot();
@@ -36,7 +36,19 @@ namespace Block_s_Quest
 
         private void Shoot()
         {
-            bullet.Add(new Bullet(rec.X+50, rec.Y-50));
+            Bullet shot = new Bullet(rec.X, rec.Y);
+        }
+
+        public void Update(KeyboardState kb)
+        {
+            checkAction(kb);
+        }
+
+        public void Draw(SpriteBatch sb, GameTime gt)
+        {
+            sb.Begin();
+            sb.Draw(tex, rec, Color.White);
+            sb.End();
         }
 
     }
