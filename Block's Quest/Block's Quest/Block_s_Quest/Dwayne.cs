@@ -22,12 +22,19 @@ namespace Block_s_Quest
             tex = t;
         }
 
-        private void checkMove(KeyboardState kb)
+        private void checkAction(KeyboardState kb)
         {
             if (kb.IsKeyDown(Keys.A) || kb.IsKeyDown(Keys.Left))
                 rec.X -= 20;
             if (kb.IsKeyDown(Keys.D) || kb.IsKeyDown(Keys.Right))
                 rec.X += 20;
+            if (kb.IsKeyDown(Keys.Space))
+                Shoot();
+        }
+
+        private void Shoot()
+        {
+
         }
 
     }
