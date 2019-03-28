@@ -15,7 +15,7 @@ namespace Block_s_Quest
         private Color color;
         private int hitpoints;
         private int size;
-        private 
+
         public Enemy(int vX, int vY, Color col, int hitP, int s)
         {
             velocityX = vX;

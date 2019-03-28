@@ -16,14 +16,20 @@ namespace Block_s_Quest
         Rectangle bulletRec;
         Texture2D bulletT;
 
-        public Bullet(int x, int y)
+        public Bullet(int x, int y, Texture2D t)
         {
             bulletRec = new Rectangle(x, y, 50, 50);
+            bulletT = t;
         }
 
-        public void Update(GameTime gametime)
+        public void Update()
         {
-            bulletRec.Y += 2;
+            bulletRec.Y -= 10;
+        }
+
+        public void Draw(SpriteBatch sb, GameTime gt)
+        {
+            sb.Draw(bulletT, bulletRec, Color.White);
         }
     }
 }
