@@ -11,22 +11,14 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Block_s_Quest
 {
-    class Dwayne
+    class Bullet
     {
-        Rectangle rec;
-        Texture2D tex;
-        float vel;
+        Rectangle bulletRec;
+        Texture2D bulletT;
 
-        public Dwayne(Texture2D t)
+        public Bullet(int x, int y)
         {
-            tex = t;
-            vel = 0;
-        }
 
-        public void Shooting()
-        {
-            Bullet shot = new Bullet(rec.X, rec.Y);
         }
-
     }
 }
