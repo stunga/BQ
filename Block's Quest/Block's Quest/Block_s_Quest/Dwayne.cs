@@ -19,8 +19,16 @@ namespace Block_s_Quest
 
         public Dwayne(Texture2D t)
         {
+            rec = new Rectangle(950, 875, 50, 50);
             tex = t;
-            vel = 0;
+        }
+
+        private void checkMove(KeyboardState kb)
+        {
+            if (kb.IsKeyDown(Keys.A) || kb.IsKeyDown(Keys.Left))
+                rec.X -= 20;
+            if (kb.IsKeyDown(Keys.D) || kb.IsKeyDown(Keys.Right))
+                rec.X += 20;
         }
 
         public void Shooting()
