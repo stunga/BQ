@@ -18,6 +18,9 @@ namespace Block_s_Quest
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Dwayne dwayne;
+        Texture2D dwaynet;
+        KeyboardState kb;
 
         public Game1()
         {
@@ -51,6 +54,8 @@ namespace Block_s_Quest
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            dwaynet = this.Content.Load<Texture2D>("Dwayne Angry Face");
+            dwayne = new Dwayne(dwaynet);
         }
 
         /// <summary>
@@ -69,12 +74,13 @@ namespace Block_s_Quest
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            kb = Keyboard.GetState();
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
             // TODO: Add your update logic here
-
+            dwayne.Update(kb);
             base.Update(gameTime);
         }
 
@@ -87,7 +93,7 @@ namespace Block_s_Quest
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            dwayne.Draw(spriteBatch, gameTime);
             base.Draw(gameTime);
         }
     }
