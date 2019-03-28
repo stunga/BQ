@@ -18,6 +18,7 @@ namespace Block_s_Quest
         KeyboardState oldKb;
         List<Bullet> bullet = new List<Bullet>();
         float vel;
+        int bulletTimer = 0;
 
         public Dwayne(Texture2D t, Texture2D bT)
         {
@@ -33,8 +34,11 @@ namespace Block_s_Quest
                 rec.X -= 20;
             if ((kb.IsKeyDown(Keys.D) || kb.IsKeyDown(Keys.Right)) && rec.X + rec.Width < 1800)
                 rec.X += 20;
-            if (kb.IsKeyDown(Keys.Space) && !oldKb.IsKeyDown(Keys.Space))
+            if (kb.IsKeyDown(Keys.Space) && bulletTimer == 0)
+            {
                 Shoot();
+                bulletTimer = 30;
+            }
 
             oldKb = kb;
         }
@@ -48,6 +52,9 @@ namespace Block_s_Quest
         public void Update(KeyboardState kb)
         {
             checkAction(kb);
+
+            if(bulletTimer > 0)
+                bulletTimer--;
 
             for (int x = 0; x < bullet.Count; x++)
                 bullet[x].Update();
