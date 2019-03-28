@@ -41,7 +41,7 @@ namespace Block_s_Quest
 
         private void Shoot()
         {
-            bullet.Add(new Bullet(rec.X+45, rec.Y, bulletT));
+            bullet.Add(new Bullet(rec.X+30, rec.Y-10, bulletT));
         }
 
         //Update
