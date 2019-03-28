@@ -17,12 +17,14 @@ namespace Block_s_Quest
         Texture2D tex;
         float vel;
 
+        //Constructor
         public Dwayne(Texture2D t)
         {
             rec = new Rectangle(950, 875, 100, 100);
             tex = t;
         }
 
+        //Checks for keypresses
         private void checkAction(KeyboardState kb)
         {
             if ((kb.IsKeyDown(Keys.A) || kb.IsKeyDown(Keys.Left)) && rec.X > 0)
@@ -38,11 +40,13 @@ namespace Block_s_Quest
             Bullet shot = new Bullet(rec.X, rec.Y);
         }
 
+        //Update
         public void Update(KeyboardState kb)
         {
             checkAction(kb);
         }
 
+        //Draw
         public void Draw(SpriteBatch sb, GameTime gt)
         {
             sb.Begin();
