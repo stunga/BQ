@@ -21,6 +21,7 @@ namespace Block_s_Quest
         Dwayne dwayne;
         Texture2D dwaynet, bulletT;
         KeyboardState kb;
+        Level level;
 
         public Game1()
         {
@@ -57,6 +58,13 @@ namespace Block_s_Quest
             dwaynet = this.Content.Load<Texture2D>("Dwayne Angry Face");
             bulletT = this.Content.Load<Texture2D>("Bullet");
             dwayne = new Dwayne(dwaynet, bulletT);
+
+            LoadLevel();
+        }
+
+        private void LoadLevel()
+        {
+            level = new Level(Services, @"Content/Levels/Level.txt");
         }
 
         /// <summary>
