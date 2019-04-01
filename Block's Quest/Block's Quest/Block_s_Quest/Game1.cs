@@ -22,6 +22,14 @@ namespace Block_s_Quest
         Texture2D dwaynet, bulletT;
         KeyboardState kb;
 
+        enum bullType
+        {
+            fire,
+            chi,
+            earth,
+            water
+        };
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
