@@ -105,11 +105,9 @@ namespace Block_s_Quest
         //Draw
         public void Draw(SpriteBatch sb, GameTime gt)
         {
-            sb.Begin();
             sb.Draw(tex, rec, Color.White);
             for (int x = 0; x < bullet.Count; x++)
                 bullet[x].Draw(sb, gt);
-            sb.End();
         }
 
     }
