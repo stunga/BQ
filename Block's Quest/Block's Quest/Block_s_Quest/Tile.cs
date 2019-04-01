@@ -20,7 +20,6 @@ namespace Block_s_Quest
         {
             TileSheetName = n;
             TileSheetIndex = i;
-            Collision = c;
         }
     }
 }
