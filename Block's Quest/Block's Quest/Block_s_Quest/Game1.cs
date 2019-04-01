@@ -21,6 +21,8 @@ namespace Block_s_Quest
         Dwayne dwayne;
         Texture2D dwaynet, bulletT, diamondt, shopt, dpadt;
         KeyboardState kb;
+        Level level;
+        int levelIndex, maxLevel;
         SpriteFont font;
 
         enum bullType
@@ -51,6 +53,9 @@ namespace Block_s_Quest
             graphics.PreferredBackBufferWidth = 1800;
             graphics.ApplyChanges();
             IsMouseVisible = true;
+            levelIndex = 1;
+            maxLevel = 2;
+
             base.Initialize();
         }
 
@@ -73,6 +78,13 @@ namespace Block_s_Quest
             gui = new UI(font, bulletT, shopt, diamondt, dpadt);
             gui.show();
             dwayne = new Dwayne(dwaynet, bulletT);
+
+            LoadLevel();
+        }
+
+        private void LoadLevel()
+        {
+            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt");
         }
 
         /// <summary>
@@ -97,7 +109,16 @@ namespace Block_s_Quest
                 this.Exit();
 
             // TODO: Add your update logic here
+            if(level.LevelEnd())
+            {
+                levelIndex++;
+
+                if(levelIndex<=maxLevel)
+                    LoadLevel();
+            }
+
             dwayne.Update(kb);
+
             base.Update(gameTime);
         }
 
