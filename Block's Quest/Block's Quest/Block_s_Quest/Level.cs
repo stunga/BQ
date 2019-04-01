@@ -56,6 +56,7 @@ namespace Block_s_Quest
 
         public Level(IServiceProvider serviceProvider, string path)
         {
+            levelIndex = 1;
             content = new ContentManager(serviceProvider, "Content");
 
             tileSheets = new Dictionary<string, Texture2D>();
@@ -177,6 +178,17 @@ namespace Block_s_Quest
                     }
                 }
             }
+        }
+
+        public bool LevelEnd()
+        {
+            foreach(Enemy e in enemies)
+            {
+                if (e.isAlive)
+                    return false;
+            }
+
+            return true;
         }
     }
 }

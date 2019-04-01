@@ -18,7 +18,7 @@ namespace Block_s_Quest
         private int size;
         private Rectangle rect;
         Boolean enemyMoveBegan;
-        Boolean isAlive = true;
+        public Boolean isAlive = true;
         Boolean spawnCoins;
         public Enemy(Texture2D i, int vX, Color col, int hitP, int s, Rectangle r)
         {
@@ -75,10 +75,12 @@ namespace Block_s_Quest
                 }
             }
         }
+
         public void Update()
         {
             ApplyPhysics();
         }
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (isAlive)

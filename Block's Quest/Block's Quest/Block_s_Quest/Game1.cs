@@ -22,6 +22,7 @@ namespace Block_s_Quest
         Texture2D dwaynet, bulletT;
         KeyboardState kb;
         Level level;
+        int levelIndex, maxLevel;
 
         enum bullType
         {
@@ -50,6 +51,9 @@ namespace Block_s_Quest
             graphics.PreferredBackBufferWidth = 1800;
             graphics.ApplyChanges();
             IsMouseVisible = true;
+            levelIndex = 1;
+            maxLevel = 2;
+
             base.Initialize();
         }
 
@@ -72,7 +76,7 @@ namespace Block_s_Quest
 
         private void LoadLevel()
         {
-            level = new Level(Services, @"Content/Levels/Level.txt");
+            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt");
         }
 
         /// <summary>
@@ -97,7 +101,16 @@ namespace Block_s_Quest
                 this.Exit();
 
             // TODO: Add your update logic here
+            if(level.LevelEnd())
+            {
+                levelIndex++;
+
+                if(levelIndex<=maxLevel)
+                    LoadLevel();
+            }
+
             dwayne.Update(kb);
+
             base.Update(gameTime);
         }
 
