@@ -19,6 +19,14 @@ namespace Block_s_Quest
         List<Bullet> bullet = new List<Bullet>();
         float vel;
         int bulletTimer = 0;
+        enum bullType
+        {
+            fire,
+            chi,
+            earth,
+            water
+        };
+        bullType curType;
 
         public Dwayne(Texture2D t, Texture2D bT)
         {
@@ -30,9 +38,9 @@ namespace Block_s_Quest
         //Checks for keypresses
         private void checkAction(KeyboardState kb)
         {
-            if ((kb.IsKeyDown(Keys.A) || kb.IsKeyDown(Keys.Left)) && rec.X > 0)
+            if (kb.IsKeyDown(Keys.A) && rec.X > 0)
                 rec.X -= 20;
-            if ((kb.IsKeyDown(Keys.D) || kb.IsKeyDown(Keys.Right)) && rec.X + rec.Width < 1800)
+            if (kb.IsKeyDown(Keys.D) && rec.X + rec.Width < 1800)
                 rec.X += 20;
             if (kb.IsKeyDown(Keys.Space) && bulletTimer == 0)
             {
@@ -40,12 +48,46 @@ namespace Block_s_Quest
                 bulletTimer = 30;
             }
 
+            if (kb.IsKeyDown(Keys.Left))
+            {
+                curType = bullType.chi;
+            }
+            if (kb.IsKeyDown(Keys.Up))
+            {
+                curType = bullType.earth;
+            }
+            if (kb.IsKeyDown(Keys.Right))
+            {
+                curType = bullType.fire;
+            }
+            if (kb.IsKeyDown(Keys.Down))
+            {
+                curType = bullType.water;
+            }
+
             oldKb = kb;
         }
 
         private void Shoot()
         {
-            bullet.Add(new Bullet(rec.X+30, rec.Y-10, bulletT));
+            switch (curType)
+            {
+                case bullType.chi:
+                    bullet.Add(new Bullet(rec.X + 30, rec.Y - 10, bulletT, 1));
+                    break;
+                case bullType.earth:
+                    bullet.Add(new Bullet(rec.X + 30, rec.Y - 10, bulletT, 2));
+                    break;
+                case bullType.fire:
+                    bullet.Add(new Bullet(rec.X + 30, rec.Y - 10, bulletT, 3));
+                    break;
+                case bullType.water:
+                    bullet.Add(new Bullet(rec.X + 30, rec.Y - 10, bulletT, 4));
+                    break;
+                default:
+                    bullet.Add(new Bullet(rec.X + 30, rec.Y - 10, bulletT));
+                    break;
+            }
         }
 
         //Update

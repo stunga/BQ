@@ -23,6 +23,14 @@ namespace Block_s_Quest
         KeyboardState kb;
         Level level;
 
+        enum bullType
+        {
+            fire,
+            chi,
+            earth,
+            water
+        };
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);

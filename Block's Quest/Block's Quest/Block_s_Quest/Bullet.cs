@@ -15,11 +15,52 @@ namespace Block_s_Quest
     {
         Rectangle bulletRec;
         Texture2D bulletT;
+        enum bullType
+        {
+            fire,
+            chi,
+            earth,
+            water
+        };
+        bullType type;
+        Color col;
 
         public Bullet(int x, int y, Texture2D t)
         {
             bulletRec = new Rectangle(x, y, 50, 50);
             bulletT = t;
+            type = bullType.chi;
+            col = Color.LightBlue;
+        }
+
+        public Bullet(int x, int y, Texture2D t, int i)
+        {
+            bulletRec = new Rectangle(x, y, 50, 50);
+            bulletT = t;
+            switch (i)
+            {
+                case 1:
+                    type = bullType.chi;
+                    col = Color.LightBlue;
+                    break;
+                case 2:
+                    type = bullType.earth;
+                    col = Color.Gray;
+                    break;
+                case 3:
+                    type = bullType.fire;
+                    col = Color.OrangeRed;
+                    break;
+                case 4:
+                    type = bullType.water;
+                    col = Color.DarkBlue;
+                    break;
+                default:
+                    type = bullType.chi;
+                    col = Color.LightBlue;
+                    break;
+            }
+
         }
 
         public void Update()
@@ -29,7 +70,7 @@ namespace Block_s_Quest
 
         public void Draw(SpriteBatch sb, GameTime gt)
         {
-            sb.Draw(bulletT, bulletRec, Color.White);
+            sb.Draw(bulletT, bulletRec, col);
         }
     }
 }
