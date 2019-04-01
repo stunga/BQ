@@ -22,12 +22,12 @@ namespace Block_s_Quest
             earth,
             water
         };
-        bullType type;
+        bullType type = bullType.chi;
         Color col;
 
         public Bullet(int x, int y, Texture2D t)
         {
-            bulletRec = new Rectangle(x, y, 50, 50);
+            bulletRec = new Rectangle(x, y, 20, 20);
             bulletT = t;
             type = bullType.chi;
             col = Color.LightBlue;
@@ -35,7 +35,7 @@ namespace Block_s_Quest
 
         public Bullet(int x, int y, Texture2D t, int i)
         {
-            bulletRec = new Rectangle(x, y, 50, 50);
+            bulletRec = new Rectangle(x, y, 20, 20);
             bulletT = t;
             switch (i)
             {

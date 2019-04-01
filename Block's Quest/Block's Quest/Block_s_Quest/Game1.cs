@@ -19,6 +19,8 @@ namespace Block_s_Quest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Dwayne dwayne;
+        Texture2D dwaynet, bulletT, diamondt, shopt, dpadt;
+        KeyboardState kb;
         Texture2D dwaynet, bulletT;
         Level level;
         int levelIndex, maxLevel;
@@ -42,6 +44,7 @@ namespace Block_s_Quest
             earth,
             water
         };
+        UI gui;
 
         public Game1()
         {
@@ -83,6 +86,12 @@ namespace Block_s_Quest
             // TODO: use this.Content to load your game content here
             dwaynet = this.Content.Load<Texture2D>("Dwayne Angry Face");
             bulletT = this.Content.Load<Texture2D>("Bullet");
+            diamondt = this.Content.Load<Texture2D>("Diamonds");
+            shopt = this.Content.Load<Texture2D>("shop");
+            dpadt = this.Content.Load<Texture2D>("dpad");
+            font = this.Content.Load<SpriteFont>("SpriteFont1");
+            gui = new UI(font, bulletT, shopt, diamondt, dpadt);
+            gui.show();
             dwayne = new Dwayne(dwaynet, bulletT);
             font = Content.Load<SpriteFont>("SpriteFont1");
             font1 = Content.Load<SpriteFont>("SpriteFont2");

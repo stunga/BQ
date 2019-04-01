@@ -26,7 +26,7 @@ namespace Block_s_Quest
             earth,
             water
         };
-        bullType curType;
+        bullType curType = bullType.chi;
 
         public Dwayne(Texture2D t, Texture2D bT)
         {
@@ -69,23 +69,23 @@ namespace Block_s_Quest
         }
 
         private void Shoot()
-        {
+        { 
             switch (curType)
             {
                 case bullType.chi:
-                    bullet.Add(new Bullet(rec.X + 30, rec.Y - 10, bulletT, 1));
+                    bullet.Add(new Bullet(rec.X + 40, rec.Y - 10, bulletT, 1));
                     break;
                 case bullType.earth:
-                    bullet.Add(new Bullet(rec.X + 30, rec.Y - 10, bulletT, 2));
+                    bullet.Add(new Bullet(rec.X + 40, rec.Y - 10, bulletT, 2));
                     break;
                 case bullType.fire:
-                    bullet.Add(new Bullet(rec.X + 30, rec.Y - 10, bulletT, 3));
+                    bullet.Add(new Bullet(rec.X + 40, rec.Y - 10, bulletT, 3));
                     break;
                 case bullType.water:
-                    bullet.Add(new Bullet(rec.X + 30, rec.Y - 10, bulletT, 4));
+                    bullet.Add(new Bullet(rec.X + 40, rec.Y - 10, bulletT, 4));
                     break;
                 default:
-                    bullet.Add(new Bullet(rec.X + 30, rec.Y - 10, bulletT));
+                    bullet.Add(new Bullet(rec.X + 40, rec.Y - 10, bulletT));
                     break;
             }
         }

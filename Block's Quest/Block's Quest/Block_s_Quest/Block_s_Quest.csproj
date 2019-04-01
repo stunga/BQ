@@ -81,6 +81,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Tile.cs" />
+    <Compile Include="UI.cs" />
     <Compile Include="Wallet.cs" />
   </ItemGroup>
   <ItemGroup>
