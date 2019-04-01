@@ -22,7 +22,7 @@ namespace Block_s_Quest
             earth,
             water
         };
-        bullType type;
+        bullType type = bullType.chi;
         Color col;
 
         public Bullet(int x, int y, Texture2D t)

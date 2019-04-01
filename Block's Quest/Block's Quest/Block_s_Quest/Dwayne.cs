@@ -26,7 +26,7 @@ namespace Block_s_Quest
             earth,
             water
         };
-        bullType curType;
+        bullType curType = bullType.chi;
 
         public Dwayne(Texture2D t, Texture2D bT)
         {
