@@ -31,6 +31,8 @@ namespace Block_s_Quest
         Color op1 = Color.White;
         Color op2 = Color.White;
         Color op3 = Color.White;
+        UI gui;
+
         enum GameState
         {
             MainMenu, Normal, Hardcore, Insane, GameOver
@@ -43,7 +45,6 @@ namespace Block_s_Quest
             earth,
             water
         };
-        UI gui;
 
         public Game1()
         {
@@ -69,7 +70,6 @@ namespace Block_s_Quest
             gameState = GameState.MainMenu;
             selectionRectangle = new Rectangle(750, 500, 0, 0);
             oldkb = Keyboard.GetState();
-
             base.Initialize();
         }
 
@@ -94,13 +94,12 @@ namespace Block_s_Quest
             dwayne = new Dwayne(dwaynet, bulletT);
             font = Content.Load<SpriteFont>("SpriteFont1");
             font1 = Content.Load<SpriteFont>("SpriteFont2");
-
             LoadLevel();
         }
 
         private void LoadLevel()
         {
-            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt");
+            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
         }
 
         /// <summary>
@@ -143,6 +142,7 @@ namespace Block_s_Quest
             }
             else       
             {
+                level.Update();
                 dwayne.Update(kb);
                 if (level.LevelEnd())
                 {
@@ -207,11 +207,15 @@ namespace Block_s_Quest
                 spriteBatch.DrawString(font, "Normal Mode", new Vector2(750, 500), op1);
                 spriteBatch.DrawString(font, "Hardcore Mode", new Vector2(750, 600), op2);
                 spriteBatch.DrawString(font, "Insane Mode", new Vector2(750, 700), op3);
+                gui.hide();
             }
             else
             {
                 background = Color.CornflowerBlue;
+                level.Draw(gameTime, spriteBatch);
                 dwayne.Draw(spriteBatch, gameTime);
+                gui.show();
+                gui.Draw(spriteBatch, gameTime);
             }
             spriteBatch.End();
             base.Draw(gameTime);

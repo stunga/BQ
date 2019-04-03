@@ -27,6 +27,7 @@ namespace Block_s_Quest
             hitpoints = hitP;
             rect = r;
         }
+
         public int getHitpoints()
         {
             if (this.hitpoints <= 0)
@@ -39,6 +40,7 @@ namespace Block_s_Quest
             }
             return hitpoints;
         }
+
         public void enemyKilled()
         {
            if (!isAlive)
