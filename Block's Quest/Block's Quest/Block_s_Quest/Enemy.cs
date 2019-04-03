@@ -26,6 +26,7 @@ namespace Block_s_Quest
             color = col;
             hitpoints = hitP;
             rect = r;
+            velocityY = 0;
         }
 
         public int getHitpoints()
@@ -50,8 +51,7 @@ namespace Block_s_Quest
         }
         private void ApplyPhysics()
         {
-            Double acceleration = -9.8;
-            velocityY = 0;
+            Double acceleration = 1;
             rect.X += velocityX;
             rect.Y += velocityY;
             velocityY += (int)acceleration;
