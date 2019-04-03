@@ -58,14 +58,15 @@ namespace Block_s_Quest
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Begin();
-            spriteBatch.Draw(diamondt, diamonds, Color.LightBlue);
-            spriteBatch.Draw(element, earth, Color.Gray);
-            spriteBatch.Draw(element, water, Color.DarkBlue);
-            spriteBatch.Draw(element, chi, Color.LightBlue);
-            spriteBatch.Draw(element, fire, Color.OrangeRed);
-            spriteBatch.Draw(dpadt, dpad, Color.White);
-            spriteBatch.End();
+            if (isShowing)
+            {
+                spriteBatch.Draw(diamondt, diamonds, Color.LightBlue);
+                spriteBatch.Draw(element, earth, Color.Gray);
+                spriteBatch.Draw(element, water, Color.DarkBlue);
+                spriteBatch.Draw(element, chi, Color.LightBlue);
+                spriteBatch.Draw(element, fire, Color.OrangeRed);
+                spriteBatch.Draw(dpadt, dpad, Color.White);
+            }
         }
 
     }
