@@ -70,7 +70,6 @@ namespace Block_s_Quest
             gameState = GameState.MainMenu;
             selectionRectangle = new Rectangle(750, 500, 0, 0);
             oldkb = Keyboard.GetState();
-
             base.Initialize();
         }
 
@@ -95,7 +94,6 @@ namespace Block_s_Quest
             dwayne = new Dwayne(dwaynet, bulletT);
             font = Content.Load<SpriteFont>("SpriteFont1");
             font1 = Content.Load<SpriteFont>("SpriteFont2");
-
             LoadLevel();
         }
 
@@ -210,12 +208,15 @@ namespace Block_s_Quest
                 spriteBatch.DrawString(font, "Normal Mode", new Vector2(750, 500), op1);
                 spriteBatch.DrawString(font, "Hardcore Mode", new Vector2(750, 600), op2);
                 spriteBatch.DrawString(font, "Insane Mode", new Vector2(750, 700), op3);
+                gui.hide();
             }
             else
             {
                 background = Color.CornflowerBlue;
                 level.Draw(gameTime, spriteBatch);
                 dwayne.Draw(spriteBatch, gameTime);
+                gui.show();
+                gui.Draw(spriteBatch, gameTime);
             }
             spriteBatch.End();
             base.Draw(gameTime);
