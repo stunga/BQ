@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.IO;
 
 namespace Block_s_Quest
@@ -12,6 +15,7 @@ namespace Block_s_Quest
     class Level
     {
         public int levelIndex;
+        public Texture2D enemyT;
         private Tile[,] tiles;
         private Dictionary<string, Texture2D> tileSheets;
         public Dictionary<int, Rectangle> TileSourceRecs;
@@ -36,8 +40,8 @@ namespace Block_s_Quest
 
         private const int TileWidth = 64;
         private const int TileHeight = 64;
-        private const int TilesPerRow = 5;
-        private const int NumRowsPerSheet = 5;
+        private const int TilesPerRow = 20;
+        private const int NumRowsPerSheet = 10;
 
         private Random random = new Random(1337);
 
@@ -54,10 +58,11 @@ namespace Block_s_Quest
         //private List<Collectable> collectables = new List<Collectable>();
         //private List<Collectable> collectedCollectables = new List<Collectable>();
 
-        public Level(IServiceProvider serviceProvider, string path)
+        public Level(IServiceProvider serviceProvider, string path, Texture2D eT)
         {
             levelIndex = 1;
             content = new ContentManager(serviceProvider, "Content");
+            enemyT = eT;
 
             tileSheets = new Dictionary<string, Texture2D>();
             //tileSheets.Add("Blocks", Content.Load<Texture2D>("Tiles/Blocks"));
@@ -123,9 +128,6 @@ namespace Block_s_Quest
             {
                 case '.':
                     return new Tile(String.Empty, 0);
-                //Player spawn
-                case '+':
-                    return LoadStartTile(x, y);
                 //Enemies spawns
                 case 'e':
                     return LoadEnemyTile(x, y, "e");
@@ -139,24 +141,13 @@ namespace Block_s_Quest
         private Tile LoadEnemyTile(int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 64) + 20);
-            //enemies.Add(new Enemy(this, position, _enemy));
-            return new Tile(String.Empty, 0);
-        }
-
-        private Tile LoadStartTile(int x, int y)
-        {
-            if (Player != null)
-                throw new NotSupportedException("A level may only have one starting point.");
-
-            start = new Vector2((x * 64) + 48, (y * 64) + 16);
-           //player = new Dwayne(this, start);
+            enemies.Add(new Enemy(enemyT, 10, Color.Green, 5, new Rectangle(_x,_y, 50, 50)));
             return new Tile(String.Empty, 0);
         }
 
         public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
         {
             DrawTiles(_spriteBatch);
-            player.Draw(_spriteBatch,_gameTime);
             foreach (Enemy enemy in enemies)
                 enemy.Draw(_gameTime, _spriteBatch);
         }
@@ -180,6 +171,14 @@ namespace Block_s_Quest
             }
         }
 
+        //Update
+        public void Update()
+        {
+            foreach (Enemy e in enemies)
+                e.Update();
+        }
+
+        //Level changer
         public bool LevelEnd()
         {
             foreach(Enemy e in enemies)

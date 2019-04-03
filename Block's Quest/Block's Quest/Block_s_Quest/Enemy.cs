@@ -15,20 +15,20 @@ namespace Block_s_Quest
         private int velocityY;
         private Color color;
         private int hitpoints;
-        private int size;
         private Rectangle rect;
         Boolean enemyMoveBegan;
         public Boolean isAlive = true;
         Boolean spawnCoins;
-        public Enemy(Texture2D i, int vX, Color col, int hitP, int s, Rectangle r)
+
+        public Enemy(Texture2D i, int vX, Color col, int hitP, Rectangle r)
         {
             img = i;
             velocityX = vX;
             color = col;
             hitpoints = hitP;
-            size = s;
             rect = r;
         }
+
         public int getHitpoints()
         {
             if (this.hitpoints <= 0)
@@ -41,16 +41,13 @@ namespace Block_s_Quest
             }
             return hitpoints;
         }
+
         public void enemyKilled()
         {
            if (!isAlive)
             {
                 spawnCoins = true;
             }
-        }
-        public int getSize()
-        {
-            return size;
         }
         private void ApplyPhysics()
         {

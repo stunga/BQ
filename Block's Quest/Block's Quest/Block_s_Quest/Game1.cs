@@ -31,6 +31,8 @@ namespace Block_s_Quest
         Color op1 = Color.White;
         Color op2 = Color.White;
         Color op3 = Color.White;
+        UI gui;
+
         enum GameState
         {
             MainMenu, Normal, Hardcore, Insane, GameOver
@@ -43,7 +45,6 @@ namespace Block_s_Quest
             earth,
             water
         };
-        UI gui;
 
         public Game1()
         {
@@ -100,7 +101,7 @@ namespace Block_s_Quest
 
         private void LoadLevel()
         {
-            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt");
+            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
         }
 
         /// <summary>
@@ -144,6 +145,7 @@ namespace Block_s_Quest
             }
             else
             {
+                level.Update();
                 dwayne.Update(kb);
                 if (level.LevelEnd())
                 {
@@ -212,6 +214,7 @@ namespace Block_s_Quest
             else
             {
                 background = Color.CornflowerBlue;
+                level.Draw(gameTime, spriteBatch);
                 dwayne.Draw(spriteBatch, gameTime);
             }
             spriteBatch.End();
