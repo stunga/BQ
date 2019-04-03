@@ -32,8 +32,8 @@ namespace Block_s_Quest
         }
         ContentManager content;
 
-        private const int TileWidth = 64;
-        private const int TileHeight = 64;
+        private const int TileWidth = 50;
+        private const int TileHeight = 180;
         private const int TilesPerRow = 20;
         private const int NumRowsPerSheet = 10;
 
@@ -135,7 +135,7 @@ namespace Block_s_Quest
         private Tile LoadEnemyTile(int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 64) + 20);
-            enemies.Add(new Enemy(enemyT, 10, Color.Green, 5, new Rectangle(_x,_y, 50, 50)));
+            enemies.Add(new Enemy(enemyT, 5, Color.Green, 5, new Rectangle(_x,_y, 50, 50)));
             return new Tile(String.Empty, 0);
         }
 
