@@ -21,9 +21,21 @@ namespace Block_s_Quest
         Dwayne dwayne;
         Texture2D dwaynet, bulletT, diamondt, shopt, dpadt;
         KeyboardState kb;
+        Texture2D dwaynet, bulletT;
         Level level;
         int levelIndex, maxLevel;
-        SpriteFont font;
+        KeyboardState oldkb;
+        GameState gameState;
+        SpriteFont font, font1;
+        Rectangle selectionRectangle;
+        Color background = Color.CornflowerBlue;
+        Color op1 = Color.White;
+        Color op2 = Color.White;
+        Color op3 = Color.White;
+        enum GameState
+        {
+            MainMenu, Normal, Hardcore, Insane, GameOver
+        };
 
         enum bullType
         {
@@ -55,6 +67,9 @@ namespace Block_s_Quest
             IsMouseVisible = true;
             levelIndex = 1;
             maxLevel = 2;
+            gameState = GameState.MainMenu;
+            selectionRectangle = new Rectangle(750, 500, 0, 0);
+            oldkb = Keyboard.GetState();
 
             base.Initialize();
         }
@@ -78,6 +93,8 @@ namespace Block_s_Quest
             gui = new UI(font, bulletT, shopt, diamondt, dpadt);
             gui.show();
             dwayne = new Dwayne(dwaynet, bulletT);
+            font = Content.Load<SpriteFont>("SpriteFont1");
+            font1 = Content.Load<SpriteFont>("SpriteFont2");
 
             LoadLevel();
         }
@@ -103,22 +120,77 @@ namespace Block_s_Quest
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            kb = Keyboard.GetState();
+            KeyboardState kb = Keyboard.GetState();
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
-            // TODO: Add your update logic here
-            if(level.LevelEnd())
+            if (gameState == GameState.MainMenu)
             {
-                levelIndex++;
-
-                if(levelIndex<=maxLevel)
-                    LoadLevel();
+                if (selectionRectangle.Y < 500)
+                {
+                    selectionRectangle.Y = 700;
+                }
+                if (selectionRectangle.Y > 700)
+                {
+                    selectionRectangle.Y = 500;
+                }
+                if (kb.IsKeyDown(Keys.Up) && !oldkb.IsKeyDown(Keys.Up))
+                {
+                    selectionRectangle.Y -= 100;
+                }
+                if (kb.IsKeyDown(Keys.Down) && !oldkb.IsKeyDown(Keys.Down))
+                {
+                    selectionRectangle.Y += 100;
+                }
             }
+            else
+            {
+                dwayne.Update(kb);
+                if (level.LevelEnd())
+                {
+                    levelIndex++;
 
-            dwayne.Update(kb);
-
+                    if (levelIndex <= maxLevel)
+                        LoadLevel();
+                }
+            }
+            if (selectionRectangle.Y == 500)
+            {
+                op1 = Color.Blue;
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
+                {
+                    gameState = GameState.Normal;
+                }
+            }
+            else
+            {
+                op1 = Color.White;
+            }
+            if (selectionRectangle.Y == 600)
+            {
+                op2 = Color.Blue;
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
+                {
+                    gameState = GameState.Hardcore;
+                }
+            }
+            else
+            {
+                op2 = Color.White;
+            }
+            if (selectionRectangle.Y == 700)
+            {
+                op3 = Color.Blue;
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
+                {
+                    gameState = GameState.Insane;
+                }
+            }
+            else
+            {
+                op3 = Color.White;
+            }
+            oldkb = kb;
             base.Update(gameTime);
         }
 
@@ -128,11 +200,22 @@ namespace Block_s_Quest
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-            dwayne.Draw(spriteBatch, gameTime);
-            gui.Draw(spriteBatch, gameTime);
+            GraphicsDevice.Clear(background);
+            spriteBatch.Begin();
+            if (gameState == GameState.MainMenu)
+            {
+                background = Color.SaddleBrown;
+                spriteBatch.DrawString(font1, "The Block's Quest", new Vector2(550, 0), Color.White);
+                spriteBatch.DrawString(font, "Normal Mode", new Vector2(750, 500), op1);
+                spriteBatch.DrawString(font, "Hardcore Mode", new Vector2(750, 600), op2);
+                spriteBatch.DrawString(font, "Insane Mode", new Vector2(750, 700), op3);
+            }
+            else
+            {
+                background = Color.CornflowerBlue;
+                dwayne.Draw(spriteBatch, gameTime);
+            }
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
