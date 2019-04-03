@@ -32,7 +32,8 @@ namespace Block_s_Quest
         Color op2 = Color.White;
         Color op3 = Color.White;
         UI gui;
-
+        List<Bullet> bullets;
+        List<Enemy> enemy;
         enum GameState
         {
             MainMenu, Normal, Hardcore, Insane, GameOver
@@ -66,6 +67,8 @@ namespace Block_s_Quest
             graphics.ApplyChanges();
             IsMouseVisible = true;
             levelIndex = 1;
+            bullets = new List<Bullet>();
+            enemy = new List<Enemy>();
             maxLevel = 2;
             gameState = GameState.MainMenu;
             selectionRectangle = new Rectangle(750, 500, 0, 0);
@@ -144,6 +147,16 @@ namespace Block_s_Quest
             {
                 level.Update();
                 dwayne.Update(kb);
+                for (int i = 0; i < dwayne.getBullets().Count; i++)
+                {
+                    bullets = dwayne.getBullets();
+                    enemy = level.getEnemies();
+                    if (bullets[i].getRect().Intersects(enemy[i].getRect()))
+                    {
+
+                    }
+                }
+                   
                 if (level.LevelEnd())
                 {
                     levelIndex++;

@@ -26,8 +26,16 @@ namespace Block_s_Quest
             color = col;
             hitpoints = hitP;
             rect = r;
+            velocityY = 0;
         }
-
+        public void decreaseHitPoints()
+        {
+            this.hitpoints--;
+        }
+        public Rectangle getRect()
+        {
+            return rect;
+        }
         public int getHitpoints()
         {
             if (this.hitpoints <= 0)
@@ -50,8 +58,7 @@ namespace Block_s_Quest
         }
         private void ApplyPhysics()
         {
-            Double acceleration = -9.8;
-            velocityY = 0;
+            Double acceleration = 1;
             rect.X += velocityX;
             rect.Y += velocityY;
             velocityY += (int)acceleration;

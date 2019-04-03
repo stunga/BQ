@@ -32,7 +32,10 @@ namespace Block_s_Quest
             type = bullType.chi;
             col = Color.LightBlue;
         }
-
+        public Rectangle getRect()
+        {
+            return bulletRec;
+        }
         public Bullet(int x, int y, Texture2D t, int i)
         {
             bulletRec = new Rectangle(x, y, 20, 20);

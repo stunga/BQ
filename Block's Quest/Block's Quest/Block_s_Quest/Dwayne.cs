@@ -34,7 +34,10 @@ namespace Block_s_Quest
             tex = t;
             bulletT = bT;
         }
-
+        public List<Bullet> getBullets()
+        {
+            return bullet;
+        }
         //Checks for keypresses
         private void checkAction(KeyboardState kb)
         {

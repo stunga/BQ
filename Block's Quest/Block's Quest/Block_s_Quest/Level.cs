@@ -24,12 +24,6 @@ namespace Block_s_Quest
         private List<Enemy> enemies = new List<Enemy>();
         private List<Enemy> deadEnemies = new List<Enemy>();
 
-        public Dwayne Player
-        {
-            get { return player; }
-        }
-        Dwayne player;
-
         private Vector2 start;
 
         public ContentManager Content
@@ -170,12 +164,16 @@ namespace Block_s_Quest
                 }
             }
         }
-
+        public List<Enemy> getEnemies()
+        {
+            return enemies;
+        }
         //Update
         public void Update()
         {
             foreach (Enemy e in enemies)
                 e.Update();
+            
         }
 
         //Level changer
