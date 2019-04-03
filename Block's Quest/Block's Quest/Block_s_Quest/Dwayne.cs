@@ -36,7 +36,7 @@ namespace Block_s_Quest
         }
 
         //Checks for keypresses
-        private void checkAction(KeyboardState kb)
+        private void checkAction(KeyboardState kb, UI ui)
         {
             if (kb.IsKeyDown(Keys.A) && rec.X > 0)
                 rec.X -= 20;
@@ -51,18 +51,22 @@ namespace Block_s_Quest
             if (kb.IsKeyDown(Keys.Left))
             {
                 curType = bullType.chi;
+                ui.setCol(Color.Magenta, Color.Gray, Color.OrangeRed, Color.DarkBlue);
             }
             if (kb.IsKeyDown(Keys.Up))
             {
                 curType = bullType.earth;
+                ui.setCol(Color.LightBlue, Color.Magenta, Color.OrangeRed, Color.DarkBlue);
             }
             if (kb.IsKeyDown(Keys.Right))
             {
                 curType = bullType.fire;
+                ui.setCol(Color.LightBlue, Color.Gray, Color.Magenta, Color.DarkBlue);
             }
             if (kb.IsKeyDown(Keys.Down))
             {
                 curType = bullType.water;
+                ui.setCol(Color.LightBlue, Color.Gray, Color.OrangeRed, Color.Magenta);
             }
 
             oldKb = kb;
@@ -91,9 +95,9 @@ namespace Block_s_Quest
         }
 
         //Update
-        public void Update(KeyboardState kb)
+        public void Update(KeyboardState kb, UI ui)
         {
-            checkAction(kb);
+            checkAction(kb, ui);
 
             if(bulletTimer > 0)
                 bulletTimer--;

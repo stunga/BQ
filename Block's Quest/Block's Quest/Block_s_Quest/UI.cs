@@ -13,11 +13,12 @@ namespace Block_s_Quest
 {
     class UI
     {
-        Rectangle diamonds, dpad, chi, fire, earth, water, shop, shopbutton, current, levelprogress, levelback;
-        String diamondamount, progresstext, score, scoretext, currtext;
-        Vector2 diamondamountloc, progresstextloc, scoreloc, scoretextloc, currtextloc;
+        Rectangle diamonds, dpad, chi, fire, earth, water, shop;
+        String diamondamount, score;
+        Vector2 diamondamountloc, scoreloc;
         SpriteFont font;
         Texture2D element, shopt, diamondt, dpadt;
+        Color firec, chic, waterc, earthc;
         bool isShowing = false;
 
         public UI(SpriteFont f, Texture2D e, Texture2D s, Texture2D d, Texture2D dp)
@@ -28,11 +29,20 @@ namespace Block_s_Quest
             diamondt = d;
             diamonds = new Rectangle(0, 0, 50, 50);
             dpadt = dp;
-            dpad = new Rectangle(30, 860, 120, 120);
+            firec = Color.OrangeRed;
+            chic = Color.Magenta;
+            waterc = Color.DarkBlue;
+            earthc = Color.Gray;
+            diamondamount = "0";
+            diamondamountloc = new Vector2(50, 12);
+            dpad = new Rectangle(40, 870, 100, 100);
             earth = new Rectangle(75, 880, 25, 20);
             water = new Rectangle(75, 940, 25, 20);
             chi = new Rectangle(50, 910, 25, 20);
-            fire = new Rectangle(100, 910, 25, 20);
+            fire = new Rectangle(100, 910, 28, 20);
+            shop = new Rectangle(800, 10, 100, 50);
+            score = "Score: 0";
+            scoreloc = new Vector2(1700, 20);
         }
 
         public void show()
@@ -56,16 +66,27 @@ namespace Block_s_Quest
             diamondamount = d.ToString();
         }
 
+        public void setCol(Color c, Color e, Color f, Color w)
+        {
+            chic = c;
+            earthc = e;
+            firec = f;
+            waterc = w;
+        }
+
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             if (isShowing)
             {
                 spriteBatch.Draw(diamondt, diamonds, Color.LightBlue);
-                spriteBatch.Draw(element, earth, Color.Gray);
-                spriteBatch.Draw(element, water, Color.DarkBlue);
-                spriteBatch.Draw(element, chi, Color.LightBlue);
-                spriteBatch.Draw(element, fire, Color.OrangeRed);
+                spriteBatch.Draw(element, earth, earthc);
+                spriteBatch.Draw(element, water, waterc);
+                spriteBatch.Draw(element, chi, chic);
+                spriteBatch.Draw(element, fire, firec);
                 spriteBatch.Draw(dpadt, dpad, Color.White);
+                spriteBatch.Draw(shopt, shop, Color.White);
+                spriteBatch.DrawString(font, diamondamount, diamondamountloc, Color.LightBlue);
+                spriteBatch.DrawString(font, score, scoreloc, Color.White);
             }
         }
 

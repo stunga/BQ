@@ -142,7 +142,7 @@ namespace Block_s_Quest
             }
             else
             {
-                dwayne.Update(kb);
+                dwayne.Update(kb, gui);
                 if (level.LevelEnd())
                 {
                     levelIndex++;
