@@ -55,22 +55,16 @@ namespace Block_s_Quest
             velocityY = 0;
             rect.X += velocityX;
             rect.Y += velocityY;
-            if ((rect.X >= 0 || rect.X+rect.Width <= 1800) && !enemyMoveBegan)
-            {
-                enemyMoveBegan = true;
-                velocityY += (int)acceleration;
-            }
+            velocityY += (int)acceleration;
             if (rect.Y+rect.Height >= 1000 || rect.Y <= 0)
             {
                 velocityY *= -1;
             }
-            if (enemyMoveBegan)
+            if (rect.X <= 0 || rect.X + rect.Width >= 1800)
             {
-                if (rect.X <= 0 || rect.X + rect.Width >= 1800)
-                {
-                    velocityX *= -1;
-                }
+                velocityX *= -1;
             }
+            
         }
 
         public void Update()
