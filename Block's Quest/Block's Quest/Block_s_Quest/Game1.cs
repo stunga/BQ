@@ -111,7 +111,6 @@ namespace Block_s_Quest
         {
             // TODO: Unload any non ContentManager content here
         }
-
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -121,7 +120,7 @@ namespace Block_s_Quest
         {
             KeyboardState kb = Keyboard.GetState();
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 this.Exit();
             if (gameState == GameState.MainMenu)
             {
@@ -142,7 +141,7 @@ namespace Block_s_Quest
                     selectionRectangle.Y += 100;
                 }
             }
-            else
+            else       
             {
                 dwayne.Update(kb);
                 if (level.LevelEnd())
