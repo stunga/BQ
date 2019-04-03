@@ -31,6 +31,8 @@ namespace Block_s_Quest
         Color op1 = Color.White;
         Color op2 = Color.White;
         Color op3 = Color.White;
+        UI gui;
+
         enum GameState
         {
             MainMenu, Normal, Hardcore, Insane, GameOver
@@ -43,7 +45,6 @@ namespace Block_s_Quest
             earth,
             water
         };
-        UI gui;
 
         public Game1()
         {
@@ -98,7 +99,7 @@ namespace Block_s_Quest
 
         private void LoadLevel()
         {
-            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt");
+            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
         }
 
         /// <summary>
@@ -109,7 +110,6 @@ namespace Block_s_Quest
         {
             // TODO: Unload any non ContentManager content here
         }
-
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -119,7 +119,7 @@ namespace Block_s_Quest
         {
             KeyboardState kb = Keyboard.GetState();
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 this.Exit();
             if (gameState == GameState.MainMenu)
             {
@@ -140,8 +140,9 @@ namespace Block_s_Quest
                     selectionRectangle.Y += 100;
                 }
             }
-            else
+            else       
             {
+                level.Update();
                 dwayne.Update(kb, gui);
                 if (level.LevelEnd())
                 {
@@ -211,6 +212,7 @@ namespace Block_s_Quest
             else
             {
                 background = Color.CornflowerBlue;
+                level.Draw(gameTime, spriteBatch);
                 dwayne.Draw(spriteBatch, gameTime);
                 gui.show();
                 gui.Draw(spriteBatch, gameTime);
