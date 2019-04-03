@@ -31,6 +31,8 @@ namespace Block_s_Quest
             dpad = new Rectangle(30, 860, 120, 120);
             earth = new Rectangle(75, 880, 25, 20);
             water = new Rectangle(75, 940, 25, 20);
+            chi = new Rectangle(50, 910, 25, 20);
+            fire = new Rectangle(100, 910, 25, 20);
         }
 
         public void show()
@@ -60,6 +62,8 @@ namespace Block_s_Quest
             spriteBatch.Draw(diamondt, diamonds, Color.LightBlue);
             spriteBatch.Draw(element, earth, Color.Gray);
             spriteBatch.Draw(element, water, Color.DarkBlue);
+            spriteBatch.Draw(element, chi, Color.LightBlue);
+            spriteBatch.Draw(element, fire, Color.OrangeRed);
             spriteBatch.Draw(dpadt, dpad, Color.White);
             spriteBatch.End();
         }
