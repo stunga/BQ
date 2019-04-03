@@ -21,7 +21,6 @@ namespace Block_s_Quest
         Dwayne dwayne;
         Texture2D dwaynet, bulletT, diamondt, shopt, dpadt;
         KeyboardState kb;
-        Texture2D dwaynet, bulletT;
         Level level;
         int levelIndex, maxLevel;
         KeyboardState oldkb;
