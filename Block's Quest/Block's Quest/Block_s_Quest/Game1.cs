@@ -126,6 +126,8 @@ namespace Block_s_Quest
                 this.Exit();
             if (gameState == GameState.MainMenu)
             {
+                dwayne.setPos(-900, -900);
+                dwayne.Shoot();
                 if (selectionRectangle.Y < 500)
                 {
                     selectionRectangle.Y = 700;
@@ -146,6 +148,8 @@ namespace Block_s_Quest
             else       
             {
                 level.Update();
+                if (dwayne.isDead(enemy))
+                    gameState = GameState.GameOver;
                 dwayne.Update(kb, gui);
                 for (int i = 0; i < dwayne.getBullets().Count; i++)
                 {
@@ -153,12 +157,7 @@ namespace Block_s_Quest
                     enemy = level.getEnemies();
                     for (int j = 0; j < enemy.Count; j++)
                     {
-                        if (bullets[i].getRect().Intersects(enemy[j].getRect()))
-                        {
-                            enemy.Remove(enemy[j]);
-                            gui.score++;
-                            bullets.Remove(bullets[i]);
-                        }
+
                     }
                 }
                    
@@ -176,6 +175,7 @@ namespace Block_s_Quest
                 if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
                 {
                     gameState = GameState.Normal;
+                    dwayne.setPos(950, 875);
                 }
             }
             else
@@ -220,16 +220,21 @@ namespace Block_s_Quest
             spriteBatch.Begin();
             if (gameState == GameState.MainMenu)
             {
-                background = Color.SaddleBrown;
+                background = Color.DarkSalmon;
                 spriteBatch.DrawString(font1, "The Block's Quest", new Vector2(550, 0), Color.White);
                 spriteBatch.DrawString(font, "Normal Mode", new Vector2(750, 500), op1);
                 spriteBatch.DrawString(font, "Hardcore Mode", new Vector2(750, 600), op2);
                 spriteBatch.DrawString(font, "Insane Mode", new Vector2(750, 700), op3);
                 gui.hide();
             }
+            else if(gameState== GameState.GameOver)
+            {
+                background = Color.Crimson;
+                spriteBatch.DrawString(font1, "GAME OVER", new Vector2(550, 600), Color.White);
+            }
             else
             {
-                background = Color.CornflowerBlue;
+                background = Color.DarkSalmon;
                 level.Draw(gameTime, spriteBatch);
                 dwayne.Draw(spriteBatch, gameTime);
                 gui.show();

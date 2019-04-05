@@ -132,8 +132,8 @@ namespace Block_s_Quest
         }
         private Tile LoadEnemyTile(int _x, int _y, string _enemy)
         {
-            Vector2 position = new Vector2((_x * 64) + 48, (_y * 64) + 20);
-            enemies.Add(new Enemy(enemyT, 5, Color.Green, 5, new Rectangle(_x,_y, 50, 50)));
+            Vector2 position = new Vector2((_x * 64) + 48, (_y * 180) + 64);
+            enemies.Add(new Enemy(enemyT, 5, Color.Green, 5, new Rectangle(_x*80,_y*100, 50, 50)));
             return new Tile(String.Empty, 0);
         }
 
@@ -171,7 +171,6 @@ namespace Block_s_Quest
         {
             foreach (Enemy e in enemies)
                 e.Update();
-            
         }
 
         //Level changer

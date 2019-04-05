@@ -38,6 +38,14 @@ namespace Block_s_Quest
         {
             return bullet;
         }
+
+        public bool isBehindDpad()
+        {
+            if (rec.X < 140)
+                return true;
+            return false;
+        }
+
         //Checks for keypresses
         private void checkAction(KeyboardState kb, UI ui)
         {
@@ -72,10 +80,32 @@ namespace Block_s_Quest
                 ui.setCol(Color.LightBlue, Color.Gray, Color.OrangeRed, Color.Magenta);
             }
 
+            if (isBehindDpad())
+                ui.halfColor();
+            else
+                ui.fullColor();
+
             oldKb = kb;
         }
 
-        private void Shoot()
+        public bool isDead(List<Enemy> enemies)
+        {
+            foreach(Enemy e in enemies)
+            {
+                Rectangle r = e.getRect();
+                if (r.Intersects(rec))
+                    return true;
+            }
+            return false;
+        }
+
+        public void setPos(int x, int y)
+        {
+            rec.X = x;
+            rec.Y = y;
+        }
+
+        public void Shoot()
         { 
             switch (curType)
             {
@@ -115,6 +145,11 @@ namespace Block_s_Quest
             sb.Draw(tex, rec, Color.White);
             for (int x = 0; x < bullet.Count; x++)
                 bullet[x].Draw(sb, gt);
+        }
+
+        public Rectangle getRect()
+        {
+            return rec;
         }
 
     }
