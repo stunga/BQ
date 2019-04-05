@@ -60,7 +60,7 @@ namespace Block_s_Quest
         {
             Double acceleration = 1;
             rect.X += velocityX;
-            rect.Y += velocityY;
+            rect.Y += (velocityY/9);
             velocityY += (int)acceleration;
             if (rect.Y+rect.Height >= 1000 || rect.Y <= 0)
             {

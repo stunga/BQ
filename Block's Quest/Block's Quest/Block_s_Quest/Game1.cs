@@ -146,21 +146,26 @@ namespace Block_s_Quest
             else       
             {
                 level.Update();
-                dwayne.Update(kb);
+                dwayne.Update(kb, gui);
                 for (int i = 0; i < dwayne.getBullets().Count; i++)
                 {
                     bullets = dwayne.getBullets();
                     enemy = level.getEnemies();
-                    if (bullets[i].getRect().Intersects(enemy[i].getRect()))
+                    for (int j = 0; j < enemy.Count; j++)
                     {
-
+                        if (bullets[i].getRect().Intersects(enemy[j].getRect()))
+                        {
+                            enemy.Remove(enemy[j]);
+                            gui.score++;
+                            bullets.Remove(bullets[i]);
+                        }
                     }
                 }
                    
                 if (level.LevelEnd())
                 {
                     levelIndex++;
-
+                    gui.score = 0;
                     if (levelIndex <= maxLevel)
                         LoadLevel();
                 }

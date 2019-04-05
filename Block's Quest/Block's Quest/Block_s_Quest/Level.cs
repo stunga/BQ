@@ -20,7 +20,6 @@ namespace Block_s_Quest
         private Dictionary<string, Texture2D> tileSheets;
         public Dictionary<int, Rectangle> TileSourceRecs;
         public List<Rectangle> TileDefinitions;
-
         private List<Enemy> enemies = new List<Enemy>();
         private List<Enemy> deadEnemies = new List<Enemy>();
 
@@ -131,7 +130,6 @@ namespace Block_s_Quest
                         "Unsupported til type character '{0}' at position {1}, {2}.", tileType, x, y));
             }
         }
-
         private Tile LoadEnemyTile(int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 64) + 20);
@@ -184,7 +182,6 @@ namespace Block_s_Quest
                 if (e.isAlive)
                     return false;
             }
-
             return true;
         }
     }
