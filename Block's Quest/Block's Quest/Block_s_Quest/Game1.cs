@@ -31,6 +31,7 @@ namespace Block_s_Quest
         Color op1 = Color.White;
         Color op2 = Color.White;
         Color op3 = Color.White;
+        int winTimer = 0;
         UI gui;
         List<Bullet> bullets;
         List<Enemy> enemy;
@@ -175,7 +176,14 @@ namespace Block_s_Quest
                         LoadLevel();
                     else
                         gameState = GameState.Win;
+                    winTimer++;
                 }
+            }
+            if (winTimer >= 180)
+            {
+                gameState = GameState.MainMenu;
+                levelIndex = 0;
+                winTimer = 0;
             }
             if (selectionRectangle.Y == 500)
             {
