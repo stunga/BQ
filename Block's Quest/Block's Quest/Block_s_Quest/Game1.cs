@@ -229,7 +229,7 @@ namespace Block_s_Quest
             else if(gameState== GameState.GameOver)
             {
                 background = Color.SaddleBrown;
-                spriteBatch.DrawString(font1, "GAME OVER", new Vector2(550, 600), Color.White);
+                spriteBatch.DrawString(font1, "GAME OVER", new Vector2(600, 500), Color.White);
             }
             else
             {
