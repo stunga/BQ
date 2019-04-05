@@ -146,7 +146,7 @@ namespace Block_s_Quest
             else       
             {
                 level.Update();
-                dwayne.Update(kb);
+                dwayne.Update(kb, gui);
                 for (int i = 0; i < dwayne.getBullets().Count; i++)
                 {
                     bullets = dwayne.getBullets();
