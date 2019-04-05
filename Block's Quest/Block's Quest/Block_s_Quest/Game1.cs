@@ -241,7 +241,7 @@ namespace Block_s_Quest
             }
             else if(gameState==GameState.Win)
             {
-                background = Color.Crimson;
+                background = Color.Green;
                 spriteBatch.DrawString(font1, "YOU WIN", new Vector2(550, 600), Color.White);
             }
             else
