@@ -88,6 +88,17 @@ namespace Block_s_Quest
             oldKb = kb;
         }
 
+        public bool isDead(List<Enemy> enemies)
+        {
+            foreach(Enemy e in enemies)
+            {
+                Rectangle r = e.getRect();
+                if ((r.X < rec.X + rec.Width && r.X > rec.X) || (r.Y > rec.Y && r.Y < rec.Y + rec.Height))
+                    return true;
+            }
+            return false;
+        }
+
         private void Shoot()
         { 
             switch (curType)

@@ -160,6 +160,9 @@ namespace Block_s_Quest
                         }
                     }
                 }
+
+                if (dwayne.isDead(enemy))
+                    gameState = GameState.GameOver;
                    
                 if (level.LevelEnd())
                 {
@@ -219,7 +222,7 @@ namespace Block_s_Quest
             spriteBatch.Begin();
             if (gameState == GameState.MainMenu)
             {
-                background = Color.SaddleBrown;
+                background = Color.DarkSalmon;
                 spriteBatch.DrawString(font1, "The Block's Quest", new Vector2(550, 0), Color.White);
                 spriteBatch.DrawString(font, "Normal Mode", new Vector2(750, 500), op1);
                 spriteBatch.DrawString(font, "Hardcore Mode", new Vector2(750, 600), op2);
@@ -228,7 +231,7 @@ namespace Block_s_Quest
             }
             else
             {
-                background = Color.CornflowerBlue;
+                background = Color.DarkSalmon;
                 level.Draw(gameTime, spriteBatch);
                 dwayne.Draw(spriteBatch, gameTime);
                 gui.show();
