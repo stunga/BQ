@@ -68,9 +68,9 @@ namespace Block_s_Quest
             graphics.ApplyChanges();
             IsMouseVisible = true;
             levelIndex = 1;
+            maxLevel = 2;
             bullets = new List<Bullet>();
             enemy = new List<Enemy>();
-            maxLevel = 2;
             gameState = GameState.MainMenu;
             selectionRectangle = new Rectangle(750, 500, 0, 0);
             oldkb = Keyboard.GetState();
@@ -236,32 +236,32 @@ namespace Block_s_Quest
         {
             GraphicsDevice.Clear(background);
             spriteBatch.Begin();
-            if (gameState == GameState.MainMenu)
+            switch(gameState)
             {
-                background = Color.DarkSalmon;
-                spriteBatch.DrawString(font1, "The Block's Quest", new Vector2(550, 0), Color.White);
-                spriteBatch.DrawString(font, "Normal Mode", new Vector2(750, 500), op1);
-                spriteBatch.DrawString(font, "Hardcore Mode", new Vector2(750, 600), op2);
-                spriteBatch.DrawString(font, "Insane Mode", new Vector2(750, 700), op3);
-                gui.hide();
-            }
-            else if(gameState== GameState.GameOver)
-            {
-                background = Color.Crimson;
-                spriteBatch.DrawString(font1, "GAME OVER", new Vector2(550, 600), Color.White);
-            }
-            else if(gameState==GameState.Win)
-            {
-                background = Color.LightSeaGreen;
-                spriteBatch.DrawString(font1, "YOU WIN", new Vector2(550, 600), Color.White);
-            }
-            else
-            {
-                background = Color.DarkSalmon;
-                level.Draw(gameTime, spriteBatch);
-                dwayne.Draw(spriteBatch, gameTime);
-                gui.show();
-                gui.Draw(spriteBatch, gameTime);
+                case GameState.MainMenu:
+                    background = Color.DarkSalmon;
+                    spriteBatch.DrawString(font1, "The Block's Quest", new Vector2(550, 0), Color.White);
+                    spriteBatch.DrawString(font, "Normal Mode", new Vector2(750, 500), op1);
+                    spriteBatch.DrawString(font, "Hardcore Mode", new Vector2(750, 600), op2);
+                    spriteBatch.DrawString(font, "Insane Mode", new Vector2(750, 700), op3);
+                    gui.hide();
+                    break;
+
+                case GameState.GameOver:
+                    background = Color.Crimson;
+                    spriteBatch.DrawString(font1, "GAME OVER", new Vector2(550, 600), Color.White);
+                    break;
+                case GameState.Win:
+                    background = Color.LightSeaGreen;
+                    spriteBatch.DrawString(font1, "YOU WIN", new Vector2(550, 600), Color.White);
+                    break;
+                default:
+                    background = Color.DarkSalmon;
+                    level.Draw(gameTime, spriteBatch);
+                    dwayne.Draw(spriteBatch, gameTime);
+                    gui.show();
+                    gui.Draw(spriteBatch, gameTime);
+                    break;
             }
             spriteBatch.End();
             base.Draw(gameTime);
