@@ -226,6 +226,11 @@ namespace Block_s_Quest
                 spriteBatch.DrawString(font, "Insane Mode", new Vector2(750, 700), op3);
                 gui.hide();
             }
+            else if(gameState== GameState.GameOver)
+            {
+                background = Color.SaddleBrown;
+                spriteBatch.DrawString(font1, "GAME OVER", new Vector2(550, 600), Color.White);
+            }
             else
             {
                 background = Color.CornflowerBlue;

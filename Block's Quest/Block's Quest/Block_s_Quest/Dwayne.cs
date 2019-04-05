@@ -117,5 +117,10 @@ namespace Block_s_Quest
                 bullet[x].Draw(sb, gt);
         }
 
+        public Rectangle getRect()
+        {
+            return rec;
+        }
+
     }
 }
