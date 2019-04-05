@@ -14,7 +14,8 @@ namespace Block_s_Quest
     class UI
     {
         Rectangle diamonds, dpad, chi, fire, earth, water, shop;
-        String diamondamount, score;
+        String diamondamount;
+        public int score;
         Vector2 diamondamountloc, scoreloc;
         SpriteFont font;
         Texture2D element, shopt, diamondt, dpadt;
@@ -42,7 +43,7 @@ namespace Block_s_Quest
             chi = new Rectangle(50, 910, 25, 20);
             fire = new Rectangle(100, 910, 28, 20);
             shop = new Rectangle(800, 10, 100, 50);
-            score = "Score: 0";
+            score = 0;
             scoreloc = new Vector2(1700, 20);
         }
 
@@ -73,7 +74,7 @@ namespace Block_s_Quest
 
         public void Update(int s, int d)
         {
-            score = s.ToString();
+            score = s;
             diamondamount = d.ToString();
         }
 
@@ -108,7 +109,7 @@ namespace Block_s_Quest
                 }
                 spriteBatch.Draw(shopt, shop, Color.White);
                 spriteBatch.DrawString(font, diamondamount, diamondamountloc, Color.LightBlue);
-                spriteBatch.DrawString(font, score, scoreloc, Color.White);
+                spriteBatch.DrawString(font, "Score: "+score.ToString(), scoreloc, Color.White);
             }
         }
 
