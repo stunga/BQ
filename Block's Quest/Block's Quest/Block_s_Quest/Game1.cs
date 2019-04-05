@@ -124,6 +124,10 @@ namespace Block_s_Quest
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 this.Exit();
+
+            if (kb.IsKeyDown(Keys.R))
+                gameState = GameState.MainMenu;
+
             if (gameState == GameState.MainMenu)
             {
                 dwayne.setPos(-900, -900);
