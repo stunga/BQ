@@ -161,6 +161,7 @@ namespace Block_s_Quest
                         if(bullets[i].getRect().Intersects(enemy[j].getRect()))
                         {
                             bullets.Remove(bullets[i]);
+                            gui.score++;
                             enemy.Remove(enemy[j]);
                         }
                     }
