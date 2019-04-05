@@ -36,7 +36,7 @@ namespace Block_s_Quest
         List<Enemy> enemy;
         enum GameState
         {
-            MainMenu, Normal, Hardcore, Insane, GameOver
+            MainMenu, Normal, Hardcore, Insane, GameOver, Win
         };
 
         enum bullType
@@ -171,6 +171,8 @@ namespace Block_s_Quest
 
                     if (levelIndex <= maxLevel)
                         LoadLevel();
+                    else
+                        gameState = GameState.Win;
                 }
             }
             if (selectionRectangle.Y == 500)
