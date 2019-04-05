@@ -38,6 +38,14 @@ namespace Block_s_Quest
         {
             return bullet;
         }
+
+        public bool isBehindDpad()
+        {
+            if (rec.X < 140)
+                return true;
+            return false;
+        }
+
         //Checks for keypresses
         private void checkAction(KeyboardState kb, UI ui)
         {
@@ -71,6 +79,11 @@ namespace Block_s_Quest
                 curType = bullType.water;
                 ui.setCol(Color.LightBlue, Color.Gray, Color.OrangeRed, Color.Magenta);
             }
+
+            if (isBehindDpad())
+                ui.halfColor();
+            else
+                ui.fullColor();
 
             oldKb = kb;
         }

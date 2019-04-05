@@ -20,6 +20,7 @@ namespace Block_s_Quest
         Texture2D element, shopt, diamondt, dpadt;
         Color firec, chic, waterc, earthc;
         bool isShowing = false;
+        bool transparent = false;
 
         public UI(SpriteFont f, Texture2D e, Texture2D s, Texture2D d, Texture2D dp)
         {
@@ -60,6 +61,16 @@ namespace Block_s_Quest
             return isShowing;
         }
 
+        public void fullColor()
+        {
+            transparent = false;
+        }
+
+        public void halfColor()
+        {
+            transparent = true;
+        }
+
         public void Update(int s, int d)
         {
             score = s.ToString();
@@ -79,11 +90,22 @@ namespace Block_s_Quest
             if (isShowing)
             {
                 spriteBatch.Draw(diamondt, diamonds, Color.LightBlue);
-                spriteBatch.Draw(element, earth, earthc);
-                spriteBatch.Draw(element, water, waterc);
-                spriteBatch.Draw(element, chi, chic);
-                spriteBatch.Draw(element, fire, firec);
-                spriteBatch.Draw(dpadt, dpad, Color.White);
+                if(transparent)
+                {
+                    spriteBatch.Draw(element, earth, earthc * 0.25f);
+                    spriteBatch.Draw(element, water, waterc * 0.25f);
+                    spriteBatch.Draw(element, chi, chic * 0.25f);
+                    spriteBatch.Draw(element, fire, firec * 0.25f);
+                    spriteBatch.Draw(dpadt, dpad, Color.White * 0.25f);
+                }
+                else
+                {
+                    spriteBatch.Draw(element, earth, earthc);
+                    spriteBatch.Draw(element, water, waterc);
+                    spriteBatch.Draw(element, chi, chic);
+                    spriteBatch.Draw(element, fire, firec);
+                    spriteBatch.Draw(dpadt, dpad, Color.White);
+                }
                 spriteBatch.Draw(shopt, shop, Color.White);
                 spriteBatch.DrawString(font, diamondamount, diamondamountloc, Color.LightBlue);
                 spriteBatch.DrawString(font, score, scoreloc, Color.White);
