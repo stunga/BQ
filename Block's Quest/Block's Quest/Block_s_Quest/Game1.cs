@@ -151,9 +151,13 @@ namespace Block_s_Quest
                 {
                     bullets = dwayne.getBullets();
                     enemy = level.getEnemies();
-                    if (bullets[i].getRect().Intersects(enemy[i].getRect()))
+                    for (int j = 0; j < enemy.Count; j++)
                     {
-
+                        if (bullets[i].getRect().Intersects(enemy[j].getRect()))
+                        {
+                            bullets.Remove(bullets[i]);
+                            enemy.Remove(enemy[j]);
+                        }
                     }
                 }
                    
