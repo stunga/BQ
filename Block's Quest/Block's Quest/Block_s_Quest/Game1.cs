@@ -196,6 +196,7 @@ namespace Block_s_Quest
                 if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
                 {
                     gameState = GameState.Hardcore;
+                    dwayne.setPos(950, 875);
                 }
             }
             else
@@ -208,6 +209,7 @@ namespace Block_s_Quest
                 if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
                 {
                     gameState = GameState.Insane;
+                    dwayne.setPos(950, 875);
                 }
             }
             else
@@ -242,7 +244,7 @@ namespace Block_s_Quest
             }
             else if(gameState==GameState.Win)
             {
-                background = Color.Green;
+                background = Color.LightSeaGreen;
                 spriteBatch.DrawString(font1, "YOU WIN", new Vector2(550, 600), Color.White);
             }
             else
