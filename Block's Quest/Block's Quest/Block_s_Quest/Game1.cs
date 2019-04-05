@@ -158,7 +158,11 @@ namespace Block_s_Quest
                     enemy = level.getEnemies();
                     for (int j = 0; j < enemy.Count; j++)
                     {
-
+                        if(bullets[i].getRect().Intersects(enemy[j].getRect()))
+                        {
+                            bullets.Remove(bullets[i]);
+                            enemy.Remove(enemy[j]);
+                        }
                     }
                 }
                    
