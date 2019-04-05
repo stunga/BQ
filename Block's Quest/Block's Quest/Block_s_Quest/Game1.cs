@@ -234,6 +234,11 @@ namespace Block_s_Quest
                 background = Color.Crimson;
                 spriteBatch.DrawString(font1, "GAME OVER", new Vector2(550, 600), Color.White);
             }
+            else if(gameState==GameState.Win)
+            {
+                background = Color.Crimson;
+                spriteBatch.DrawString(font1, "YOU WIN", new Vector2(550, 600), Color.White);
+            }
             else
             {
                 background = Color.DarkSalmon;
