@@ -93,13 +93,19 @@ namespace Block_s_Quest
             foreach(Enemy e in enemies)
             {
                 Rectangle r = e.getRect();
-                if ((r.X < rec.X + rec.Width && r.X > rec.X) || (r.Y > rec.Y && r.Y < rec.Y + rec.Height))
+                if (r.Intersects(rec))
                     return true;
             }
             return false;
         }
 
-        private void Shoot()
+        public void setPos(int x, int y)
+        {
+            rec.X = x;
+            rec.Y = y;
+        }
+
+        public void Shoot()
         { 
             switch (curType)
             {

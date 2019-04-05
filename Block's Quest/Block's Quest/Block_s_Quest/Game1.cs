@@ -126,6 +126,8 @@ namespace Block_s_Quest
                 this.Exit();
             if (gameState == GameState.MainMenu)
             {
+                dwayne.setPos(-900, -900);
+                dwayne.Shoot();
                 if (selectionRectangle.Y < 500)
                 {
                     selectionRectangle.Y = 700;
@@ -146,6 +148,8 @@ namespace Block_s_Quest
             else       
             {
                 level.Update();
+                if (dwayne.isDead(enemy))
+                    gameState = GameState.GameOver;
                 dwayne.Update(kb, gui);
                 for (int i = 0; i < dwayne.getBullets().Count; i++)
                 {
@@ -160,9 +164,6 @@ namespace Block_s_Quest
                         }
                     }
                 }
-
-                if (dwayne.isDead(enemy))
-                    gameState = GameState.GameOver;
                    
                 if (level.LevelEnd())
                 {
@@ -178,6 +179,7 @@ namespace Block_s_Quest
                 if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
                 {
                     gameState = GameState.Normal;
+                    dwayne.setPos(950, 875);
                 }
             }
             else
@@ -231,7 +233,7 @@ namespace Block_s_Quest
             }
             else if(gameState== GameState.GameOver)
             {
-                background = Color.SaddleBrown;
+                background = Color.Crimson;
                 spriteBatch.DrawString(font1, "GAME OVER", new Vector2(550, 600), Color.White);
             }
             else

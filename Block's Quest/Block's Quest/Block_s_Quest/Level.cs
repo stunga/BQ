@@ -173,7 +173,6 @@ namespace Block_s_Quest
         {
             foreach (Enemy e in enemies)
                 e.Update();
-            
         }
 
         //Level changer
