@@ -15,12 +15,12 @@ namespace Block_s_Quest
     {
         public enum type
         {
-            green,
-            blue,
-            yellow,
-            red,
-            purple,
-            orange
+            green=1,
+            blue=5,
+            yellow=10,
+            red=20,
+            purple=50,
+            orange=100
         };
         type col;
         Rectangle rec;
@@ -37,19 +37,7 @@ namespace Block_s_Quest
         //Get the value of this diamond
         public int getValue()
         {
-            if (col == type.green)
-                return 1;
-            if (col == type.blue)
-                return 5;
-            if (col == type.yellow)
-                return 10;
-            if (col == type.red)
-                return 20;
-            if (col == type.purple)
-                return 50;
-            if (col == type.orange)
-                return 100;
-            return 0;
+            return (int)col;
         }
     }
 }
