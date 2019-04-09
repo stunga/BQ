@@ -15,6 +15,7 @@ namespace Block_s_Quest
     {
         public enum type
         {
+            //Try green=1;
             green,
             blue,
             yellow,

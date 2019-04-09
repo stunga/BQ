@@ -159,6 +159,7 @@ namespace Block_s_Quest
                     enemy = level.getEnemies();
                     for (int j = 0; j < enemy.Count; j++)
                     {
+                        //Work Backwords
                         if(bullets[i].getRect().Intersects(enemy[j].getRect()))
                         {
                             bullets.Remove(bullets[i]);
@@ -249,11 +250,11 @@ namespace Block_s_Quest
 
                 case GameState.GameOver:
                     background = Color.Crimson;
-                    spriteBatch.DrawString(font1, "GAME OVER", new Vector2(550, 600), Color.White);
+                    spriteBatch.DrawString(font1, "GAME OVER", new Vector2(650, 500), Color.White);
                     break;
                 case GameState.Win:
                     background = Color.LightSeaGreen;
-                    spriteBatch.DrawString(font1, "YOU WIN", new Vector2(550, 600), Color.White);
+                    spriteBatch.DrawString(font1, "YOU WIN", new Vector2(650, 500), Color.White);
                     break;
                 default:
                     background = Color.DarkSalmon;
