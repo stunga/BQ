@@ -219,6 +219,7 @@ namespace Block_s_Quest
                 //Changes to next Level
                 if (level.LevelEnd())
                 {
+                    //gameState = GameState.Overworld;
                     levelIndex++;
                     gui.score = 0;
 
