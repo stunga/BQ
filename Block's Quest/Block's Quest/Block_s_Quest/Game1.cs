@@ -36,6 +36,7 @@ namespace Block_s_Quest
         List<Bullet> bullets;
         List<Enemy> enemy;
         Boolean bug;
+        Overworld ow;
 
         enum GameState
         {
@@ -77,7 +78,6 @@ namespace Block_s_Quest
             gameState = GameState.MainMenu;
             selectionRectangle = new Rectangle(750, 500, 0, 0);
             oldkb = Keyboard.GetState();
-
             base.Initialize();
         }
 
@@ -103,6 +103,8 @@ namespace Block_s_Quest
             font = Content.Load<SpriteFont>("SpriteFont1");
             font1 = Content.Load<SpriteFont>("SpriteFont2");
             LoadLevel();
+            ow = new Overworld(bulletT);
+            ow.Hide();
         }
 
         private void LoadLevel()
@@ -157,10 +159,27 @@ namespace Block_s_Quest
                 {
                     selectionRectangle.Y += 100;
                 }
+                if (selectionRectangle.Y == 500)
+                {
+                    op1 = Color.Blue;
+                    if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
+                    {
+                        gameState = GameState.Overworld;
+                    }
+                }
+                else
+                {
+                    op1 = Color.White;
+                }
             }
             else if(gameState == GameState.Overworld)
             {
-
+                if(kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
+                {
+                    gameState = GameState.Normal;
+                    ow.Display();
+                }
+                dwayne.setPos(950, 875);
             }
             else       
             {
@@ -212,45 +231,32 @@ namespace Block_s_Quest
                 levelIndex = 0;
                 gameOverTimer = 0;
             }
-            if (selectionRectangle.Y == 500)
-            {
-                op1 = Color.Blue;
-                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState==GameState.MainMenu)
-                {
-                    gameState = GameState.Normal;
-                    dwayne.setPos(950, 875);
-                }
-            }
-            else
-            {
-                op1 = Color.White;
-            }
-            if (selectionRectangle.Y == 600)
-            {
-                op2 = Color.Blue;
-                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu)
-                {
-                    gameState = GameState.Hardcore;
-                    dwayne.setPos(950, 875);
-                }
-            }
-            else
-            {
-                op2 = Color.White;
-            }
-            if (selectionRectangle.Y == 700)
-            {
-                op3 = Color.Blue;
-                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu)
-                {
-                    gameState = GameState.Insane;
-                    dwayne.setPos(950, 875);
-                }
-            }
-            else
-            {
-                op3 = Color.White;
-            }
+            //if (selectionRectangle.Y == 600)
+            //{
+            //    op2 = Color.Blue;
+            //    if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu)
+            //    {
+            //        gameState = GameState.Hardcore;
+            //        dwayne.setPos(950, 875);
+            //    }
+            //}
+            //else
+            //{
+            //    op2 = Color.White;
+            //}
+            //if (selectionRectangle.Y == 700)
+            //{
+            //    op3 = Color.Blue;
+            //    if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu)
+            //    {
+            //        gameState = GameState.Insane;
+            //        dwayne.setPos(950, 875);
+            //    }
+            //}
+            //else
+            //{
+            //    op3 = Color.White;
+            //}
             oldkb = kb;
             base.Update(gameTime);
         }
@@ -273,7 +279,10 @@ namespace Block_s_Quest
                     spriteBatch.DrawString(font, "Insane Mode", new Vector2(750, 700), op3);
                     gui.hide();
                     break;
-
+                case GameState.Overworld:
+                    ow.Display();
+                    ow.Draw(gameTime, spriteBatch);
+                    break;
                 case GameState.GameOver:
                     background = Color.Crimson;
                     spriteBatch.DrawString(font1, "GAME OVER", new Vector2(650, 500), Color.White);
