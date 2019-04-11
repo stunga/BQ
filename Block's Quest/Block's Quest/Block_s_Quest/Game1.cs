@@ -39,7 +39,7 @@ namespace Block_s_Quest
         List<Enemy> enemy;
         Boolean bug;
         Overworld ow;
-        Boolean bug, soundEffectPlayed;
+        Boolean soundEffectPlayed;
 
         enum GameState
         {
@@ -102,7 +102,6 @@ namespace Block_s_Quest
             font = this.Content.Load<SpriteFont>("SpriteFont1");
             gui = new UI(font, bulletT, shopt, diamondt, dpadt);
             gui.show();
-            dwayne = new Dwayne(dwaynet, bulletT);
             font = Content.Load<SpriteFont>("SpriteFont1");
             font1 = Content.Load<SpriteFont>("SpriteFont2");
             shootEffect = Content.Load<SoundEffect>("pm_ag_1_2_abstract_guns_281");
