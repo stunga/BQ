@@ -18,5 +18,11 @@ namespace Block_s_Quest
         {
 
         }
+
+        public void loadLevel(Level l)
+        {
+            level = l;
+        }
+
     }
 }

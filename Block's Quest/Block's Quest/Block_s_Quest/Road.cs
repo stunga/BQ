@@ -13,13 +13,14 @@ namespace Block_s_Quest
 {
     class Road
     {
-        enum tileType
+        enum TileType
         {
             startnode,
             node,
             horizontal,
             vertical
         };
+        TileType tileType;
 
         public Road()
         {
