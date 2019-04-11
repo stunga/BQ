@@ -109,7 +109,7 @@ namespace Block_s_Quest
                 }
                 spriteBatch.Draw(shopt, shop, Color.White);
                 spriteBatch.DrawString(font, diamondamount, diamondamountloc, Color.LightBlue);
-                spriteBatch.DrawString(font, "Score: "+score.ToString(), scoreloc, Color.White);
+                spriteBatch.DrawString(font, "Score: " + score.ToString(), scoreloc, Color.White);
             }
         }
 
