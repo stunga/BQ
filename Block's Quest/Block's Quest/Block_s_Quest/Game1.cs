@@ -140,6 +140,10 @@ namespace Block_s_Quest
                 bug = false;
             }
 
+            //Tester for Fire Rate Upgrade
+            if (kb.IsKeyDown(Keys.I) && !oldkb.IsKeyDown(Keys.I))
+                dwayne.UpgradeFireRate();
+
             if (gameState == GameState.MainMenu)
             {
                 dwayne.setPos(-900, -900);
@@ -202,6 +206,10 @@ namespace Block_s_Quest
                             enemy.Remove(enemy[j]);
                         }
                     }
+
+                    //Removes Bullet if off Screen
+                    if (bullets[i].getRect().Y + 20 < 0)
+                        bullets.Remove(bullets[i]);
                 }
                    
                 if (level.LevelEnd())
