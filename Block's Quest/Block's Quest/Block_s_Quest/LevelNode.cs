@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Block_s_Quest
 {
-    class LevelNode
+    class LevelNode : Road
     {
     }
 }
