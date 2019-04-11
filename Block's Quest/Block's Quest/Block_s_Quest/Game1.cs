@@ -31,9 +31,12 @@ namespace Block_s_Quest
         Color op1 = Color.White;
         Color op2 = Color.White;
         Color op3 = Color.White;
+        int winTimer = 0, gameOverTimer = 0;
         UI gui;
         List<Bullet> bullets;
         List<Enemy> enemy;
+        Boolean bug;
+
         enum GameState
         {
             MainMenu, Normal, Hardcore, Insane, GameOver, Win, Overworld
@@ -66,6 +69,7 @@ namespace Block_s_Quest
             graphics.PreferredBackBufferWidth = 1800;
             graphics.ApplyChanges();
             IsMouseVisible = true;
+            bug = true;
             levelIndex = 1;
             maxLevel = 2;
             bullets = new List<Bullet>();
@@ -73,6 +77,7 @@ namespace Block_s_Quest
             gameState = GameState.MainMenu;
             selectionRectangle = new Rectangle(750, 500, 0, 0);
             oldkb = Keyboard.GetState();
+
             base.Initialize();
         }
 
@@ -125,10 +130,17 @@ namespace Block_s_Quest
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 this.Exit();
 
+            if (bug)
+            {
+                dwayne.Shoot();
+                bullets = dwayne.getBullets();
+                bullets.Remove(bullets[0]);
+                bug = false;
+            }
+
             if (gameState == GameState.MainMenu)
             {
                 dwayne.setPos(-900, -900);
-                dwayne.Shoot();
                 if (selectionRectangle.Y < 500)
                 {
                     selectionRectangle.Y = 700;
@@ -154,13 +166,15 @@ namespace Block_s_Quest
             {
                 level.Update();
                 if (dwayne.isDead(enemy))
+                {
                     gameState = GameState.GameOver;
+                }
                 dwayne.Update(kb, gui);
-                for (int i = 0; i < dwayne.getBullets().Count; i++)
+                for (int i = dwayne.getBullets().Count -1; i >= 0; i--)
                 {
                     bullets = dwayne.getBullets();
                     enemy = level.getEnemies();
-                    for (int j = 0; j < enemy.Count; j++)
+                    for (int j = enemy.Count-1; j >= 0; j--)
                     {
                         if(bullets[i].getRect().Intersects(enemy[j].getRect()))
                         {
@@ -179,12 +193,29 @@ namespace Block_s_Quest
                         LoadLevel();
                     else
                         gameState = GameState.Win;
+                    winTimer++;
                 }
+            }
+            if (gameState == GameState.GameOver)
+            {
+                gameOverTimer++;
+            }
+            if (winTimer >= 180)
+            {
+                gameState = GameState.MainMenu;
+                levelIndex = 0;
+                winTimer = 0;
+            }
+            if (gameOverTimer >= 180)
+            {
+                gameState = GameState.MainMenu;
+                levelIndex = 0;
+                gameOverTimer = 0;
             }
             if (selectionRectangle.Y == 500)
             {
                 op1 = Color.Blue;
-                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState==GameState.MainMenu)
                 {
                     gameState = GameState.Normal;
                     dwayne.setPos(950, 875);
@@ -197,7 +228,7 @@ namespace Block_s_Quest
             if (selectionRectangle.Y == 600)
             {
                 op2 = Color.Blue;
-                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu)
                 {
                     gameState = GameState.Hardcore;
                     dwayne.setPos(950, 875);
@@ -210,7 +241,7 @@ namespace Block_s_Quest
             if (selectionRectangle.Y == 700)
             {
                 op3 = Color.Blue;
-                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu)
                 {
                     gameState = GameState.Insane;
                     dwayne.setPos(950, 875);
@@ -245,11 +276,11 @@ namespace Block_s_Quest
 
                 case GameState.GameOver:
                     background = Color.Crimson;
-                    spriteBatch.DrawString(font1, "GAME OVER", new Vector2(550, 600), Color.White);
+                    spriteBatch.DrawString(font1, "GAME OVER", new Vector2(650, 500), Color.White);
                     break;
                 case GameState.Win:
                     background = Color.LightSeaGreen;
-                    spriteBatch.DrawString(font1, "YOU WIN", new Vector2(550, 600), Color.White);
+                    spriteBatch.DrawString(font1, "YOU WIN", new Vector2(650, 500), Color.White);
                     break;
                 default:
                     background = Color.DarkSalmon;
