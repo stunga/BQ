@@ -104,7 +104,6 @@ namespace Block_s_Quest
             font1 = Content.Load<SpriteFont>("SpriteFont2");
             LoadLevel();
             ow = new Overworld(bulletT);
-            ow.Hide();
         }
 
         private void LoadLevel()
@@ -181,7 +180,6 @@ namespace Block_s_Quest
                 if(kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
                 {
                     gameState = GameState.Normal;
-                    ow.Display();
                 }
                 dwayne.setPos(950, 875);
             }
@@ -288,7 +286,6 @@ namespace Block_s_Quest
                     gui.hide();
                     break;
                 case GameState.Overworld:
-                    ow.Display();
                     ow.Draw(gameTime, spriteBatch);
                     break;
                 case GameState.GameOver:

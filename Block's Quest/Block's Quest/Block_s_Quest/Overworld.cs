@@ -18,23 +18,9 @@ namespace Block_s_Quest
         {
             background = t;
         }
-
-        public void Display()
-        {
-            showing = true;
-        }
-
-        public void Hide()
-        {
-            showing = false;
-        }
-
         public void Draw(GameTime gt, SpriteBatch sb)
         {
-            if(showing)
-            {
-                sb.Draw(background, new Rectangle(0, 0, 1800, 1000), Color.Gold);
-            }
+            sb.Draw(background, new Rectangle(0, 0, 1800, 1000), Color.Gold);
         }
     }
 }

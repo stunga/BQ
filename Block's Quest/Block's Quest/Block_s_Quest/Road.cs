@@ -7,5 +7,12 @@ namespace Block_s_Quest
 {
     class Road
     {
+        enum tileType
+        {
+            node,
+            horizontal,
+            vertical
+        };
+
     }
 }
