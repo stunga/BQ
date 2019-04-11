@@ -31,7 +31,7 @@ namespace Block_s_Quest
         Color op1 = Color.White;
         Color op2 = Color.White;
         Color op3 = Color.White;
-        int winTimer = 0;
+        int winTimer = 0, gameOverTimer = 0;
         UI gui;
         List<Bullet> bullets;
         List<Enemy> enemy;
@@ -165,7 +165,9 @@ namespace Block_s_Quest
             {
                 level.Update();
                 if (dwayne.isDead(enemy))
+                {
                     gameState = GameState.GameOver;
+                }
                 dwayne.Update(kb, gui);
                 for (int i = dwayne.getBullets().Count -1; i >= 0; i--)
                 {
@@ -193,11 +195,21 @@ namespace Block_s_Quest
                     winTimer++;
                 }
             }
+            if (gameState == GameState.GameOver)
+            {
+                gameOverTimer++;
+            }
             if (winTimer >= 180)
             {
                 gameState = GameState.MainMenu;
                 levelIndex = 0;
                 winTimer = 0;
+            }
+            if (gameOverTimer >= 180)
+            {
+                gameState = GameState.MainMenu;
+                levelIndex = 0;
+                gameOverTimer = 0;
             }
             if (selectionRectangle.Y == 500)
             {
