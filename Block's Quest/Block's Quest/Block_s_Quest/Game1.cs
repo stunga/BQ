@@ -138,6 +138,9 @@ namespace Block_s_Quest
                 bug = false;
             }
 
+            if (kb.IsKeyDown(Keys.I) && !oldkb.IsKeyDown(Keys.I))
+                dwayne.UpgradeFireRate();
+
             if (gameState == GameState.MainMenu)
             {
                 dwayne.setPos(-900, -900);
