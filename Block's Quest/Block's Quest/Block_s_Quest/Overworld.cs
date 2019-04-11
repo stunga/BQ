@@ -35,10 +35,6 @@ namespace Block_s_Quest
             {
                 sb.Draw(background, new Rectangle(0, 0, 1800, 1000), Color.Gold);
             }
-            else
-            {
-
-            }
         }
     }
 }
