@@ -22,6 +22,7 @@ namespace Block_s_Quest
             earth,
             water
         };
+
         bullType type = bullType.chi;
         Color col;
 

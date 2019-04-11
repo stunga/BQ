@@ -37,11 +37,13 @@ namespace Block_s_Quest
         UI gui;
         List<Bullet> bullets;
         List<Enemy> enemy;
+        Boolean bug;
+        Overworld ow;
         Boolean bug, soundEffectPlayed;
 
         enum GameState
         {
-            MainMenu, Normal, Hardcore, Insane, GameOver, Win
+            MainMenu, Normal, Hardcore, Insane, GameOver, Win, Overworld
         };
 
         enum bullType
@@ -79,7 +81,6 @@ namespace Block_s_Quest
             gameState = GameState.MainMenu;
             selectionRectangle = new Rectangle(750, 500, 0, 0);
             oldkb = Keyboard.GetState();
-
             base.Initialize();
         }
 
@@ -101,6 +102,7 @@ namespace Block_s_Quest
             font = this.Content.Load<SpriteFont>("SpriteFont1");
             gui = new UI(font, bulletT, shopt, diamondt, dpadt);
             gui.show();
+            dwayne = new Dwayne(dwaynet, bulletT);
             font = Content.Load<SpriteFont>("SpriteFont1");
             font1 = Content.Load<SpriteFont>("SpriteFont2");
             shootEffect = Content.Load<SoundEffect>("pm_ag_1_2_abstract_guns_281");
@@ -108,6 +110,7 @@ namespace Block_s_Quest
             musicInstance = gameMusic.CreateInstance();
             dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content);
             LoadLevel();
+            ow = new Overworld(bulletT);
         }
 
         private void LoadLevel()
@@ -145,6 +148,11 @@ namespace Block_s_Quest
                 bullets.Remove(bullets[0]);
                 bug = false;
             }
+
+            //Tester for Fire Rate Upgrade
+            if (kb.IsKeyDown(Keys.I) && !oldkb.IsKeyDown(Keys.I))
+                dwayne.UpgradeFireRate();
+
             if (gameState == GameState.MainMenu)
             {
                 dwayne.setPos(-900, -900);
@@ -164,38 +172,72 @@ namespace Block_s_Quest
                 {
                     selectionRectangle.Y += 100;
                 }
+                if (selectionRectangle.Y == 500)
+                {
+                    op1 = Color.Blue;
+                    if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
+                    {
+                        gameState = GameState.Overworld;
+                    }
+                }
+                else
+                {
+                    op1 = Color.White;
+                }
+            }
+            else if(gameState == GameState.Overworld)
+            {
+                if(kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
+                {
+                    gameState = GameState.Normal;
+                }
+                dwayne.setPos(950, 875);
             }
             else       
             {
+                //Checks for collisoin of enemies with bullets
+                for (int i = dwayne.getBullets().Count - 1; i >= 0; i--)
+                {
+                    bullets = dwayne.getBullets();
+                    enemy = level.getEnemies();
+
+                    //Removes Bullet if off Screen
+                    if (bullets[i].getRect().Y + 20 < 0)
+                        bullets.Remove(bullets[i]);
+                    else
+                    {
+                        for (int j = enemy.Count - 1; j >= 0; j--)
+                        {
+                            if (bullets[i].getRect().Intersects(enemy[j].getRect()))
+                            {
+                                bullets.Remove(bullets[i]);
+                                gui.score++;
+                                enemy.Remove(enemy[j]);
+                            }
+                        }
+                    }
+                    
+                }
+
                 level.Update();
                 if (dwayne.isDead(enemy))
                 {
                     gameState = GameState.GameOver;
                 }
                 dwayne.Update(kb, gui);
-                for (int i = dwayne.getBullets().Count -1; i >= 0; i--)
-                {
-                    bullets = dwayne.getBullets();
-                    enemy = level.getEnemies();
-                    for (int j = enemy.Count-1; j >= 0; j--)
-                    {
-                        if(bullets[i].getRect().Intersects(enemy[j].getRect()))
-                        {
-                            bullets.Remove(bullets[i]);
-                            gui.score++;
-                            enemy.Remove(enemy[j]);
-                        }
-                    }
-                }
-                   
+                
+                //Changes to next Level
                 if (level.LevelEnd())
                 {
+                    //gameState = GameState.Overworld;
                     levelIndex++;
                     gui.score = 0;
+
                     if (levelIndex <= maxLevel)
                         LoadLevel();
                     else
                         gameState = GameState.Win;
+
                     winTimer++;
                 }
             }
@@ -277,7 +319,9 @@ namespace Block_s_Quest
                     spriteBatch.DrawString(font, "Insane Mode", new Vector2(750, 700), op3);
                     gui.hide();
                     break;
-
+                case GameState.Overworld:
+                    ow.Draw(gameTime, spriteBatch);
+                    break;
                 case GameState.GameOver:
                     background = Color.Crimson;
                     spriteBatch.DrawString(font1, "GAME OVER", new Vector2(650, 500), Color.White);

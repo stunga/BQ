@@ -20,6 +20,7 @@ namespace Block_s_Quest
         List<Bullet> bullet = new List<Bullet>();
         float vel;
         int bulletTimer = 0;
+        int rate = 30;
         enum bullType
         {
             fire,
@@ -128,6 +129,13 @@ namespace Block_s_Quest
                     bullet.Add(new Bullet(rec.X + 40, rec.Y - 10, bulletT));
                     break;
             }
+        }
+
+        //Increases fire rate
+        public void UpgradeFireRate()
+        {
+            if(rate-10!=0)
+                rate--;
         }
 
         //Update
