@@ -104,7 +104,6 @@ namespace Block_s_Quest
             font1 = Content.Load<SpriteFont>("SpriteFont2");
             LoadLevel();
             ow = new Overworld(bulletT);
-            ow.Hide();
         }
 
         private void LoadLevel()
@@ -181,38 +180,41 @@ namespace Block_s_Quest
                 if(kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
                 {
                     gameState = GameState.Normal;
-                    ow.Display();
                 }
                 dwayne.setPos(950, 875);
             }
             else       
             {
+                //Checks for collisoin of enemies with bullets
+                for (int i = dwayne.getBullets().Count - 1; i >= 0; i--)
+                {
+                    bullets = dwayne.getBullets();
+                    enemy = level.getEnemies();
+
+                    //Removes Bullet if off Screen
+                    if (bullets[i].getRect().Y + 20 < 0)
+                        bullets.Remove(bullets[i]);
+                    else
+                    {
+                        for (int j = enemy.Count - 1; j >= 0; j--)
+                        {
+                            if (bullets[i].getRect().Intersects(enemy[j].getRect()))
+                            {
+                                bullets.Remove(bullets[i]);
+                                gui.score++;
+                                enemy.Remove(enemy[j]);
+                            }
+                        }
+                    }
+                    
+                }
+
                 level.Update();
                 if (dwayne.isDead(enemy))
                 {
                     gameState = GameState.GameOver;
                 }
                 dwayne.Update(kb, gui);
-
-                //Checks for collisoin of enemies with bullets
-                for (int i = dwayne.getBullets().Count -1; i >= 0; i--)
-                {
-                    bullets = dwayne.getBullets();
-                    enemy = level.getEnemies();
-                    for (int j = enemy.Count-1; j >= 0; j--)
-                    {
-                        if(bullets[i].getRect().Intersects(enemy[j].getRect()))
-                        {
-                            bullets.Remove(bullets[i]);
-                            gui.score++;
-                            enemy.Remove(enemy[j]);
-                        }
-                    }
-
-                    //Removes Bullet if off Screen
-                    if (bullets[i].getRect().Y + 20 < 0)
-                        bullets.Remove(bullets[i]);
-                }
                 
                 //Changes to next Level
                 if (level.LevelEnd())
@@ -293,7 +295,6 @@ namespace Block_s_Quest
                     gui.hide();
                     break;
                 case GameState.Overworld:
-                    ow.Display();
                     ow.Draw(gameTime, spriteBatch);
                     break;
                 case GameState.GameOver:
