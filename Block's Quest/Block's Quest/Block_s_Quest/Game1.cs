@@ -36,7 +36,7 @@ namespace Block_s_Quest
         List<Enemy> enemy;
         enum GameState
         {
-            MainMenu, Normal, Hardcore, Insane, GameOver, Win
+            MainMenu, Normal, Hardcore, Insane, GameOver, Win, Overworld
         };
 
         enum bullType
@@ -145,6 +145,10 @@ namespace Block_s_Quest
                 {
                     selectionRectangle.Y += 100;
                 }
+            }
+            else if(gameState == GameState.Overworld)
+            {
+
             }
             else       
             {
