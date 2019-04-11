@@ -174,6 +174,8 @@ namespace Block_s_Quest
                     gameState = GameState.GameOver;
                 }
                 dwayne.Update(kb, gui);
+
+                //Checks for collisoin of enemies with bullets
                 for (int i = dwayne.getBullets().Count -1; i >= 0; i--)
                 {
                     bullets = dwayne.getBullets();
@@ -192,15 +194,18 @@ namespace Block_s_Quest
                     if (bullets[i].getRect().Y + 20 < 0)
                         bullets.Remove(bullets[i]);
                 }
-                   
+                
+                //Changes to next Level
                 if (level.LevelEnd())
                 {
                     levelIndex++;
                     gui.score = 0;
+
                     if (levelIndex <= maxLevel)
                         LoadLevel();
                     else
                         gameState = GameState.Win;
+
                     winTimer++;
                 }
             }
