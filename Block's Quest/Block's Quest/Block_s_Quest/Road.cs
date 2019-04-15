@@ -15,6 +15,7 @@ namespace Block_s_Quest
     {
         enum tileType
         {
+            startnode,
             node,
             horizontal,
             vertical
@@ -24,5 +25,7 @@ namespace Block_s_Quest
         {
 
         }
+
+
     }
 }

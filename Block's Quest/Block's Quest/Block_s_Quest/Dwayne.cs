@@ -16,6 +16,7 @@ namespace Block_s_Quest
         Rectangle rec;
         Texture2D tex, bulletT;
         KeyboardState oldKb;
+        SoundEffect sound;
         List<Bullet> bullet = new List<Bullet>();
         float vel;
         int bulletTimer = 0;
@@ -29,11 +30,12 @@ namespace Block_s_Quest
         };
         bullType curType = bullType.chi;
 
-        public Dwayne(Texture2D t, Texture2D bT)
+        public Dwayne(Texture2D t, Texture2D bT, SoundEffect s, ContentManager content)
         {
             rec = new Rectangle(950, 875, 100, 100);
             tex = t;
             bulletT = bT;
+            sound = s;
         }
         public List<Bullet> getBullets()
         {
@@ -57,7 +59,8 @@ namespace Block_s_Quest
             if (kb.IsKeyDown(Keys.Space) && bulletTimer == 0)
             {
                 Shoot();
-                bulletTimer = rate;
+                sound.Play();
+                bulletTimer = 30;
             }
 
             if (kb.IsKeyDown(Keys.Left))

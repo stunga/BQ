@@ -13,5 +13,10 @@ namespace Block_s_Quest
 {
     class LevelNode : Road
     {
+        Level level;
+        public LevelNode()
+        {
+
+        }
     }
 }
