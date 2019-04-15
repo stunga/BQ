@@ -13,17 +13,29 @@ namespace Block_s_Quest
 {
     class Road
     {
-        enum tileType
+        enum TileType
         {
             startnode,
-            node,
-            horizontal,
-            vertical
+            path,
+            levelnode
         };
+        TileType tileType;
+        Rectangle rec;
 
-        public Road()
+        public Road(int x, int y, int type)
         {
+            rec = new Rectangle(x, y, 64, 64);
+            if (type == 0)
+                tileType = TileType.startnode;
+            else if (type == 1)
+                tileType = TileType.path;
+            else
+                tileType = TileType.levelnode;
+        }
 
+        public Rectangle getRec()
+        {
+            return rec;
         }
 
 

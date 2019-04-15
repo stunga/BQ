@@ -12,6 +12,12 @@ namespace Block_s_Quest
     class Overworld
     {
         Texture2D background;
+        Vector2 vel;
+
+        public Overworld()
+        {
+
+        }
 
         public Overworld(Texture2D t)
         {
@@ -22,5 +28,11 @@ namespace Block_s_Quest
         {
             sb.Draw(background, new Rectangle(0, 0, 1800, 1000), Color.Gold);
         }
+
+        public void addLevel(LevelNode l)
+        {
+
+        }
+
     }
 }

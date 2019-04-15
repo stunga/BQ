@@ -94,6 +94,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tiles\Node.jpg">
+      <Name>Node</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tiles\Road.png">
+      <Name>Road</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="pm_ag_1_2_abstract_guns_281.wav">
       <Name>pm_ag_1_2_abstract_guns_281</Name>
       <Importer>WavImporter</Importer>
@@ -106,6 +118,10 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
+    <None Include="Overworlds\Overworld1.txt">
+      <Name>Overworld1</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Levels\Level3.txt">

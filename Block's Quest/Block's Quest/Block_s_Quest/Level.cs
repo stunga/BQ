@@ -22,6 +22,8 @@ namespace Block_s_Quest
         public List<Rectangle> TileDefinitions;
         private List<Enemy> enemies = new List<Enemy>();
         private List<Enemy> deadEnemies = new List<Enemy>();
+        private Overworld ow;
+
         private Vector2 start;
 
         public ContentManager Content
@@ -30,8 +32,8 @@ namespace Block_s_Quest
         }
         ContentManager content;
 
-        private const int TileWidth = 50;
-        private const int TileHeight = 180;
+        private const int TileWidth = 100;
+        private const int TileHeight = 100;
         private const int TilesPerRow = 20;
         private const int NumRowsPerSheet = 10;
 
@@ -47,9 +49,6 @@ namespace Block_s_Quest
             get { return tiles.GetLength(1); }
         }
 
-        //private List<Collectable> collectables = new List<Collectable>();
-        //private List<Collectable> collectedCollectables = new List<Collectable>();
-
         public Level(IServiceProvider serviceProvider, string path, Texture2D eT)
         {
             levelIndex = 1;
@@ -58,6 +57,28 @@ namespace Block_s_Quest
             bossT = Content.Load<Texture2D>("Boss");
             tileSheets = new Dictionary<string, Texture2D>();
             //tileSheets.Add("Blocks", Content.Load<Texture2D>("Tiles/Blocks"));
+
+            TileSourceRecs = new Dictionary<int, Rectangle>();
+            for (int i = 0; i < TilesPerRow * NumRowsPerSheet; i++)
+            {
+                Rectangle rectTile = new Rectangle(
+                    (i % TilesPerRow) * TileWidth,
+                    (i / TilesPerRow) * TileHeight,
+                    TileWidth,
+                    TileHeight);
+                TileSourceRecs.Add(i, rectTile);
+            }
+            LoadTiles(path);
+        }
+
+        public Level(IServiceProvider serviceProvider, string path)
+        {
+            content = new ContentManager(serviceProvider, "Content");
+
+            tileSheets = new Dictionary<string, Texture2D>();
+            tileSheets.Add("Road", Content.Load<Texture2D>("Tiles/Road"));
+            tileSheets.Add("Node", Content.Load<Texture2D>("Tiles/Node"));
+            tileSheets.Add("Start", Content.Load<Texture2D>("Bullet"));
 
             TileSourceRecs = new Dictionary<int, Rectangle>();
             for (int i = 0; i < TilesPerRow * NumRowsPerSheet; i++)
@@ -123,6 +144,16 @@ namespace Block_s_Quest
                 //Enemies spawns
                 case 'e':
                     return LoadEnemyTile(x, y, "e");
+                //Road
+                case 'r':
+                    return LoadVarietyTile("Road", x, y);
+                //Node
+                case 'l':
+                    return LoadVarietyTile("Node", x, y);
+                //Start
+                case '+':
+                    return LoadStartTile(x, y);
+
                 case 'b':
                     return LoadBossTile(x, y, "b");
                 default:
@@ -130,12 +161,32 @@ namespace Block_s_Quest
                         "Unsupported til type character '{0}' at position {1}, {2}.", tileType, x, y));
             }
         }
+
         private Tile LoadEnemyTile(int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 180) + 64);
             enemies.Add(new Enemy(enemyT, 5, Color.Green, 5, new Rectangle(_x*80,_y*100, 50, 50)));
             return new Tile(String.Empty, 0);
         }
+
+        private Tile LoadVarietyTile(String tileSheetName, int x, int y)
+        {
+            if (tileSheetName.Equals("Node"))
+            {
+                ow = new Overworld();
+                new LevelNode(x, y);
+            }
+
+            return new Tile(tileSheetName, 0);
+
+        }
+
+        private Tile LoadStartTile(int x, int y)
+        {
+            start = new Vector2((x * 64) + 48, (y * 64) + 64);
+            return new Tile("Start", 0);
+        }
+
         private Tile LoadBossTile (int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 180) + 64);
@@ -171,6 +222,7 @@ namespace Block_s_Quest
         {
             return enemies;
         }
+
         //Update
         public void Update()
         {
@@ -187,6 +239,12 @@ namespace Block_s_Quest
                     return false;
             }
             return true;
+        }
+
+        //Return 2D Array or Roads:
+        public Tile[,] getTile()
+        {
+            return tiles;
         }
     }
 }

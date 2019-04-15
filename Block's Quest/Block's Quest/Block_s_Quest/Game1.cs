@@ -21,7 +21,7 @@ namespace Block_s_Quest
         Dwayne dwayne;
         Texture2D dwaynet, bulletT, diamondt, shopt, dpadt;
         KeyboardState kb;
-        Level level;
+        Level level,owBuild;
         int levelIndex, maxLevel;
         KeyboardState oldkb;
         GameState gameState;
@@ -109,12 +109,18 @@ namespace Block_s_Quest
             musicInstance = gameMusic.CreateInstance();
             dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content);
             LoadLevel();
+            LoadOverWorld();
             ow = new Overworld(bulletT);
         }
 
         private void LoadLevel()
         {
             level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
+        }
+
+        private void LoadOverWorld()
+        {
+            owBuild = new Level(Services, @"Content/Overworlds/Overworld1.txt");
         }
 
         /// <summary>
@@ -320,6 +326,7 @@ namespace Block_s_Quest
                     break;
                 case GameState.Overworld:
                     ow.Draw(gameTime, spriteBatch);
+                    owBuild.Draw(gameTime, spriteBatch);
                     break;
                 case GameState.GameOver:
                     background = Color.Crimson;
