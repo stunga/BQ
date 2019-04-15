@@ -80,6 +80,7 @@ namespace Block_s_Quest
             tileSheets = new Dictionary<string, Texture2D>();
             tileSheets.Add("Road", Content.Load<Texture2D>("Tiles/Road"));
             tileSheets.Add("Node", Content.Load<Texture2D>("Tiles/Node"));
+            tileSheets.Add("Start", Content.Load<Texture2D>("Bullet"));
 
             TileSourceRecs = new Dictionary<int, Rectangle>();
             for (int i = 0; i < TilesPerRow * NumRowsPerSheet; i++)
@@ -147,10 +148,10 @@ namespace Block_s_Quest
                     return LoadEnemyTile(x, y, "e");
                 //Road
                 case 'r':
-                    return LoadVarietyTile("Road", 0, 5);
+                    return LoadVarietyTile("Road");
                 //Node
                 case 'l':
-                    return LoadVarietyTile("Node", 5, 10);
+                    return LoadVarietyTile("Node");
                 //Start
                 case '+':
                     return LoadStartTile(x, y);
@@ -168,17 +169,14 @@ namespace Block_s_Quest
             return new Tile(String.Empty, 0);
         }
 
-        private Tile LoadVarietyTile(String tileSheetName, int colorRow, int variationCount)
+        private Tile LoadVarietyTile(String tileSheetName)
         {
-            int index = random.Next(variationCount);
-            int tileSheetIndex = colorRow + index;
-            return new Tile(tileSheetName, tileSheetIndex);
+            return new Tile(tileSheetName,0);
         }
 
         private Tile LoadStartTile(int x, int y)
         {
-            start = new Vector2((x * 64) + 48, (y * 64) + 16);
-
+            start = new Vector2((x * 64) + 48, (y * 64) + 64);
             return new Tile(String.Empty, 0);
         }
 
@@ -211,6 +209,7 @@ namespace Block_s_Quest
         {
             return enemies;
         }
+
         //Update
         public void Update()
         {

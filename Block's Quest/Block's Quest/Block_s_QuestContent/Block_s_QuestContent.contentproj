@@ -93,7 +93,6 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Compile Include="Tiles\Node.jpg">
       <Name>Node</Name>

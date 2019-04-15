@@ -109,6 +109,7 @@ namespace Block_s_Quest
             musicInstance = gameMusic.CreateInstance();
             dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content);
             LoadLevel();
+            LoadOverWorld();
             ow = new Overworld(bulletT);
         }
 
