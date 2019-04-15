@@ -12,6 +12,7 @@ namespace Block_s_Quest
     class Overworld
     {
         Texture2D background;
+        Vector2 vel;
 
         public Overworld(Texture2D t)
         {
