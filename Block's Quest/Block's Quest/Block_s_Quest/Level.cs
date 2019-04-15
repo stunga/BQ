@@ -232,5 +232,11 @@ namespace Block_s_Quest
             }
             return true;
         }
+
+        //Return 2D Array or Roads:
+        public Tile[,] getTile()
+        {
+            return tiles;
+        }
     }
 }
