@@ -22,6 +22,7 @@ namespace Block_s_Quest
         public List<Rectangle> TileDefinitions;
         private List<Enemy> enemies = new List<Enemy>();
         private List<Enemy> deadEnemies = new List<Enemy>();
+        private Overworld ow;
 
         private Vector2 start;
 
@@ -172,7 +173,10 @@ namespace Block_s_Quest
         private Road LoadVarietyTile(String tileSheetName, int x, int y)
         {
             if (tileSheetName.Equals("Node"))
-                return new LevelNode(x, y);
+            {
+                ow = new Overworld();
+                new LevelNode(x, y);
+            }
 
         }
 
