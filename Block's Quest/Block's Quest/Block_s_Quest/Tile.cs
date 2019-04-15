@@ -12,8 +12,8 @@ namespace Block_s_Quest
         public string TileSheetName;
         public int TileSheetIndex;
 
-        public const int Width = 50;
-        public const int Height = 180;
+        public const int Width = 100;
+        public const int Height = 100;
         public static readonly Vector2 Size = new Vector2(Width, Height);
 
         public Tile(string n, int i)

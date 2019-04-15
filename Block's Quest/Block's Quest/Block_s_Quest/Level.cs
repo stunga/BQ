@@ -32,8 +32,8 @@ namespace Block_s_Quest
         }
         ContentManager content;
 
-        private const int TileWidth = 50;
-        private const int TileHeight = 180;
+        private const int TileWidth = 100;
+        private const int TileHeight = 100;
         private const int TilesPerRow = 20;
         private const int NumRowsPerSheet = 10;
 
@@ -48,9 +48,6 @@ namespace Block_s_Quest
         {
             get { return tiles.GetLength(1); }
         }
-
-        //private List<Collectable> collectables = new List<Collectable>();
-        //private List<Collectable> collectedCollectables = new List<Collectable>();
 
         public Level(IServiceProvider serviceProvider, string path, Texture2D eT)
         {
@@ -170,7 +167,7 @@ namespace Block_s_Quest
             return new Tile(String.Empty, 0);
         }
 
-        private Road LoadVarietyTile(String tileSheetName, int x, int y)
+        private Tile LoadVarietyTile(String tileSheetName, int x, int y)
         {
             if (tileSheetName.Equals("Node"))
             {
@@ -178,12 +175,14 @@ namespace Block_s_Quest
                 new LevelNode(x, y);
             }
 
+            return new Tile(tileSheetName, 0);
+
         }
 
         private Tile LoadStartTile(int x, int y)
         {
             start = new Vector2((x * 64) + 48, (y * 64) + 64);
-            return new Tile(String.Empty, 0);
+            return new Tile("Start", 0);
         }
 
         public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
