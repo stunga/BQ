@@ -148,10 +148,10 @@ namespace Block_s_Quest
                     return LoadEnemyTile(x, y, "e");
                 //Road
                 case 'r':
-                    return LoadVarietyTile("Road");
+                    return LoadVarietyTile("Road", x, y);
                 //Node
                 case 'l':
-                    return LoadVarietyTile("Node");
+                    return LoadVarietyTile("Node", x, y);
                 //Start
                 case '+':
                     return LoadStartTile(x, y);
@@ -169,9 +169,11 @@ namespace Block_s_Quest
             return new Tile(String.Empty, 0);
         }
 
-        private Tile LoadVarietyTile(String tileSheetName)
+        private Road LoadVarietyTile(String tileSheetName, int x, int y)
         {
-            return new Tile(tileSheetName,0);
+            if (tileSheetName.Equals("Node"))
+                return new LevelNode(x, y);
+
         }
 
         private Tile LoadStartTile(int x, int y)
