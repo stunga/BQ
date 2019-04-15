@@ -28,8 +28,6 @@ namespace Block_s_Quest
             if (type == 0)
                 tileType = TileType.startnode;
             else if (type == 1)
-                tileType = TileType.node;
-            else if (type == 2)
                 tileType = TileType.path;
             else
                 tileType = TileType.levelnode;

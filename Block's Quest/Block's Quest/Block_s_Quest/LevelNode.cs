@@ -16,11 +16,11 @@ namespace Block_s_Quest
         Level level;
         bool active = true;
 
-        public LevelNode(int x, int y) : base(x, y, 4)
+        public LevelNode(int x, int y) : base(x, y, 2)
         {
         }
 
-        public LevelNode(int x, int y, Level l) : base(x, y, 4)
+        public LevelNode(int x, int y, Level l) : base(x, y, 2)
         {
             level = l;
         }
