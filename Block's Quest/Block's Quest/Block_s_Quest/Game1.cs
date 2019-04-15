@@ -120,7 +120,7 @@ namespace Block_s_Quest
 
         private void LoadOverWorld()
         {
-            owBuild = new Level(Services, @"Content/Levels/Overworld.txt");
+            owBuild = new Level(Services, @"Content/Overworlds/Overworld1.txt");
         }
 
         /// <summary>
