@@ -16,7 +16,6 @@ namespace Block_s_Quest
         enum TileType
         {
             startnode,
-            node,
             path,
             levelnode
         };
@@ -25,7 +24,7 @@ namespace Block_s_Quest
 
         public Road(int x, int y, int type)
         {
-            rec = new Rectangle(x, y, 64, 180);
+            rec = new Rectangle(x, y, 64, 64);
             if (type == 0)
                 tileType = TileType.startnode;
             else if (type == 1)
