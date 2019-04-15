@@ -15,14 +15,13 @@ namespace Block_s_Quest
     class Level
     {
         public int levelIndex;
-        public Texture2D enemyT;
+        public Texture2D enemyT, bossT;
         private Tile[,] tiles;
         private Dictionary<string, Texture2D> tileSheets;
         public Dictionary<int, Rectangle> TileSourceRecs;
         public List<Rectangle> TileDefinitions;
         private List<Enemy> enemies = new List<Enemy>();
         private List<Enemy> deadEnemies = new List<Enemy>();
-
         private Vector2 start;
 
         public ContentManager Content
@@ -56,7 +55,7 @@ namespace Block_s_Quest
             levelIndex = 1;
             content = new ContentManager(serviceProvider, "Content");
             enemyT = eT;
-
+            bossT = Content.Load<Texture2D>("Boss");
             tileSheets = new Dictionary<string, Texture2D>();
             //tileSheets.Add("Blocks", Content.Load<Texture2D>("Tiles/Blocks"));
 
@@ -124,7 +123,8 @@ namespace Block_s_Quest
                 //Enemies spawns
                 case 'e':
                     return LoadEnemyTile(x, y, "e");
-
+                case 'b':
+                    return LoadBossTile(x, y, "b");
                 default:
                     throw new NotSupportedException(String.Format(
                         "Unsupported til type character '{0}' at position {1}, {2}.", tileType, x, y));
@@ -136,7 +136,12 @@ namespace Block_s_Quest
             enemies.Add(new Enemy(enemyT, 5, Color.Green, 5, new Rectangle(_x*80,_y*100, 50, 50)));
             return new Tile(String.Empty, 0);
         }
-
+        private Tile LoadBossTile (int _x, int _y, string _enemy)
+        {
+            Vector2 position = new Vector2((_x * 64) + 48, (_y * 180) + 64);
+            enemies.Add(new Enemy(bossT, 2, Color.White, 20, new Rectangle(450,200, 100, 100)));
+            return new Tile(String.Empty, 0);
+        }
         public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
         {
             DrawTiles(_spriteBatch);
