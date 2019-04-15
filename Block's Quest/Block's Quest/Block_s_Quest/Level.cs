@@ -73,6 +73,27 @@ namespace Block_s_Quest
             LoadTiles(path);
         }
 
+        public Level(IServiceProvider serviceProvider, string path)
+        {
+            content = new ContentManager(serviceProvider, "Content");
+
+            tileSheets = new Dictionary<string, Texture2D>();
+            tileSheets.Add("Road", Content.Load<Texture2D>("Tiles/Road"));
+            tileSheets.Add("Node", Content.Load<Texture2D>("Tiles/Node"));
+
+            TileSourceRecs = new Dictionary<int, Rectangle>();
+            for (int i = 0; i < TilesPerRow * NumRowsPerSheet; i++)
+            {
+                Rectangle rectTile = new Rectangle(
+                    (i % TilesPerRow) * TileWidth,
+                    (i / TilesPerRow) * TileHeight,
+                    TileWidth,
+                    TileHeight);
+                TileSourceRecs.Add(i, rectTile);
+            }
+            LoadTiles(path);
+        }
+
         private void LoadTiles(string path)
         {
             int numOfTilesAcross = 0;
@@ -124,16 +145,40 @@ namespace Block_s_Quest
                 //Enemies spawns
                 case 'e':
                     return LoadEnemyTile(x, y, "e");
+                //Road
+                case 'r':
+                    return LoadVarietyTile("Road", 0, 5);
+                //Node
+                case 'l':
+                    return LoadVarietyTile("Node", 5, 10);
+                //Start
+                case '+':
+                    return LoadStartTile(x, y);
 
                 default:
                     throw new NotSupportedException(String.Format(
                         "Unsupported til type character '{0}' at position {1}, {2}.", tileType, x, y));
             }
         }
+
         private Tile LoadEnemyTile(int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 180) + 64);
             enemies.Add(new Enemy(enemyT, 5, Color.Green, 5, new Rectangle(_x*80,_y*100, 50, 50)));
+            return new Tile(String.Empty, 0);
+        }
+
+        private Tile LoadVarietyTile(String tileSheetName, int colorRow, int variationCount)
+        {
+            int index = random.Next(variationCount);
+            int tileSheetIndex = colorRow + index;
+            return new Tile(tileSheetName, tileSheetIndex);
+        }
+
+        private Tile LoadStartTile(int x, int y)
+        {
+            start = new Vector2((x * 64) + 48, (y * 64) + 16);
+
             return new Tile(String.Empty, 0);
         }
 
