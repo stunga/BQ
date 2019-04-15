@@ -94,6 +94,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="pm_ag_1_2_abstract_guns_281.wav">
+      <Name>pm_ag_1_2_abstract_guns_281</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bakugan - Aquos Arena.wav">
+      <Name>Bakugan - Aquos Arena</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
     <None Include="Overworlds\Overworld1.txt">
       <Name>Overworld1</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

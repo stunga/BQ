@@ -31,12 +31,15 @@ namespace Block_s_Quest
         Color op1 = Color.White;
         Color op2 = Color.White;
         Color op3 = Color.White;
+        SoundEffect shootEffect, gameMusic;
+        SoundEffectInstance musicInstance;
         int winTimer = 0, gameOverTimer = 0;
         UI gui;
         List<Bullet> bullets;
         List<Enemy> enemy;
         Boolean bug;
         Overworld ow;
+        Boolean soundEffectPlayed;
 
         enum GameState
         {
@@ -99,9 +102,12 @@ namespace Block_s_Quest
             font = this.Content.Load<SpriteFont>("SpriteFont1");
             gui = new UI(font, bulletT, shopt, diamondt, dpadt);
             gui.show();
-            dwayne = new Dwayne(dwaynet, bulletT);
             font = Content.Load<SpriteFont>("SpriteFont1");
             font1 = Content.Load<SpriteFont>("SpriteFont2");
+            shootEffect = Content.Load<SoundEffect>("pm_ag_1_2_abstract_guns_281");
+            gameMusic = Content.Load<SoundEffect>("Bakugan - Aquos Arena");
+            musicInstance = gameMusic.CreateInstance();
+            dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content);
             LoadLevel();
             ow = new Overworld(bulletT);
         }
@@ -130,7 +136,10 @@ namespace Block_s_Quest
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 this.Exit();
-
+            if (musicInstance.State != SoundState.Playing)
+            {
+                musicInstance.Play();
+            }
             if (bug)
             {
                 dwayne.Shoot();
@@ -247,32 +256,46 @@ namespace Block_s_Quest
                 levelIndex = 0;
                 gameOverTimer = 0;
             }
-            //if (selectionRectangle.Y == 600)
-            //{
-            //    op2 = Color.Blue;
-            //    if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu)
-            //    {
-            //        gameState = GameState.Hardcore;
-            //        dwayne.setPos(950, 875);
-            //    }
-            //}
-            //else
-            //{
-            //    op2 = Color.White;
-            //}
-            //if (selectionRectangle.Y == 700)
-            //{
-            //    op3 = Color.Blue;
-            //    if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu)
-            //    {
-            //        gameState = GameState.Insane;
-            //        dwayne.setPos(950, 875);
-            //    }
-            //}
-            //else
-            //{
-            //    op3 = Color.White;
-            //}
+            if (selectionRectangle.Y == 500)
+            {
+                op1 = Color.Blue;
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState==GameState.MainMenu)
+                {
+                    gameState = GameState.Normal;
+                    dwayne.setPos(950, 875);
+                }
+            }
+            else
+            {
+                op1 = Color.White;
+            }
+            if (selectionRectangle.Y == 600)
+            {
+                op2 = Color.Blue;
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu)
+                {
+                    gameState = GameState.Hardcore;
+                    dwayne.setPos(950, 875);
+                }
+            }
+            else
+            {
+                op2 = Color.White;
+            }
+            if (selectionRectangle.Y == 700)
+            {
+                op3 = Color.Blue;
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu)
+                {
+                    gameState = GameState.Insane;
+                    dwayne.setPos(950, 875);
+                }
+            }
+            else
+            {
+                op3 = Color.White;
+            }
+            
             oldkb = kb;
             base.Update(gameTime);
         }
