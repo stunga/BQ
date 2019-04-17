@@ -11,7 +11,8 @@ namespace Block_s_Quest
 {
     class Overworld
     {
-        Texture2D background;
+        Texture2D background, playert;
+        Rectangle player;
         Vector2 vel;
 
         public Overworld()
@@ -19,9 +20,10 @@ namespace Block_s_Quest
 
         }
 
-        public Overworld(Texture2D t)
+        public Overworld(Texture2D t, Texture2D p)
         {
             background = t;
+            playert = p;
         }
 
         public void Draw(GameTime gt, SpriteBatch sb)

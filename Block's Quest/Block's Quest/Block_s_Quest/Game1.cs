@@ -110,7 +110,7 @@ namespace Block_s_Quest
             dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content);
             LoadLevel();
             LoadOverWorld();
-            ow = new Overworld(bulletT);
+            ow = new Overworld(bulletT, dwaynet);
         }
 
         private void LoadLevel()
