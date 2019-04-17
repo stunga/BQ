@@ -75,7 +75,7 @@ namespace Block_s_Quest
             IsMouseVisible = true;
             bug = true;
             levelIndex = 1;
-            maxLevel = 2;
+            maxLevel = 3;
             bullets = new List<Bullet>();
             enemy = new List<Enemy>();
             gameState = GameState.MainMenu;
