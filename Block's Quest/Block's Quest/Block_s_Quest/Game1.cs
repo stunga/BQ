@@ -110,7 +110,6 @@ namespace Block_s_Quest
             dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content);
             LoadLevel();
             LoadOverWorld();
-            ow = new Overworld(bulletT, dwaynet);
         }
 
         private void LoadLevel()
@@ -121,6 +120,7 @@ namespace Block_s_Quest
         private void LoadOverWorld()
         {
             owBuild = new Level(Services, @"Content/Overworlds/Overworld1.txt");
+            ow = new Overworld(bulletT, dwaynet, owBuild.getPath());
         }
 
         /// <summary>
@@ -192,6 +192,7 @@ namespace Block_s_Quest
             }
             else if(gameState == GameState.Overworld)
             {
+                ow.Update(gameTime, kb, oldkb);
                 if(kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
                 {
                     gameState = GameState.Normal;
@@ -325,8 +326,8 @@ namespace Block_s_Quest
                     gui.hide();
                     break;
                 case GameState.Overworld:
-                    ow.Draw(gameTime, spriteBatch);
                     owBuild.Draw(gameTime, spriteBatch);
+                    ow.Draw(gameTime, spriteBatch);
                     break;
                 case GameState.GameOver:
                     background = Color.Crimson;
