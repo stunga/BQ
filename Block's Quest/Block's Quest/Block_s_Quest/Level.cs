@@ -190,7 +190,7 @@ namespace Block_s_Quest
         private Tile LoadBossTile (int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 180) + 64);
-            enemies.Add(new Enemy(bossT, 2, Color.White, 20, new Rectangle(450,200, 100, 100)));
+            enemies.Add(new Boss(bossT, 18, Color.White, 20, new Rectangle(450,200, 100, 100)));
             return new Tile(String.Empty, 0);
         }
         public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)

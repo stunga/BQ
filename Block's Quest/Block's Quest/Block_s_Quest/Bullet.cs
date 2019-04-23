@@ -15,6 +15,7 @@ namespace Block_s_Quest
     {
         Rectangle bulletRec;
         Texture2D bulletT;
+        int bulletDamage;
         enum bullType
         {
             fire,
@@ -37,6 +38,10 @@ namespace Block_s_Quest
         {
             return bulletRec;
         }
+        public int getBulletDamage()
+        {
+            return this.bulletDamage;
+        }
         public Bullet(int x, int y, Texture2D t, int i)
         {
             bulletRec = new Rectangle(x, y, 20, 20);
@@ -46,19 +51,23 @@ namespace Block_s_Quest
                 case 1:
                     type = bullType.chi;
                     col = Color.LightBlue;
+                    bulletDamage = 3;
                     break;
                 case 2:
                     type = bullType.earth;
                     col = Color.Gray;
+                    bulletDamage = 2;
                     break;
                 case 3:
                     type = bullType.fire;
                     col = Color.OrangeRed;
+                    bulletDamage = 4;
                     break;
                 case 4:
                     type = bullType.water;
                     col = Color.DarkBlue;
                     break;
+                    bulletDamage = 1;
                 default:
                     type = bullType.chi;
                     col = Color.LightBlue;

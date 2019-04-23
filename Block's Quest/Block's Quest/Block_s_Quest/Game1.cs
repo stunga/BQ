@@ -217,13 +217,13 @@ namespace Block_s_Quest
                             {
                                 bullets.Remove(bullets[i]);
                                 gui.score++;
-                                enemy.Remove(enemy[j]);
+                                enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
+                                enemy[j].getHitpoints();
                             }
                         }
                     }
                     
                 }
-
                 level.Update();
                 if (dwayne.isDead(enemy))
                 {
