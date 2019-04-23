@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace Block_s_Quest
 {
@@ -16,6 +18,8 @@ namespace Block_s_Quest
         Road[,] path;
         Rectangle[,] grid = new Rectangle[20, 10];
         Rectangle[,] back = new Rectangle[20, 10];
+        List<Level> levels = new List<Level>();
+        Level currlevel;
 
         public Overworld()
         {
@@ -28,17 +32,22 @@ namespace Block_s_Quest
             playert = p;
         }
 
-        public Overworld(Texture2D t, Texture2D p, Road[,] pa)
+        public Overworld(Texture2D t, Texture2D p, Road[,] pa, IServiceProvider Services)
         {
             background = t;
             playert = p;
             path = pa;
-            for(int x = 0; x  < 20; x++)
+            int levelcounter = 1;
+            for (int x = 0; x  < 20; x++)
             {
                 for(int y = 0; y < 10; y++)
                 {
                     if (path[x, y] != null)
                     {
+                        if (path[x, y].getType() == 2)
+                        {
+                            Level l = new Level(Services, @"Content/Levels/Level" + levelcounter + ".txt", t);
+                        }
                         if (path[x, y].getType() == 0)
                         {
                             player = new Rectangle(x * 100, y * 100, 100, 100);

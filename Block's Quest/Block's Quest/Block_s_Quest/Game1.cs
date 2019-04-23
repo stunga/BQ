@@ -75,7 +75,7 @@ namespace Block_s_Quest
             IsMouseVisible = true;
             bug = true;
             levelIndex = 1;
-            maxLevel = 3;
+            maxLevel = 4;
             bullets = new List<Bullet>();
             enemy = new List<Enemy>();
             gameState = GameState.MainMenu;
@@ -120,7 +120,7 @@ namespace Block_s_Quest
         private void LoadOverWorld()
         {
             owBuild = new Level(Services, @"Content/Overworlds/Overworld1.txt");
-            ow = new Overworld(bulletT, dwaynet, owBuild.getPath());
+            ow = new Overworld(bulletT, dwaynet, owBuild.getPath(), Services);
         }
 
         /// <summary>
