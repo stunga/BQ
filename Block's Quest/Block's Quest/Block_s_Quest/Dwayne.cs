@@ -18,6 +18,7 @@ namespace Block_s_Quest
         KeyboardState oldKb;
         SoundEffect sound;
         List<Bullet> bullet = new List<Bullet>();
+        int numBullets;
         float vel;
         int bulletTimer = 0;
         int rate = 30;
@@ -36,6 +37,7 @@ namespace Block_s_Quest
             tex = t;
             bulletT = bT;
             sound = s;
+            numBullets = 1;
         }
         public List<Bullet> getBullets()
         {
@@ -60,7 +62,7 @@ namespace Block_s_Quest
             {
                 Shoot();
                 sound.Play();
-                bulletTimer = 30;
+                bulletTimer = rate;
             }
 
             if (kb.IsKeyDown(Keys.Left))
@@ -96,9 +98,12 @@ namespace Block_s_Quest
         {
             foreach(Enemy e in enemies)
             {
-                Rectangle r = e.getRect();
-                if (r.Intersects(rec))
-                    return true;
+                if (e.isAlive)
+                {
+                    Rectangle r = e.getRect();
+                    if (r.Intersects(rec))
+                        return true;
+                }
             }
             return false;
         }
@@ -110,24 +115,33 @@ namespace Block_s_Quest
         }
 
         public void Shoot()
-        { 
-            switch (curType)
+        {
+            int holder = 40;
+
+            holder = holder / numBullets;
+
+            for (int x = 0; x < numBullets; x++)
             {
-                case bullType.chi:
-                    bullet.Add(new Bullet(rec.X + 40, rec.Y - 10, bulletT, 1));
-                    break;
-                case bullType.earth:
-                    bullet.Add(new Bullet(rec.X + 40, rec.Y - 10, bulletT, 2));
-                    break;
-                case bullType.fire:
-                    bullet.Add(new Bullet(rec.X + 40, rec.Y - 10, bulletT, 3));
-                    break;
-                case bullType.water:
-                    bullet.Add(new Bullet(rec.X + 40, rec.Y - 10, bulletT, 4));
-                    break;
-                default:
-                    bullet.Add(new Bullet(rec.X + 40, rec.Y - 10, bulletT));
-                    break;
+                switch (curType)
+                {
+                    case bullType.chi:
+                        bullet.Add(new Bullet(rec.X + holder, rec.Y - 10, bulletT, 1));
+                        break;
+                    case bullType.earth:
+                        bullet.Add(new Bullet(rec.X + holder, rec.Y - 10, bulletT, 2));
+                        break;
+                    case bullType.fire:
+                        bullet.Add(new Bullet(rec.X + holder, rec.Y - 10, bulletT, 3));
+                        break;
+                    case bullType.water:
+                        bullet.Add(new Bullet(rec.X + holder, rec.Y - 10, bulletT, 4));
+                        break;
+                    default:
+                        bullet.Add(new Bullet(rec.X + holder, rec.Y - 10, bulletT));
+                        break;
+                }
+
+                holder =holder+holder/2;
             }
         }
 
@@ -136,6 +150,13 @@ namespace Block_s_Quest
         {
             if(rate-10!=0)
                 rate--;
+        }
+
+        //Increase # of Bullets
+        public void UpgradeNumBullets()
+        {
+            if (numBullets != 3)
+                numBullets++;
         }
 
         //Update

@@ -14,15 +14,14 @@ namespace Block_s_Quest
 {
     class Level
     {
-        public int levelIndex;
         public Texture2D enemyT, bossT;
         private Tile[,] tiles;
         private Dictionary<string, Texture2D> tileSheets;
         public Dictionary<int, Rectangle> TileSourceRecs;
-        public List<Rectangle> TileDefinitions;
         private List<Enemy> enemies = new List<Enemy>();
         private List<Enemy> deadEnemies = new List<Enemy>();
-        private Overworld ow;
+        private Overworld ow = new Overworld();
+        Road[,] path = new Road[20, 10];
 
         private Vector2 start;
 
@@ -51,7 +50,6 @@ namespace Block_s_Quest
 
         public Level(IServiceProvider serviceProvider, string path, Texture2D eT)
         {
-            levelIndex = 1;
             content = new ContentManager(serviceProvider, "Content");
             enemyT = eT;
             bossT = Content.Load<Texture2D>("Boss");
@@ -153,7 +151,7 @@ namespace Block_s_Quest
                 //Start
                 case '+':
                     return LoadStartTile(x, y);
-
+               //Boss
                 case 'b':
                     return LoadBossTile(x, y, "b");
                 default:
@@ -173,8 +171,13 @@ namespace Block_s_Quest
         {
             if (tileSheetName.Equals("Node"))
             {
-                ow = new Overworld();
-                new LevelNode(x, y);
+                LevelNode ln = new LevelNode(x, y);
+                path[x, y] = ln;
+            }
+            if(tileSheetName.Equals("Road"))
+            {
+                Road r = new Road(x, y, 1);
+                path[x, y] = r;
             }
 
             return new Tile(tileSheetName, 0);
@@ -183,6 +186,8 @@ namespace Block_s_Quest
 
         private Tile LoadStartTile(int x, int y)
         {
+            Road r = new Road(x, y, 0);
+            path[x, y] = r;
             start = new Vector2((x * 64) + 48, (y * 64) + 64);
             return new Tile("Start", 0);
         }
@@ -245,6 +250,11 @@ namespace Block_s_Quest
         public Tile[,] getTile()
         {
             return tiles;
+        }
+
+        public Road[,] getPath()
+        {
+            return path;
         }
     }
 }

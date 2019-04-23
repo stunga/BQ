@@ -38,6 +38,14 @@ namespace Block_s_Quest
             return rec;
         }
 
-
+        public int getType()
+        {
+            if (tileType == TileType.startnode)
+                return 0;
+            else if (tileType == TileType.path)
+                return 1;
+            else
+                return 2;
+        }
     }
 }

@@ -75,7 +75,7 @@ namespace Block_s_Quest
             IsMouseVisible = true;
             bug = true;
             levelIndex = 1;
-            maxLevel = 3;
+            maxLevel = 4;
             bullets = new List<Bullet>();
             enemy = new List<Enemy>();
             gameState = GameState.MainMenu;
@@ -110,7 +110,6 @@ namespace Block_s_Quest
             dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content);
             LoadLevel();
             LoadOverWorld();
-            ow = new Overworld(bulletT);
         }
 
         private void LoadLevel()
@@ -121,6 +120,7 @@ namespace Block_s_Quest
         private void LoadOverWorld()
         {
             owBuild = new Level(Services, @"Content/Overworlds/Overworld1.txt");
+            ow = new Overworld(bulletT, dwaynet, owBuild.getPath(), Services);
         }
 
         /// <summary>
@@ -143,9 +143,8 @@ namespace Block_s_Quest
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 this.Exit();
             if (musicInstance.State != SoundState.Playing)
-            {
                 musicInstance.Play();
-            }
+
             if (bug)
             {
                 dwayne.Shoot();
@@ -157,6 +156,10 @@ namespace Block_s_Quest
             //Tester for Fire Rate Upgrade
             if (kb.IsKeyDown(Keys.I) && !oldkb.IsKeyDown(Keys.I))
                 dwayne.UpgradeFireRate();
+
+            //Tester for # Bullets Upgrade
+            if (kb.IsKeyDown(Keys.O) && !oldkb.IsKeyDown(Keys.O))
+                dwayne.UpgradeNumBullets();
 
             if (gameState == GameState.MainMenu)
             {
@@ -192,6 +195,7 @@ namespace Block_s_Quest
             }
             else if(gameState == GameState.Overworld)
             {
+                ow.Update(gameTime, kb, oldkb);
                 if(kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
                 {
                     gameState = GameState.Normal;
@@ -221,16 +225,16 @@ namespace Block_s_Quest
                                 enemy[j].getHitpoints();
                             }
                         }
-                    }
-                    
+                    }      
                 }
                 level.Update();
+
                 if (dwayne.isDead(enemy))
                 {
                     gameState = GameState.GameOver;
                 }
                 dwayne.Update(kb, gui);
-                
+
                 //Changes to next Level
                 if (level.LevelEnd())
                 {
@@ -325,8 +329,8 @@ namespace Block_s_Quest
                     gui.hide();
                     break;
                 case GameState.Overworld:
-                    ow.Draw(gameTime, spriteBatch);
                     owBuild.Draw(gameTime, spriteBatch);
+                    ow.Draw(gameTime, spriteBatch);
                     break;
                 case GameState.GameOver:
                     background = Color.Crimson;
