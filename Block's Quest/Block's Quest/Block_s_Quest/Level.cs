@@ -14,12 +14,10 @@ namespace Block_s_Quest
 {
     class Level
     {
-        public int levelIndex;
         public Texture2D enemyT, bossT;
         private Tile[,] tiles;
         private Dictionary<string, Texture2D> tileSheets;
         public Dictionary<int, Rectangle> TileSourceRecs;
-        public List<Rectangle> TileDefinitions;
         private List<Enemy> enemies = new List<Enemy>();
         private List<Enemy> deadEnemies = new List<Enemy>();
         private Overworld ow;
@@ -51,7 +49,6 @@ namespace Block_s_Quest
 
         public Level(IServiceProvider serviceProvider, string path, Texture2D eT)
         {
-            levelIndex = 1;
             content = new ContentManager(serviceProvider, "Content");
             enemyT = eT;
             bossT = Content.Load<Texture2D>("Boss");
@@ -153,7 +150,7 @@ namespace Block_s_Quest
                 //Start
                 case '+':
                     return LoadStartTile(x, y);
-
+               //Boss
                 case 'b':
                     return LoadBossTile(x, y, "b");
                 default:
@@ -246,5 +243,7 @@ namespace Block_s_Quest
         {
             return tiles;
         }
+
+
     }
 }

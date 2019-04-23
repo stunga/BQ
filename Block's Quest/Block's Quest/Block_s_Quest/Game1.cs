@@ -143,9 +143,8 @@ namespace Block_s_Quest
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 this.Exit();
             if (musicInstance.State != SoundState.Playing)
-            {
                 musicInstance.Play();
-            }
+
             if (bug)
             {
                 dwayne.Shoot();
@@ -157,6 +156,10 @@ namespace Block_s_Quest
             //Tester for Fire Rate Upgrade
             if (kb.IsKeyDown(Keys.I) && !oldkb.IsKeyDown(Keys.I))
                 dwayne.UpgradeFireRate();
+
+            //Tester for # Bullets Upgrade
+            if (kb.IsKeyDown(Keys.O) && !oldkb.IsKeyDown(Keys.O))
+                dwayne.UpgradeNumBullets();
 
             if (gameState == GameState.MainMenu)
             {
@@ -220,17 +223,17 @@ namespace Block_s_Quest
                                 enemy.Remove(enemy[j]);
                             }
                         }
-                    }
-                    
+                    }      
                 }
 
                 level.Update();
+
                 if (dwayne.isDead(enemy))
                 {
                     gameState = GameState.GameOver;
                 }
                 dwayne.Update(kb, gui);
-                
+
                 //Changes to next Level
                 if (level.LevelEnd())
                 {
