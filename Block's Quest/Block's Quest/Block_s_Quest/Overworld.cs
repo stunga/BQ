@@ -38,26 +38,26 @@ namespace Block_s_Quest
             playert = p;
             path = pa;
             int levelcounter = 1;
-            for (int x = 0; x  < 20; x++)
+            for (int y = 0; y  < 20; y++)
             {
-                for(int y = 0; y < 10; y++)
+                for(int x = 0; x < 10; x++)
                 {
-                    if (path[x, y] != null)
+                    if (path[y, x] != null)
                     {
-                        if (path[x, y].getType() == 2)
+                        if (path[y, x].getType() == 2)
                         {
                             Level l = new Level(Services, @"Content/Levels/Level" + levelcounter + ".txt", t);
                         }
-                        if (path[x, y].getType() == 0)
+                        if (path[y, x].getType() == 0)
                         {
-                            player = new Rectangle(x * 100, y * 100, 100, 100);
-                            grid[x, y] = player;
-                            back[x, y] = new Rectangle(x * 100, y * 100, 100, 100);
+                            player = new Rectangle(y * 100, x * 100, 100, 100);
+                            grid[y, x] = player;
+                            back[y, x] = new Rectangle(y * 100, x * 100, 100, 100);
                         }
                         else
                         {
-                            grid[x, y] = new Rectangle(x * 100, y * 100, 100, 100);
-                            back[x, y] = new Rectangle(x * 100, y * 100, 100, 100);
+                            grid[y, x] = new Rectangle(y * 100, x * 100, 100, 100);
+                            back[y, x] = new Rectangle(y * 100, x * 100, 100, 100);
                         }
                     }
                 }
@@ -68,19 +68,19 @@ namespace Block_s_Quest
         {
             int x = player.X / 100;
             int y = player.Y / 100;
-            if (kb.IsKeyUp(Keys.A) && oldkb.IsKeyDown(Keys.A) && grid[x - 1, y] != null)
+            if ((kb.IsKeyUp(Keys.A) && oldkb.IsKeyDown(Keys.A)) && grid[x - 1, y] != null)
             {
                 player = grid[x - 1, y];
             }
-            if (kb.IsKeyUp(Keys.S) && oldkb.IsKeyDown(Keys.S) && grid[x, y + 1] != null)
+            if ((kb.IsKeyUp(Keys.S) && oldkb.IsKeyDown(Keys.S)) && grid[x, y + 1] != null)
             {
                 player = grid[x, y + 1];
             }
-            if (kb.IsKeyUp(Keys.D) && oldkb.IsKeyDown(Keys.D) && grid[x + 1, y] != null)
+            if ((kb.IsKeyUp(Keys.D) && oldkb.IsKeyDown(Keys.D)) && grid[x + 1, y] != null)
             {
                 player = grid[x + 1, y];
             }
-            if (kb.IsKeyUp(Keys.W) && oldkb.IsKeyDown(Keys.W) && grid[x, y - 1] != null)
+            if ((kb.IsKeyUp(Keys.W) && oldkb.IsKeyDown(Keys.W)) && grid[x, y - 1] != null)
             {
                 player = grid[x, y - 1];
             }
