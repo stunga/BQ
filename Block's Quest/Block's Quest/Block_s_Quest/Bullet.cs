@@ -71,6 +71,7 @@ namespace Block_s_Quest
                 default:
                     type = bullType.chi;
                     col = Color.LightBlue;
+                    bulletDamage = 3;
                     break;
             }
 

@@ -37,13 +37,6 @@ namespace Block_s_Quest
         public new void decreaseHitPoints(int bulletDamage)
         {
             this.hitpoints -= bulletDamage;
-        }
-        public new Rectangle getRect()
-        {
-            return rectangle;
-        }
-        public new int getHitpoints()
-        {
             if (this.hitpoints <= 0)
             {
                 isAlive = false;
@@ -52,7 +45,10 @@ namespace Block_s_Quest
             {
                 isAlive = true;
             }
-            return hitpoints;
+        }
+        public new Rectangle getRect()
+        {
+            return rectangle;
         }
 
         public new void enemyKilled()
