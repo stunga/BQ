@@ -19,7 +19,7 @@ namespace Block_s_Quest
         Rectangle[,] grid = new Rectangle[20, 10];
         Rectangle[,] back = new Rectangle[20, 10];
         List<Level> levels = new List<Level>();
-        Level currlevel;
+        //Level currlevel;
 
         public Overworld()
         {

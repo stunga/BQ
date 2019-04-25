@@ -66,8 +66,8 @@ namespace Block_s_Quest
                 case 4:
                     type = bullType.water;
                     col = Color.DarkBlue;
-                    break;
                     bulletDamage = 1;
+                    break;
                 default:
                     type = bullType.chi;
                     col = Color.LightBlue;

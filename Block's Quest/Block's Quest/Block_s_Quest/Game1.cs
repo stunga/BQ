@@ -39,7 +39,7 @@ namespace Block_s_Quest
         List<Enemy> enemy;
         Boolean bug;
         Overworld ow;
-        Boolean soundEffectPlayed;
+        //Boolean soundEffectPlayed;
 
         enum GameState
         {
