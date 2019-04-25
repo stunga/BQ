@@ -141,10 +141,19 @@ namespace Block_s_Quest
                         break;
                 }
 
-                if (x % 2 == 0)
-                    holder += 40;
+                if(numBullets%2==0)
+                {
+                    if (x % 2 == 0)
+                        holder += center;
+                    else
+                        holder -= center;
+
+                    center += center / 2;
+                }
                 else
-                    holder -= 40;
+                {
+                    holder += 30;
+                }
             }
         }
 

@@ -22,7 +22,6 @@ namespace Block_s_Quest
 
         public LevelNode(int x, int y, int index) : base(x, y, 2)
         {
-            level = l;
         }
 
         public void loadLevel(Level l)

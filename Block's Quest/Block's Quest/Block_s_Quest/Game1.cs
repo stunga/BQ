@@ -224,7 +224,7 @@ namespace Block_s_Quest
                                 if (enemy[j].getHitpoints() == 0)
                                     enemy.Remove(enemy[j]);
 
-                                bullets.Remove(bullets[i]);
+                                //bullets.Remove(bullets[i]);
 
                             }
                         }
