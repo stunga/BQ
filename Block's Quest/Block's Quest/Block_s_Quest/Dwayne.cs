@@ -117,8 +117,12 @@ namespace Block_s_Quest
         public void Shoot()
         {
             int center = 40;
+            int holder;
 
-            int holder = center / numBullets;
+            if (numBullets == 4)
+                holder = 10;
+            else
+                holder = center / numBullets;
 
             for (int x = 0; x < numBullets; x++)
             {
@@ -140,19 +144,23 @@ namespace Block_s_Quest
                         bullet.Add(new Bullet(rec.X + holder, rec.Y - 10, bulletT));
                         break;
                 }
-
-                if(numBullets%2==0)
+                if (numBullets == 4)
                 {
-                    if (x % 2 == 0)
-                        holder += center;
-                    else
-                        holder -= center;
-
-                    center += center / 2;
+                    holder += 30;
                 }
                 else
                 {
-                    holder += 30;
+                    if (numBullets % 2 == 0)
+                    {
+                        if (x % 2 == 0)
+                            holder += center;
+                        else
+                            holder -= center;
+                    }
+                    else
+                    {
+                        holder += 30;
+                    }
                 }
             }
         }
