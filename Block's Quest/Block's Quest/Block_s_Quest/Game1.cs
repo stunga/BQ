@@ -34,6 +34,7 @@ namespace Block_s_Quest
         SoundEffect shootEffect, gameMusic;
         SoundEffectInstance musicInstance;
         int winTimer = 0, gameOverTimer = 0;
+        int spawnTimer = 0;
         UI gui;
         List<Bullet> bullets;
         List<Enemy> enemy;
@@ -230,6 +231,14 @@ namespace Block_s_Quest
                     if (bullets[i].getRect().Y <= 200)
                     {
                         bullets.Remove(bullets[i]);
+                    }
+                }
+                if (levelIndex == 4)
+                {
+                    spawnTimer++;
+                    if (spawnTimer % 180 == 0)
+                    {
+                        level.spawnEnemy(level.bossRect);
                     }
                 }
                 level.Update();

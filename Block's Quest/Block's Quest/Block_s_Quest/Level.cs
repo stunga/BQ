@@ -20,6 +20,7 @@ namespace Block_s_Quest
         public Dictionary<int, Rectangle> TileSourceRecs;
         private List<Enemy> enemies = new List<Enemy>();
         private List<Enemy> deadEnemies = new List<Enemy>();
+        public Rectangle bossRect = new Rectangle();
         private Overworld ow = new Overworld();
         Road[,] path = new Road[20, 10];
         int levelIndex = 1;
@@ -185,7 +186,11 @@ namespace Block_s_Quest
             return new Tile(tileSheetName, 0);
 
         }
-
+        
+        public void spawnEnemy(Rectangle bossRec)
+        {
+            enemies.Add(new Enemy(enemyT, 5, Color.Green, 10, new Rectangle(bossRec.X, bossRec.Y + 70, 50, 50)));
+        }
         private Tile LoadStartTile(int x, int y)
         {
             Road r = new Road(x, y, 0);
@@ -233,8 +238,17 @@ namespace Block_s_Quest
         //Update
         public void Update()
         {
+            Type t;
             foreach (Enemy e in enemies)
+            {
                 e.Update();
+                t = e.GetType();
+                if (t.Equals(typeof(Boss)))
+                {
+                    bossRect = e.getRect();
+                }
+            }
+            
         }
 
         //Level changer
