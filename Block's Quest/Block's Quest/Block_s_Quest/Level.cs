@@ -22,6 +22,7 @@ namespace Block_s_Quest
         private List<Enemy> deadEnemies = new List<Enemy>();
         private Overworld ow = new Overworld();
         Road[,] path = new Road[20, 10];
+        int levelIndex = 1;
 
         private Vector2 start;
 
@@ -171,8 +172,9 @@ namespace Block_s_Quest
         {
             if (tileSheetName.Equals("Node"))
             {
-                LevelNode ln = new LevelNode(x, y);
+                LevelNode ln = new LevelNode(x, y, levelIndex);
                 path[x, y] = ln;
+                levelIndex++;
             }
             if(tileSheetName.Equals("Road"))
             {
