@@ -116,9 +116,9 @@ namespace Block_s_Quest
 
         public void Shoot()
         {
-            int holder = 40;
+            int center = 40;
 
-            holder = holder / numBullets;
+            int holder = center / numBullets;
 
             for (int x = 0; x < numBullets; x++)
             {
@@ -141,7 +141,19 @@ namespace Block_s_Quest
                         break;
                 }
 
-                holder =holder+holder/2;
+                if(numBullets%2==0)
+                {
+                    if (x % 2 == 0)
+                        holder += center;
+                    else
+                        holder -= center;
+
+                    center += center / 2;
+                }
+                else
+                {
+                    holder += 30;
+                }
             }
         }
 
@@ -155,7 +167,7 @@ namespace Block_s_Quest
         //Increase # of Bullets
         public void UpgradeNumBullets()
         {
-            if (numBullets != 3)
+            if (numBullets != 4)
                 numBullets++;
         }
 
