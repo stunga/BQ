@@ -20,9 +20,10 @@ namespace Block_s_Quest
         {
         }
 
-        public LevelNode(int x, int y, int index) : base(x, y, 2)
+        public LevelNode(int x, int y, int index, IServiceProvider Services, Texture2D tex) : base(x, y, 2)
         {
-            level = l;
+            ContentManager Content = new ContentManager(Services, "Content");
+            Level l = new Level(Services, @"Content/Levels/Level" + index + ".txt", Content.Load<Texture2D>("Tiles/Node"));
         }
 
         public void loadLevel(Level l)

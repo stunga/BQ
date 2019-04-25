@@ -50,6 +50,14 @@ namespace Block_s_Quest
                 return true;
         }
 
+        public Boolean isLevel(int x, int y)
+        {
+            if (path[x, y].getType() == 2)
+                return true;
+            else
+                return false;
+        }
+
         public Rectangle move(int x, int y)
         {
             return grid[x, y];

@@ -23,6 +23,7 @@ namespace Block_s_Quest
         private Overworld ow = new Overworld();
         Road[,] path = new Road[20, 10];
         int levelIndex = 1;
+        IServiceProvider Services;
 
         private Vector2 start;
 
@@ -51,6 +52,7 @@ namespace Block_s_Quest
 
         public Level(IServiceProvider serviceProvider, string path, Texture2D eT)
         {
+            Services = serviceProvider;
             content = new ContentManager(serviceProvider, "Content");
             enemyT = eT;
             bossT = Content.Load<Texture2D>("Boss");
@@ -72,6 +74,7 @@ namespace Block_s_Quest
 
         public Level(IServiceProvider serviceProvider, string path)
         {
+            Services = serviceProvider;
             content = new ContentManager(serviceProvider, "Content");
 
             tileSheets = new Dictionary<string, Texture2D>();
@@ -172,7 +175,7 @@ namespace Block_s_Quest
         {
             if (tileSheetName.Equals("Node"))
             {
-                LevelNode ln = new LevelNode(x, y, levelIndex);
+                LevelNode ln = new LevelNode(x, y, levelIndex, Services, Content.Load<Texture2D>("Tiles/Node"));
                 path[x, y] = ln;
                 levelIndex++;
             }

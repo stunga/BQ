@@ -19,7 +19,7 @@ namespace Block_s_Quest
         Rectangle[,] grid = new Rectangle[20, 10];
         Rectangle[,] back = new Rectangle[20, 10];
         List<Level> levels = new List<Level>();
-        //Level currlevel;
+        Level currlevel;
 
         public Overworld()
         {
@@ -38,30 +38,6 @@ namespace Block_s_Quest
             playert = p;
             path = pa;
             int levelcounter = 1;
-            for (int y = 0; y  < 20; y++)
-            {
-                for(int x = 0; x < 10; x++)
-                {
-                    if (path[y, x] != null)
-                    {
-                        if (path[y, x].getType() == 2)
-                        {
-                            Level l = new Level(Services, @"Content/Levels/Level" + levelcounter + ".txt", t);
-                        }
-                        if (path[y, x].getType() == 0)
-                        {
-                            player = new Rectangle(y * 100, x * 100, 100, 100);
-                            grid[y, x] = player;
-                            back[y, x] = new Rectangle(y * 100, x * 100, 100, 100);
-                        }
-                        else
-                        {
-                            grid[y, x] = new Rectangle(y * 100, x * 100, 100, 100);
-                            back[y, x] = new Rectangle(y * 100, x * 100, 100, 100);
-                        }
-                    }
-                }
-            }
         }
 
         public void Update(GameTime gt, KeyboardState kb, KeyboardState oldkb)
@@ -89,16 +65,6 @@ namespace Block_s_Quest
         public void Draw(GameTime gt, SpriteBatch sb)
         {
             sb.Draw(playert, player, Color.White);
-        }
-
-        public void addLevel(LevelNode l)
-        {
-
-        }
-
-        public void addRoad(Road r)
-        {
-
         }
 
     }
