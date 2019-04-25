@@ -221,14 +221,16 @@ namespace Block_s_Quest
                             {
                                 gui.score++;
                                 enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
-                                if (enemy[j].getHitpoints() == 0)
-                                    enemy.Remove(enemy[j]);
-
-                                //bullets.Remove(bullets[i]);
-
                             }
                         }
                     }      
+                }
+                for (int i = 0; i < bullets.Count; i++)
+                {
+                    if (bullets[i].getRect().Y <= 200)
+                    {
+                        bullets.Remove(bullets[i]);
+                    }
                 }
                 level.Update();
 
