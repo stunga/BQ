@@ -26,6 +26,7 @@ namespace Block_s_Quest
         KeyboardState oldkb;
         GameState gameState;
         SpriteFont font, font1;
+        List<Diamond> collectables = new List<Diamond>();
         Rectangle selectionRectangle;
         Color background = Color.CornflowerBlue;
         Color op1 = Color.White;
@@ -112,10 +113,12 @@ namespace Block_s_Quest
             LoadLevel();
             LoadOverWorld();
         }
+        
 
         private void LoadLevel()
         {
             level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
+            level.setTexture(diamondt);
         }
 
         private void LoadOverWorld()
@@ -132,6 +135,7 @@ namespace Block_s_Quest
         {
             // TODO: Unload any non ContentManager content here
         }
+        
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -226,6 +230,14 @@ namespace Block_s_Quest
                         }
                     }      
                 }
+                for (int i = collectables.Count-1; i >= 0; i--)
+                {
+                    if (dwayne.getRect().Intersects(collectables[i].getRect()))
+                    {
+                        collectables.Remove(collectables[i]);
+                        level.setCollectables(collectables);
+                    }
+                }
                 for (int i = 0; i < bullets.Count; i++)
                 {
                     if (bullets[i].getRect().Y <= 200)
@@ -233,13 +245,15 @@ namespace Block_s_Quest
                         bullets.Remove(bullets[i]);
                     }
                 }
+                
                 if (levelIndex == 4)
                 {
-                    spawnTimer++;
-                    if (spawnTimer % 180 == 0)
-                    {
+                     spawnTimer++;
+                     if (spawnTimer % 180 == 0 && level.BossEnemy())
+                     {
                         level.spawnEnemy(level.bossRect);
-                    }
+                        
+                     }
                 }
                 level.Update();
 
@@ -361,6 +375,13 @@ namespace Block_s_Quest
                     gui.show();
                     gui.Draw(spriteBatch, gameTime);
                     break;
+            }
+            if (gameState == GameState.Normal|| gameState == GameState.Hardcore|| gameState == GameState.Insane)
+            {
+                foreach (Diamond d in collectables)
+                {
+                    spriteBatch.Draw(diamondt, d.getRect(), d.getColor());
+                }
             }
             spriteBatch.End();
             base.Draw(gameTime);

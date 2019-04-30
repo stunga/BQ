@@ -18,6 +18,7 @@ namespace Block_s_Quest
 
         public LevelNode(int x, int y) : base(x, y, 2)
         {
+
         }
 
         public LevelNode(int x, int y, int index, IServiceProvider Services, Texture2D tex) : base(x, y, 2)

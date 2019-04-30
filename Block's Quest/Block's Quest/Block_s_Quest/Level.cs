@@ -20,6 +20,8 @@ namespace Block_s_Quest
         public Dictionary<int, Rectangle> TileSourceRecs;
         private List<Enemy> enemies = new List<Enemy>();
         private List<Enemy> deadEnemies = new List<Enemy>();
+        private List<Diamond> collectables = new List<Diamond>();
+        private Texture2D diamondT;
         public Rectangle bossRect = new Rectangle();
         private Overworld ow = new Overworld();
         Road[,] path = new Road[20, 10];
@@ -164,14 +166,25 @@ namespace Block_s_Quest
                         "Unsupported til type character '{0}' at position {1}, {2}.", tileType, x, y));
             }
         }
-
+        public Boolean BossEnemy()
+        {
+            Type t;
+            foreach (Enemy e in enemies)
+            {
+                t = e.GetType();
+                if (t.Equals(typeof(Boss)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         private Tile LoadEnemyTile(int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 180) + 64);
             enemies.Add(new Enemy(enemyT, 5, Color.Green, 10, new Rectangle(_x*80,_y*100, 50, 50)));
             return new Tile(String.Empty, 0);
         }
-
         private Tile LoadVarietyTile(String tileSheetName, int x, int y)
         {
             if (tileSheetName.Equals("Node"))
@@ -189,7 +202,14 @@ namespace Block_s_Quest
             return new Tile(tileSheetName, 0);
 
         }
-        
+        public void setCollectables(List<Diamond> c)
+        {
+            collectables = c;
+        }
+        public void setTexture(Texture2D t)
+        {
+            diamondT = t;
+        }
         public void spawnEnemy(Rectangle bossRec)
         {
             enemies.Add(new Enemy(enemyT, 5, Color.Green, 10, new Rectangle(bossRec.X, bossRec.Y + 70, 50, 50)));
@@ -208,6 +228,11 @@ namespace Block_s_Quest
             enemies.Add(new Boss(bossT, 11, Color.White, 25, new Rectangle(450,200, 100, 100)));
             return new Tile(String.Empty, 0);
         }
+        public Tile LoadCollectable(Rectangle rec, Diamond.type type)
+        {
+            collectables.Add(new Diamond(rec.X, rec.Y, diamondT, type));
+            return new Tile(string.Empty, 0);
+        }
         public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
         {
             DrawTiles(_spriteBatch);
@@ -215,7 +240,7 @@ namespace Block_s_Quest
                 enemy.Draw(_gameTime, _spriteBatch);
         }
 
-        private void DrawTiles(SpriteBatch spriteBatch)
+        private void DrawTiles(SpriteBatch spriteBatch)       
         {
             for (int y = 0; y < Height; y++)
             {
@@ -249,6 +274,10 @@ namespace Block_s_Quest
                 if (t.Equals(typeof(Boss)))
                 {
                     bossRect = e.getRect();
+                }
+                if (e.isAlive ==  false)
+                {
+                    LoadCollectable(e.getRect(), Diamond.type.green);
                 }
             }
             

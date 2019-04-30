@@ -25,7 +25,7 @@ namespace Block_s_Quest
         type col;
         Rectangle rec;
         Texture tex;
-
+        Color color;
         //Constructor
         public Diamond(int x, int y, Texture t, type c)
         {
@@ -33,7 +33,35 @@ namespace Block_s_Quest
             tex = t;
             col = c;
         }
-
+        public Color getColor()
+        {
+            switch(col)
+            {
+                case type.green:
+                    color = Color.Green;
+                    break;
+                case type.blue:
+                    color = Color.Blue;
+                    break;
+                case type.yellow:
+                    color = Color.Yellow;
+                    break;
+                case type.red:
+                    color = Color.Red;
+                    break;
+                case type.purple:
+                    color = Color.Purple;
+                    break;
+                case type.orange:
+                    color = Color.Orange;
+                    break;
+            }
+            return color;
+        }
+        public Rectangle getRect()
+        {
+            return rec;
+        }
         //Get the value of this diamond
         public int getValue()
         {
