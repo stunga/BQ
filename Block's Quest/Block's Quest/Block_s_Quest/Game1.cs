@@ -43,7 +43,7 @@ namespace Block_s_Quest
 
         enum GameState
         {
-            MainMenu, Normal, Hardcore, Insane, GameOver, Win, Overworld
+            MainMenu, Normal, Hardcore, Insane, GameOver, Win, Overworld, Pause
         };
 
         enum bullType
@@ -227,7 +227,7 @@ namespace Block_s_Quest
                 }
                 for (int i = 0; i < bullets.Count; i++)
                 {
-                    if (bullets[i].getRect().Y <= 200)
+                    if (bullets[i].getRect().Y <= 0)
                     {
                         bullets.Remove(bullets[i]);
                     }
