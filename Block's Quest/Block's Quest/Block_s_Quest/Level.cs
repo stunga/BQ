@@ -175,7 +175,7 @@ namespace Block_s_Quest
         {
             if (tileSheetName.Equals("Node"))
             {
-                LevelNode ln = new LevelNode(x, y, levelIndex, Services, Content.Load<Texture2D>("Tiles/Node"));
+                Road ln = new Road(x, y, levelIndex, Services, Content.Load<Texture2D>("Tiles/Node"));
                 path[x, y] = ln;
                 levelIndex++;
             }

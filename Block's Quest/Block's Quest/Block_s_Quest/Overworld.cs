@@ -14,52 +14,68 @@ namespace Block_s_Quest
     class Overworld
     {
         Texture2D background, playert;
-        Rectangle player;
-        Road[,] path;
-        Rectangle[,] grid = new Rectangle[20, 10];
-        Rectangle[,] back = new Rectangle[20, 10];
+        Rectangle player, prev;
+        Path path;
         List<Level> levels = new List<Level>();
         Level currlevel;
+        int x, y;
 
+        //Needed for level class
         public Overworld()
         {
-
         }
 
-        public Overworld(Texture2D t, Texture2D p)
-        {
-            background = t;
-            playert = p;
-        }
-
-        public Overworld(Texture2D t, Texture2D p, Road[,] pa, IServiceProvider Services)
+        //Basic Constructor
+        public Overworld(Texture2D t, Texture2D p, Path pa, IServiceProvider Services)
         {
             background = t;
             playert = p;
             path = pa;
             int levelcounter = 1;
+            player = pa.getStart();
         }
 
         public void Update(GameTime gt, KeyboardState kb, KeyboardState oldkb)
         {
-            int x = player.X / 100;
-            int y = player.Y / 100;
-            if ((kb.IsKeyUp(Keys.A) && oldkb.IsKeyDown(Keys.A)) && grid[x - 1, y] != null)
+            //Find location in grid of Dwayne icon
+            x = player.X / 100;
+            y = player.Y / 100;
+
+            //When Dwayne moves, uses methods from path class to make sure that area has a road and then move dwayne to that spot
+            if ((kb.IsKeyUp(Keys.A) && oldkb.IsKeyDown(Keys.A)) && path.check(x - 1, y))
             {
-                player = grid[x - 1, y];
+                player = path.move(x - 1, y);
             }
-            if ((kb.IsKeyUp(Keys.S) && oldkb.IsKeyDown(Keys.S)) && grid[x, y + 1] != null)
+            else if ((kb.IsKeyUp(Keys.S) && oldkb.IsKeyDown(Keys.S)) && path.check(x, y + 1))
             {
-                player = grid[x, y + 1];
+                player = path.move(x, y + 1);
             }
-            if ((kb.IsKeyUp(Keys.D) && oldkb.IsKeyDown(Keys.D)) && grid[x + 1, y] != null)
+            else if ((kb.IsKeyUp(Keys.D) && oldkb.IsKeyDown(Keys.D)) && path.check(x + 1, y))
             {
-                player = grid[x + 1, y];
+                player = path.move(x + 1, y);
             }
-            if ((kb.IsKeyUp(Keys.W) && oldkb.IsKeyDown(Keys.W)) && grid[x, y - 1] != null)
+            else if ((kb.IsKeyUp(Keys.W) && oldkb.IsKeyDown(Keys.W)) && path.check(x, y - 1))
             {
-                player = grid[x, y - 1];
+                player = path.move(x, y - 1);
             }
+
+            //Makes sure that dwaynes rectangle is never null because of old glitch where he would be able to move to an empty space and it would crash the game
+                if (player == null)
+                player = prev;
+            prev = player;
+        }
+
+        public Level returnLevel()
+        {
+            return path.load(x, y);
+        }
+
+        public bool isLevel()
+        {
+            if (path.isLevel(x, y))
+                return true;
+            else
+                return false;
         }
 
         public void Draw(GameTime gt, SpriteBatch sb)

@@ -78,7 +78,6 @@
     <Compile Include="Dwayne.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Level.cs" />
-    <Compile Include="LevelNode.cs" />
     <Compile Include="Overworld.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

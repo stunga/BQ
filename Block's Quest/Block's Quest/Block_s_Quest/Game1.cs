@@ -120,7 +120,7 @@ namespace Block_s_Quest
         private void LoadOverWorld()
         {
             owBuild = new Level(Services, @"Content/Overworlds/Overworld1.txt");
-            ow = new Overworld(bulletT, dwaynet, owBuild.getPath(), Services);
+            ow = new Overworld(bulletT, dwaynet, new Path(owBuild.getPath()), Services);
         }
 
         /// <summary>
@@ -198,6 +198,10 @@ namespace Block_s_Quest
                 ow.Update(gameTime, kb, oldkb);
                 if(kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
                 {
+                    if(ow.isLevel())
+                    {
+                        level = ow.returnLevel();
+                    }
                     gameState = GameState.Normal;
                 }
                 dwayne.setPos(950, 875);

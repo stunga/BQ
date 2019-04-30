@@ -13,6 +13,7 @@ namespace Block_s_Quest
 {
     class Road
     {
+        //GENERAL DATA
         enum TileType
         {
             startnode,
@@ -22,6 +23,12 @@ namespace Block_s_Quest
         TileType tileType;
         Rectangle rec;
 
+        //LEVEL NODE SPECIFIC DATA
+        Level level;
+        bool active = true;
+
+        //GENERAL METHODS
+        //Default constructor
         public Road(int x, int y, int type)
         {
             rec = new Rectangle(x, y, 64, 64);
@@ -38,6 +45,7 @@ namespace Block_s_Quest
             return rec;
         }
 
+        //Returns what type of road it is
         public int getType()
         {
             if (tileType == TileType.startnode)
@@ -46,6 +54,36 @@ namespace Block_s_Quest
                 return 1;
             else
                 return 2;
+        }
+
+        //LEVEL NODE SPECIFIC METHODS
+        //Level node constructor
+        public Road(int x, int y, int index, IServiceProvider Services, Texture2D tex)
+        {
+            rec = new Rectangle(x, y, 64, 64);
+            tileType = TileType.levelnode;
+            ContentManager Content = new ContentManager(Services, "Content");
+            level = new Level(Services, @"Content/Levels/Level" + index + ".txt", Content.Load<Texture2D>("Tiles/Node"));
+        }
+
+        public void loadLevel(Level l)
+        {
+            level = l;
+        }
+
+        public void deactivate()
+        {
+            active = false;
+        }
+
+        public bool isActive()
+        {
+            return active;
+        }
+
+        public Level enterLevel()
+        {
+            return level;
         }
     }
 }
