@@ -169,7 +169,7 @@ namespace Block_s_Quest
                 dwayne.UpgradeNumBullets();
 
             //Pause
-            if (kb.IsKeyDown(Keys.Escape) && !oldkb.IsKeyDown(Keys.Escape))
+            if (kb.IsKeyDown(Keys.Escape) && !oldkb.IsKeyDown(Keys.Escape) && gameState!=GameState.GameOver && gameState != GameState.Win)
                 gameState = GameState.Pause;
 
             switch(gameState)
@@ -551,7 +551,7 @@ namespace Block_s_Quest
                     spriteBatch.DrawString(font1, "YOU WIN", new Vector2(650, 500), Color.White);
                     break;
                 case GameState.Pause:
-                    spriteBatch.DrawString(font1, "PAUSE", new Vector2(600, 0), Color.White);
+                    spriteBatch.DrawString(font1, "PAUSE", new Vector2(800, 300), Color.White);
                     spriteBatch.DrawString(font, "Shop", new Vector2(750, 500), pause[0]);
                     spriteBatch.DrawString(font, "Resume", new Vector2(750, 600), pause[1]);
                     spriteBatch.DrawString(font, "Exit", new Vector2(750, 700), pause[2]);
