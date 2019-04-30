@@ -19,7 +19,7 @@ namespace Block_s_Quest
         SoundEffect sound;
         List<Bullet> bullet = new List<Bullet>();
         int numBullets;
-        float vel;
+        //float vel;
         int bulletTimer = 0;
         int rate = 30;
         enum bullType
