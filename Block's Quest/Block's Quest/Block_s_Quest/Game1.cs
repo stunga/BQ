@@ -26,6 +26,7 @@ namespace Block_s_Quest
         KeyboardState oldkb;
         GameState gameState;
         SpriteFont font, font1;
+        List<Diamond> collectables = new List<Diamond>();
         Rectangle selectionRectangle;
         Color background = Color.CornflowerBlue;
         Color op1 = Color.White;
@@ -34,16 +35,19 @@ namespace Block_s_Quest
         SoundEffect shootEffect, gameMusic;
         SoundEffectInstance musicInstance;
         int winTimer = 0, gameOverTimer = 0;
+        int spawnTimer = 0;
         UI gui;
         List<Bullet> bullets;
         List<Enemy> enemy;
         Boolean bug;
         Overworld ow;
+        Color[] pause = new Color[3];
+        int currentP = 0;
         //Boolean soundEffectPlayed;
 
         enum GameState
         {
-            MainMenu, Normal, Hardcore, Insane, GameOver, Win, Overworld
+            MainMenu, Normal, Hardcore, Insane, GameOver, Win, Overworld, Pause, Shop
         };
 
         enum bullType
@@ -81,6 +85,10 @@ namespace Block_s_Quest
             gameState = GameState.MainMenu;
             selectionRectangle = new Rectangle(750, 500, 0, 0);
             oldkb = Keyboard.GetState();
+
+            for (int x = 0; x < 3; x++)
+                pause[x] = Color.White;
+
             base.Initialize();
         }
 
@@ -111,10 +119,12 @@ namespace Block_s_Quest
             LoadLevel();
             LoadOverWorld();
         }
+        
 
         private void LoadLevel()
         {
             level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
+            level.setTexture(diamondt);
         }
 
         private void LoadOverWorld()
@@ -131,6 +141,7 @@ namespace Block_s_Quest
         {
             // TODO: Unload any non ContentManager content here
         }
+        
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -140,7 +151,7 @@ namespace Block_s_Quest
         {
             KeyboardState kb = Keyboard.GetState();
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             if (musicInstance.State != SoundState.Playing)
                 musicInstance.Play();
@@ -160,6 +171,199 @@ namespace Block_s_Quest
             //Tester for # Bullets Upgrade
             if (kb.IsKeyDown(Keys.O) && !oldkb.IsKeyDown(Keys.O))
                 dwayne.UpgradeNumBullets();
+
+            //Pause
+            if (kb.IsKeyDown(Keys.Escape) && !oldkb.IsKeyDown(Keys.Escape) && gameState!=GameState.GameOver && gameState != GameState.Win)
+                gameState = GameState.Pause;
+
+            switch(gameState)
+            {
+                case GameState.MainMenu:
+                        dwayne.setPos(-900, -900);
+                        if (selectionRectangle.Y < 500)
+                            selectionRectangle.Y = 700;
+                        if (selectionRectangle.Y > 700)
+                            selectionRectangle.Y = 500;
+                        if (kb.IsKeyDown(Keys.Up) && !oldkb.IsKeyDown(Keys.Up))
+                            selectionRectangle.Y -= 100;
+                        if (kb.IsKeyDown(Keys.Down) && !oldkb.IsKeyDown(Keys.Down))
+                            selectionRectangle.Y += 100;
+                        if (selectionRectangle.Y == 500)
+                        {
+                            op1 = Color.Blue;
+                            if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
+                                gameState = GameState.Overworld;
+                        }
+                        else
+                            op1 = Color.White;
+                    break;
+
+                case GameState.Overworld:
+                    ow.Update(gameTime, kb, oldkb);
+                    if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
+                        gameState = GameState.Normal;
+                    dwayne.setPos(950, 875);
+                    break;
+
+                case GameState.GameOver:
+                    gameOverTimer++;
+                    break;
+
+                case GameState.Win:
+                    winTimer++;
+                    break;
+
+                case GameState.Pause:
+                    if (kb.IsKeyDown(Keys.Up) && !oldkb.IsKeyDown(Keys.Up))
+                    {
+                        if (currentP - 1 < 0)
+                            currentP = 2;
+                        else
+                            currentP--;
+                    }
+                    else if (kb.IsKeyDown(Keys.Down) && !oldkb.IsKeyDown(Keys.Down))
+                    {
+                        if (currentP + 1 > 2)
+                            currentP = 0;
+                        else
+                            currentP++;
+                    }
+
+                    if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
+                    {
+                        switch (currentP)
+                        {
+                            case 0:
+                                gameState = GameState.Shop;
+                                break;
+                            case 1:
+                                gameState = GameState.Normal;
+                                break;
+                            case 2:
+                                this.Exit();
+                                break;
+                        }
+                        currentP = 0;
+
+                    }
+
+                    for (int x = 0; x < 3; x++)
+                    {
+                        if (x == currentP)
+                            pause[x] = Color.Blue;
+                        else
+                            pause[x] = Color.White;
+                    }
+                    break;
+
+                //GamePlay
+                default:
+                    //Checks for collisoin of enemies with bullets
+                    for (int i = dwayne.getBullets().Count - 1; i >= 0; i--)
+                    {
+                        bullets = dwayne.getBullets();
+                        enemy = level.getEnemies();
+
+                        //Removes Bullet if off Screen
+                        if (bullets[i].getRect().Y + 20 < 0)
+                            bullets.Remove(bullets[i]);
+                        else
+                        {
+                            for (int j = enemy.Count - 1; j >= 0; j--)
+                            {
+                                if (bullets[i].getRect().Intersects(enemy[j].getRect()))
+                                {
+                                    gui.score++;
+                                    enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
+                                }
+                            }
+                        }
+                    }
+                    for (int i = 0; i < bullets.Count; i++)
+                    {
+                        if (bullets[i].getRect().Y <= 0)
+                        {
+                            bullets.Remove(bullets[i]);
+                        }
+                    }
+                    if (levelIndex == 4)
+                    {
+                        spawnTimer++;
+                        if (spawnTimer % 180 == 0)
+                        {
+                            level.spawnEnemy(level.bossRect);
+                        }
+                    }
+                    level.Update();
+
+                    if (dwayne.isDead(enemy))
+                    {
+                        gameState = GameState.GameOver;
+                    }
+                    dwayne.Update(kb, gui);
+
+                    //Changes to next Level
+                    if (level.LevelEnd())
+                    {
+                        //gameState = GameState.Overworld;
+                        levelIndex++;
+                        gui.score = 0;
+
+                        if (levelIndex <= maxLevel)
+                            LoadLevel();
+                        else
+                            gameState = GameState.Win;
+                    }
+                    break;
+
+            }
+
+            /*
+            if (gameState == GameState.Pause)
+            {
+                if(kb.IsKeyDown(Keys.Up) && !oldkb.IsKeyDown(Keys.Up))
+                {
+                    if(currentP-1 < 0)
+                        currentP = 2;
+                    else
+                        currentP--;
+                }
+                else if (kb.IsKeyDown(Keys.Down) && !oldkb.IsKeyDown(Keys.Down))
+                {
+                    if (currentP + 1 > 2)
+                        currentP = 0;
+                    else
+                        currentP++;
+                }
+
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
+                {
+                    switch(currentP)
+                    {
+                        case 0:
+                            gameState = GameState.Shop;
+                            break;
+                        case 1:
+                            gameState = GameState.Normal;
+                            break;
+                        case 2:
+                            this.Exit();
+                            break;
+                    }
+                    currentP = 0;
+
+                }
+
+                for (int x = 0; x < 3; x++)
+                {
+                    if (x == currentP)
+                        pause[x] = Color.Blue;
+                    else
+                        pause[x] = Color.White;
+                }
+                    
+
+            }
 
             if (gameState == GameState.MainMenu)
             {
@@ -229,12 +433,30 @@ namespace Block_s_Quest
                         }
                     }      
                 }
+                for (int i = collectables.Count-1; i >= 0; i--)
+                {
+                    if (dwayne.getRect().Intersects(collectables[i].getRect()))
+                    {
+                        collectables.Remove(collectables[i]);
+                        level.setCollectables(collectables);
+                    }
+                }
                 for (int i = 0; i < bullets.Count; i++)
                 {
-                    if (bullets[i].getRect().Y <= 200)
+                    if (bullets[i].getRect().Y <= 0)
                     {
                         bullets.Remove(bullets[i]);
                     }
+                }
+                
+                if (levelIndex == 4)
+                {
+                     spawnTimer++;
+                     if (spawnTimer % 180 == 0 && level.BossEnemy())
+                     {
+                        level.spawnEnemy(level.bossRect);
+                        
+                     }
                 }
                 level.Update();
 
@@ -255,14 +477,10 @@ namespace Block_s_Quest
                         LoadLevel();
                     else
                         gameState = GameState.Win;
-
-                    winTimer++;
                 }
             }
-            if (gameState == GameState.GameOver)
-            {
-                gameOverTimer++;
-            }
+            */
+
             if (winTimer >= 180)
             {
                 gameState = GameState.MainMenu;
@@ -275,6 +493,7 @@ namespace Block_s_Quest
                 levelIndex = 0;
                 gameOverTimer = 0;
             }
+
             if (selectionRectangle.Y == 500)
             {
                 op1 = Color.Blue;
@@ -349,6 +568,12 @@ namespace Block_s_Quest
                     background = Color.LightSeaGreen;
                     spriteBatch.DrawString(font1, "YOU WIN", new Vector2(650, 500), Color.White);
                     break;
+                case GameState.Pause:
+                    spriteBatch.DrawString(font1, "PAUSE", new Vector2(800, 300), Color.White);
+                    spriteBatch.DrawString(font, "Shop", new Vector2(750, 500), pause[0]);
+                    spriteBatch.DrawString(font, "Resume", new Vector2(750, 600), pause[1]);
+                    spriteBatch.DrawString(font, "Exit", new Vector2(750, 700), pause[2]);
+                    break;
                 default:
                     background = Color.DarkSalmon;
                     level.Draw(gameTime, spriteBatch);
@@ -356,6 +581,13 @@ namespace Block_s_Quest
                     gui.show();
                     gui.Draw(spriteBatch, gameTime);
                     break;
+            }
+            if (gameState == GameState.Normal|| gameState == GameState.Hardcore|| gameState == GameState.Insane)
+            {
+                foreach (Diamond d in collectables)
+                {
+                    spriteBatch.Draw(diamondt, d.getRect(), d.getColor());
+                }
             }
             spriteBatch.End();
             base.Draw(gameTime);
