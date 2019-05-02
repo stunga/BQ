@@ -21,8 +21,7 @@ namespace Block_s_Quest
         Dwayne dwayne;
         Texture2D dwaynet, bulletT, diamondt, shopt, dpadt;
         KeyboardState kb;
-        Level level,owBuild;
-        int levelIndex, maxLevel;
+        Level level, owBuild;
         KeyboardState oldkb;
         GameState gameState;
         SpriteFont font, font1;
@@ -78,8 +77,6 @@ namespace Block_s_Quest
             graphics.ApplyChanges();
             IsMouseVisible = true;
             bug = true;
-            levelIndex = 1;
-            maxLevel = 4;
             bullets = new List<Bullet>();
             enemy = new List<Enemy>();
             gameState = GameState.MainMenu;
@@ -116,16 +113,16 @@ namespace Block_s_Quest
             gameMusic = Content.Load<SoundEffect>("Bakugan - Aquos Arena");
             musicInstance = gameMusic.CreateInstance();
             dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content);
-            LoadLevel();
+            //LoadLevel();
             LoadOverWorld();
         }
         
 
-        private void LoadLevel()
-        {
-            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
-            level.setTexture(diamondt);
-        }
+        //private void LoadLevel()
+        //{
+        //    level = new Level(Services, @"Content/Levels/Level/1.txt", Content.Load<Texture2D>("Tiles/Node"));
+        //    level.setTexture(diamondt);
+        //}
 
         private void LoadOverWorld()
         {
@@ -200,8 +197,14 @@ namespace Block_s_Quest
 
                 case GameState.Overworld:
                     ow.Update(gameTime, kb, oldkb);
-                    if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
-                        gameState = GameState.Normal;
+                    if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter) && ow.isActive()) 
+                    {
+                        if (ow.isLevel())
+                        {
+                            level = ow.returnLevel();
+                            gameState = GameState.Normal;
+                        }
+                    }
                     dwayne.setPos(950, 875);
                     break;
 
@@ -286,7 +289,7 @@ namespace Block_s_Quest
                             bullets.Remove(bullets[i]);
                         }
                     }
-                    if (levelIndex == 4)
+                    if (ow.isBoss())
                     {
                         spawnTimer++;
                         if (spawnTimer % 180 == 0)
@@ -305,14 +308,13 @@ namespace Block_s_Quest
                     //Changes to next Level
                     if (level.LevelEnd())
                     {
-                        //gameState = GameState.Overworld;
-                        levelIndex++;
+                        ow.deactivate();
                         gui.score = 0;
 
-                        if (levelIndex <= maxLevel)
-                            LoadLevel();
-                        else
+                        if (ow.isBoss())
                             gameState = GameState.Win;
+                        else
+                            gameState = GameState.Overworld;
                     }
                     break;
 
@@ -484,13 +486,11 @@ namespace Block_s_Quest
             if (winTimer >= 180)
             {
                 gameState = GameState.MainMenu;
-                levelIndex = 0;
                 winTimer = 0;
             }
             if (gameOverTimer >= 180)
             {
                 gameState = GameState.MainMenu;
-                levelIndex = 0;
                 gameOverTimer = 0;
             }
 
