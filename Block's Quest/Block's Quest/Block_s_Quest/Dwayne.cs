@@ -122,7 +122,7 @@ namespace Block_s_Quest
             if (numBullets == 4)
                 holder = 10;
             else
-                holder = center / numBullets;
+                holder = center  / numBullets;
 
             for (int x = 0; x < numBullets; x++)
             {
@@ -172,11 +172,21 @@ namespace Block_s_Quest
                 rate--;
         }
 
+        public int getFireRate()
+        {
+            return rate;
+        }
+
         //Increase # of Bullets
         public void UpgradeNumBullets()
         {
             if (numBullets != 4)
                 numBullets++;
+        }
+
+        public int getNumBullets()
+        {
+            return numBullets;
         }
 
         //Update
