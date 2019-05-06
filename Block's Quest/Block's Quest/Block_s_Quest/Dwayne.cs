@@ -168,7 +168,7 @@ namespace Block_s_Quest
         //Increases fire rate
         public void UpgradeFireRate()
         {
-            if(rate-10!=0)
+            if(rate-5!=0)
                 rate--;
         }
 

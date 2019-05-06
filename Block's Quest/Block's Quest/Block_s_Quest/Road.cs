@@ -65,7 +65,7 @@ namespace Block_s_Quest
             tileType = TileType.levelnode;
             ContentManager Content = new ContentManager(Services, "Content");
             index = levelindex;
-            level = new Level(Services, @"Content/Overworlds/Overworld/Levels/Level" + index + ".txt", Content.Load<Texture2D>("Tiles/Node"));
+            level = new Level(Services, @"Content/Levels/Level" + index + ".txt", Content.Load<Texture2D>("Tiles/Node"));
         }
 
         public void loadLevel(Level l)
