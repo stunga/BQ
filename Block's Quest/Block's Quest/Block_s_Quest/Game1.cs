@@ -170,7 +170,7 @@ namespace Block_s_Quest
         {
             KeyboardState kb = Keyboard.GetState();
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit(); 
             if (musicInstance.State != SoundState.Playing)
                 musicInstance.Play();
@@ -194,12 +194,12 @@ namespace Block_s_Quest
             //Tester for Wallet Class/Shop
             //Gives Diamonds
             if (kb.IsKeyDown(Keys.P) && !oldkb.IsKeyDown(Keys.P))
-                wallet.addDiamond(new Diamond(10, 10, bulletT, Diamond.type.green));
+                wallet.deposit(10);
 
             //Pause
             if (kb.IsKeyDown(Keys.Escape) && !oldkb.IsKeyDown(Keys.Escape) && gameState != GameState.GameOver && gameState != GameState.Win)
             {
-                if (gameState != GameState.Shop)
+                if (gameState != GameState.Shop && gameState != GameState.Pause)
                     prevState = gameState;
 
                 gameState = GameState.Pause;
@@ -315,6 +315,7 @@ namespace Block_s_Quest
                                 if (wallet.getBalance() >= cost[0])
                                 {
                                     dwayne.UpgradeFireRate();
+                                    wallet.withdraw(cost[0]);
                                     cost[0] += 10;
                                 }
                                 break;
@@ -322,6 +323,7 @@ namespace Block_s_Quest
                                 if (wallet.getBalance() >= cost[1])
                                 {
                                     dwayne.UpgradeNumBullets();
+                                    wallet.withdraw(cost[1]);
                                     cost[1] += 10;
                                 }
                                 break;
@@ -513,8 +515,9 @@ namespace Block_s_Quest
                         spriteBatch.Draw(bulletT, new Rectangle(items[x].X-20,items[x].Y-20,140,140), shop[x]);
                         spriteBatch.Draw(bulletT, items[x], Color.White);
                         spriteBatch.DrawString(font, itemName[x], new Vector2(items[x].X, items[x].Y + 150),Color.White);
+                        spriteBatch.DrawString(font, "Price: $" + cost[x], new Vector2(items[x].X, items[x].Y + 250), Color.White);
                     }
-                    spriteBatch.DrawString(font, "$"+wallet.getBalance(), new Vector2(200,300), Color.White);
+                    spriteBatch.DrawString(font, "$" + wallet.getBalance(), new Vector2(800, 500), Color.White);
                     break;
                 default:
                     background = Color.DarkSalmon;
