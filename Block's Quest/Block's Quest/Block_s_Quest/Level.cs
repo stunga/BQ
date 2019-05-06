@@ -20,8 +20,6 @@ namespace Block_s_Quest
         public Dictionary<int, Rectangle> TileSourceRecs;
         private List<Enemy> enemies = new List<Enemy>();
         private List<Enemy> deadEnemies = new List<Enemy>();
-        private List<Diamond> collectables = new List<Diamond>();
-        private Texture2D diamondT;
         public Rectangle bossRect = new Rectangle();
         private Overworld ow = new Overworld();
         Road[,] path = new Road[20, 10];
@@ -152,8 +150,33 @@ namespace Block_s_Quest
                 //Road
                 case 'r':
                     return LoadVarietyTile("Road", x, y);
-                //Node
-                case 'l':
+                //Levels
+                case '1':
+                    levelIndex = 1;
+                    return LoadVarietyTile("Node", x, y);
+                case '2':
+                    levelIndex = 2;
+                    return LoadVarietyTile("Node", x, y);
+                case '3':
+                    levelIndex = 3;
+                    return LoadVarietyTile("Node", x, y);
+                case '4':
+                    levelIndex = 4;
+                    return LoadVarietyTile("Node", x, y);
+                case '5':
+                    levelIndex = 5;
+                    return LoadVarietyTile("Node", x, y);
+                case '6':
+                    levelIndex = 6;
+                    return LoadVarietyTile("Node", x, y);
+                case '7':
+                    levelIndex = 7;
+                    return LoadVarietyTile("Node", x, y);
+                case '8':
+                    levelIndex = 8;
+                    return LoadVarietyTile("Node", x, y);
+                case '9':
+                    levelIndex = 9;
                     return LoadVarietyTile("Node", x, y);
                 //Start
                 case '+':
@@ -202,16 +225,9 @@ namespace Block_s_Quest
             return new Tile(tileSheetName, 0);
 
         }
-        public void setCollectables(List<Diamond> c)
-        {
-            collectables = c;
-        }
-        public void setTexture(Texture2D t)
-        {
-            diamondT = t;
-        }
         public void spawnEnemy(Rectangle bossRec)
         {
+            if (bossRec.Y <= 650)
             enemies.Add(new Enemy(enemyT, 5, Color.Green, 10, new Rectangle(bossRec.X, bossRec.Y + 70, 50, 50)));
         }
         private Tile LoadStartTile(int x, int y)
@@ -228,11 +244,11 @@ namespace Block_s_Quest
             enemies.Add(new Boss(bossT, 11, Color.White, 25, new Rectangle(450,200, 100, 100)));
             return new Tile(String.Empty, 0);
         }
-        public Tile LoadCollectable(Rectangle rec, Diamond.type type)
-        {
-            collectables.Add(new Diamond(rec.X, rec.Y, diamondT, type));
-            return new Tile(string.Empty, 0);
-        }
+        //public Tile LoadCollectable(Rectangle rec, Diamond.type type)
+        //{
+        //    collectables.Add(new Diamond(rec.X, rec.Y, diamondT, type));
+        //    return new Tile(string.Empty, 0);
+        //}
         public void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
         {
             DrawTiles(_spriteBatch);
@@ -274,10 +290,6 @@ namespace Block_s_Quest
                 if (t.Equals(typeof(Boss)))
                 {
                     bossRect = e.getRect();
-                }
-                if (e.isAlive ==  false)
-                {
-                    LoadCollectable(e.getRect(), Diamond.type.green);
                 }
             }
             

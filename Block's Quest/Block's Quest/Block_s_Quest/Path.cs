@@ -56,8 +56,13 @@ namespace Block_s_Quest
         //Used to see if specified road is a level node before attempting to load a level which may not exist
         public Boolean isLevel(int x, int y)
         {
-            if (path[x, y].getType() == 2)
-                return true;
+            if (path[x, y] != null)
+            {
+                if (path[x, y].getType() == 2)
+                    return true;
+                else
+                    return false;
+            }
             else
                 return false;
         }
@@ -71,6 +76,17 @@ namespace Block_s_Quest
         public Rectangle move(int x, int y)
         {
             return grid[x, y];
+        }
+
+        //Used to deactivate a level
+        public void deactivate(int x, int y)
+        {
+            path[x, y].deactivate();
+        }
+
+        public bool isActive(int x, int y)
+        {
+            return path[x, y].isActive();
         }
 
     }
