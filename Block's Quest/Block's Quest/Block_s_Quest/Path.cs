@@ -56,8 +56,13 @@ namespace Block_s_Quest
         //Used to see if specified road is a level node before attempting to load a level which may not exist
         public Boolean isLevel(int x, int y)
         {
-            if (path[x, y].getType() == 2)
-                return true;
+            if (path[x, y] != null)
+            {
+                if (path[x, y].getType() == 2)
+                    return true;
+                else
+                    return false;
+            }
             else
                 return false;
         }
