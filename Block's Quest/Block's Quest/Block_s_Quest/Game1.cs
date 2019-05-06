@@ -43,6 +43,7 @@ namespace Block_s_Quest
         Overworld ow;
         Color[] pause = new Color[3];
         int currentP = 0;
+        int owindex;
         //Boolean soundEffectPlayed;
 
         enum GameState
@@ -88,6 +89,8 @@ namespace Block_s_Quest
 
             for (int x = 0; x < 3; x++)
                 pause[x] = Color.White;
+
+            owindex = 1;
 
             base.Initialize();
         }

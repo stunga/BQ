@@ -44,7 +44,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Levels\Level1.txt">
+    <None Include="Overworlds\Overworld1\Levels\Level1.txt">
       <Name>Level1</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -81,7 +81,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Levels\Level2.txt">
+    <None Include="Overworlds\Overworld1\Levels\Level2.txt">
       <Name>Level2</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -118,13 +118,13 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <None Include="Overworlds\Overworld1.txt">
+    <None Include="Overworlds\Overworld1\Overworld1.txt">
       <Name>Overworld1</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Levels\Level4.txt">
+    <None Include="Overworlds\Overworld1\Levels\Level4.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>Level4</Name>
     </None>
@@ -137,7 +137,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Levels\Level3.txt">
+    <None Include="Overworlds\Overworld1\Levels\Level3.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>Level3</Name>
     </None>
