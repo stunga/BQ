@@ -309,7 +309,7 @@ namespace Block_s_Quest
                             bullets.Remove(bullets[i]);
                         }
                     }
-                    if (ow.isBoss())
+                    if (ow.isBoss() && level.BossEnemy())
                     {
                         spawnTimer++;
                         if (spawnTimer % 180 == 0)

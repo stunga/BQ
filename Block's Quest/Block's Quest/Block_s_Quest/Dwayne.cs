@@ -122,7 +122,7 @@ namespace Block_s_Quest
             if (numBullets == 4)
                 holder = 10;
             else
-                holder = center / numBullets;
+                holder = center  / numBullets;
 
             for (int x = 0; x < numBullets; x++)
             {
