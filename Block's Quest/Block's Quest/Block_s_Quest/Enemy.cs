@@ -18,7 +18,6 @@ namespace Block_s_Quest
         private Rectangle rect;
         public Boolean isAlive = true;
         Boolean spawnCoins;
-        //public SpriteFont font; //Implement numbers on enemies to show hitpoints once bullet damage is implemented.
         public Enemy(Texture2D i, int vX, Color col, int hitP, Rectangle r)
         {
             img = i;
@@ -28,7 +27,7 @@ namespace Block_s_Quest
             rect = r;
             velocityY = 0;
         }
-        public void decreaseHitPoints(int bulletDamage)
+        public int decreaseHitPoints(int bulletDamage)
         {
             this.hitpoints -= bulletDamage;
             if (this.hitpoints <= 0)
@@ -39,6 +38,7 @@ namespace Block_s_Quest
             {
                 isAlive = true;
             }
+            return hitpoints;
         }
         public Rectangle getRect()
         {

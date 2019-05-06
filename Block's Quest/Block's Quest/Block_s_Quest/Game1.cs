@@ -21,7 +21,8 @@ namespace Block_s_Quest
         Dwayne dwayne;
         Texture2D dwaynet, bulletT, diamondt, shopt, dpadt;
         KeyboardState kb;
-        Level level, owBuild;
+        Level level,owBuild;
+        int levelIndex, maxLevel;
         KeyboardState oldkb;
         GameState gameState;
         SpriteFont font, font1;
@@ -77,6 +78,8 @@ namespace Block_s_Quest
             graphics.ApplyChanges();
             IsMouseVisible = true;
             bug = true;
+            levelIndex = 1;
+            maxLevel = 4;
             bullets = new List<Bullet>();
             enemy = new List<Enemy>();
             gameState = GameState.MainMenu;
@@ -118,6 +121,10 @@ namespace Block_s_Quest
         }
         
 
+        private void LoadLevel()
+        {
+            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
+        }
         //private void LoadLevel()
         //{
         //    level = new Level(Services, @"Content/Levels/Level/1.txt", Content.Load<Texture2D>("Tiles/Node"));
@@ -148,8 +155,8 @@ namespace Block_s_Quest
         {
             KeyboardState kb = Keyboard.GetState();
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
+                this.Exit(); 
             if (musicInstance.State != SoundState.Playing)
                 musicInstance.Play();
 
@@ -277,9 +284,22 @@ namespace Block_s_Quest
                                 if (bullets[i].getRect().Intersects(enemy[j].getRect()))
                                 {
                                     gui.score++;
+                                    if (enemy[j].decreaseHitPoints(bullets[i].getBulletDamage()) <= 0)
+                                    {
+                                        collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, Diamond.type.blue));
+                                    }
                                     enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
                                 }
                             }
+                        }
+                    }
+                    for (int i = collectables.Count - 1; i >= 0; i--)
+                    {
+                        collectables[i].Update();
+                        if (dwayne.getRect().Intersects(collectables[i].getRect()))
+                        {
+                            collectables.Remove(collectables[i]);
+                            gui.UpdateDiamondCount();
                         }
                     }
                     for (int i = 0; i < bullets.Count; i++)
@@ -298,7 +318,7 @@ namespace Block_s_Quest
                         }
                     }
                     level.Update();
-
+                    
                     if (dwayne.isDead(enemy))
                     {
                         gameState = GameState.GameOver;
@@ -486,11 +506,13 @@ namespace Block_s_Quest
             if (winTimer >= 180)
             {
                 gameState = GameState.MainMenu;
+                levelIndex = 0;
                 winTimer = 0;
             }
             if (gameOverTimer >= 180)
             {
                 gameState = GameState.MainMenu;
+                levelIndex = 0;
                 gameOverTimer = 0;
             }
 
