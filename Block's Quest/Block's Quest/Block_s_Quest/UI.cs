@@ -35,7 +35,7 @@ namespace Block_s_Quest
             chic = Color.Magenta;
             waterc = Color.DarkBlue;
             earthc = Color.Gray;
-            diamondamount =0;
+            diamondamount = 0;
             diamondamountloc = new Vector2(50, 12);
             dpad = new Rectangle(40, 870, 100, 100);
             earth = new Rectangle(75, 880, 25, 20);
