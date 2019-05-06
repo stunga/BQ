@@ -26,12 +26,32 @@ namespace Block_s_Quest
         Rectangle rec;
         Texture tex;
         Color color;
+        int velocityX = 5, velocityY = 0;
         //Constructor
         public Diamond(int x, int y, Texture t, type c)
         {
             rec = new Rectangle(x - 10, y - 10, 20, 20);
             tex = t;
             col = c;
+        }
+        public void Update()
+        {
+            if (this.rec.Y < 1000-this.rec.Height)
+            {
+                Double acceleration = 1;
+                rec.Y += (velocityY / 9);
+                rec.X += velocityX;
+                velocityY += (int)acceleration;
+                if (rec.X <= 0 || rec.X + rec.Width >= 1800)
+                {
+                    velocityX *= -1;
+                }
+            }
+            else
+            {
+                velocityX = 0;
+                velocityY = 0;    
+            }
         }
         public Color getColor()
         {

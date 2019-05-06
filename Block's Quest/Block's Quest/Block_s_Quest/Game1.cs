@@ -124,7 +124,6 @@ namespace Block_s_Quest
         private void LoadLevel()
         {
             level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
-            level.setTexture(diamondt);
         }
 
         private void LoadOverWorld()
@@ -151,8 +150,8 @@ namespace Block_s_Quest
         {
             KeyboardState kb = Keyboard.GetState();
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
+                this.Exit(); 
             if (musicInstance.State != SoundState.Playing)
                 musicInstance.Play();
 
@@ -274,9 +273,22 @@ namespace Block_s_Quest
                                 if (bullets[i].getRect().Intersects(enemy[j].getRect()))
                                 {
                                     gui.score++;
+                                    if (enemy[j].decreaseHitPoints(bullets[i].getBulletDamage()) <= 0)
+                                    {
+                                        collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, Diamond.type.blue));
+                                    }
                                     enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
                                 }
                             }
+                        }
+                    }
+                    for (int i = collectables.Count - 1; i >= 0; i--)
+                    {
+                        collectables[i].Update();
+                        if (dwayne.getRect().Intersects(collectables[i].getRect()))
+                        {
+                            collectables.Remove(collectables[i]);
+                            gui.UpdateDiamondCount();
                         }
                     }
                     for (int i = 0; i < bullets.Count; i++)
@@ -286,7 +298,7 @@ namespace Block_s_Quest
                             bullets.Remove(bullets[i]);
                         }
                     }
-                    if (levelIndex == 4)
+                    if (levelIndex == 4 && level.BossEnemy())
                     {
                         spawnTimer++;
                         if (spawnTimer % 180 == 0)
@@ -295,7 +307,7 @@ namespace Block_s_Quest
                         }
                     }
                     level.Update();
-
+                    
                     if (dwayne.isDead(enemy))
                     {
                         gameState = GameState.GameOver;
@@ -433,14 +445,7 @@ namespace Block_s_Quest
                         }
                     }      
                 }
-                for (int i = collectables.Count-1; i >= 0; i--)
-                {
-                    if (dwayne.getRect().Intersects(collectables[i].getRect()))
-                    {
-                        collectables.Remove(collectables[i]);
-                        level.setCollectables(collectables);
-                    }
-                }
+               
                 for (int i = 0; i < bullets.Count; i++)
                 {
                     if (bullets[i].getRect().Y <= 0)
