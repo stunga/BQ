@@ -168,8 +168,13 @@ namespace Block_s_Quest
         //Increases fire rate
         public void UpgradeFireRate()
         {
-            if(rate-10!=0)
+            if(rate-5!=0)
                 rate--;
+        }
+
+        public int getFireRate()
+        {
+            return rate;
         }
 
         //Increase # of Bullets
@@ -177,6 +182,11 @@ namespace Block_s_Quest
         {
             if (numBullets != 4)
                 numBullets++;
+        }
+
+        public int getNumBullets()
+        {
+            return numBullets;
         }
 
         //Update

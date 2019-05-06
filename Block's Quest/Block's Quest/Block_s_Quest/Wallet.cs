@@ -13,30 +13,45 @@ namespace Block_s_Quest
 {
     class Wallet
     {
-        List<Diamond> wallet;
+        int balance;
 
         //Constructor
         public Wallet()
         {
-            wallet = new List<Diamond>();
+            balance = 0;
         }
         
-        //Add currency to wallet
+        //Add currency to wallet based on diamonds
         public void addDiamond(Diamond d)
         {
-            wallet.Add(d);
+            balance += d.getValue();
         }
 
-        //Gets total value of diamonds in wallet
+        //Add currency to wallet based on int value
+        public void deposit(int i)
+        {
+            balance += i;
+        }
+
+        //Subtract currency
+        public void withdraw(int i)
+        {
+            balance -= i;
+        }
+
+        //Gets total balance in wallet
         public int getBalance()
         {
-            int temp = 0;
+            return balance;
+        }
 
-            //Gets the value of each diamon and adds it together
-            foreach (Diamond i in wallet)
-                temp += i.getValue();
-
-            return temp;
+        //Determines if player can afford an upgrade
+        public bool afford(int cost)
+        {
+            if (balance >= cost)
+                return true;
+            else
+                return false;
         }
 
     }

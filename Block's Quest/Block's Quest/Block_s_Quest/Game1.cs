@@ -24,7 +24,7 @@ namespace Block_s_Quest
         Level level,owBuild;
         int levelIndex, maxLevel;
         KeyboardState oldkb;
-        GameState gameState;
+        GameState gameState,prevState;
         SpriteFont font, font1;
         List<Diamond> collectables = new List<Diamond>();
         Rectangle selectionRectangle;
@@ -42,7 +42,13 @@ namespace Block_s_Quest
         Boolean bug;
         Overworld ow;
         Color[] pause = new Color[3];
-        int currentP = 0;
+        Color[] shop = new Color[2];
+        Rectangle[] items = new Rectangle[2];
+        string[] itemName = new string[2];
+        int current = 0;
+        Wallet wallet = new Wallet();
+        int[] cost = new int[2];
+        bool[] upgradeable = new bool[2];
         //Boolean soundEffectPlayed;
 
         enum GameState
@@ -88,6 +94,17 @@ namespace Block_s_Quest
 
             for (int x = 0; x < 3; x++)
                 pause[x] = Color.White;
+
+            for (int x = 0; x < 2; x++)
+            {
+                upgradeable[x] = true;
+                cost[x] = 10;
+                items[x] = new Rectangle(500 + (x * 200), 600, 100, 100);
+                shop[x] = Color.DarkSalmon;
+            }
+
+            itemName[0] = "Upgrade \n Fire Rate";
+            itemName[1] = "Upgrade \n # of Bullets";
 
             base.Initialize();
         }
@@ -155,7 +172,7 @@ namespace Block_s_Quest
         {
             KeyboardState kb = Keyboard.GetState();
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit(); 
             if (musicInstance.State != SoundState.Playing)
                 musicInstance.Play();
@@ -176,9 +193,19 @@ namespace Block_s_Quest
             if (kb.IsKeyDown(Keys.O) && !oldkb.IsKeyDown(Keys.O))
                 dwayne.UpgradeNumBullets();
 
+            //Tester for Wallet Class/Shop
+            //Gives Diamonds
+            if (kb.IsKeyDown(Keys.P) && !oldkb.IsKeyDown(Keys.P))
+                wallet.deposit(10);
+
             //Pause
-            if (kb.IsKeyDown(Keys.Escape) && !oldkb.IsKeyDown(Keys.Escape) && gameState!=GameState.GameOver && gameState != GameState.Win)
+            if (kb.IsKeyDown(Keys.Escape) && !oldkb.IsKeyDown(Keys.Escape) && gameState != GameState.GameOver && gameState != GameState.Win)
+            {
+                if (gameState != GameState.Shop && gameState != GameState.Pause)
+                    prevState = gameState;
+
                 gameState = GameState.Pause;
+            }
 
             switch(gameState)
             {
@@ -224,45 +251,99 @@ namespace Block_s_Quest
                     break;
 
                 case GameState.Pause:
-                    if (kb.IsKeyDown(Keys.Up) && !oldkb.IsKeyDown(Keys.Up))
+                    if ((kb.IsKeyDown(Keys.Up) && !oldkb.IsKeyDown(Keys.Up)) || (kb.IsKeyDown(Keys.W) && !oldkb.IsKeyDown(Keys.W)))
                     {
-                        if (currentP - 1 < 0)
-                            currentP = 2;
+                        if (current - 1 < 0)
+                            current = 2;
                         else
-                            currentP--;
+                            current--;
                     }
-                    else if (kb.IsKeyDown(Keys.Down) && !oldkb.IsKeyDown(Keys.Down))
+                    else if ((kb.IsKeyDown(Keys.Down) && !oldkb.IsKeyDown(Keys.Down)) || (kb.IsKeyDown(Keys.S) && !oldkb.IsKeyDown(Keys.S)))
                     {
-                        if (currentP + 1 > 2)
-                            currentP = 0;
+                        if (current + 1 > 2)
+                            current = 0;
                         else
-                            currentP++;
+                            current++;
                     }
 
                     if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
                     {
-                        switch (currentP)
+                        switch (current)
                         {
                             case 0:
                                 gameState = GameState.Shop;
                                 break;
                             case 1:
-                                gameState = GameState.Normal;
+                                gameState = prevState;
                                 break;
                             case 2:
                                 this.Exit();
                                 break;
                         }
-                        currentP = 0;
+                        current = 0;
 
                     }
 
                     for (int x = 0; x < 3; x++)
                     {
-                        if (x == currentP)
+                        if (x == current)
                             pause[x] = Color.Blue;
                         else
                             pause[x] = Color.White;
+                    }
+                    break;
+
+                case GameState.Shop:
+                    if ((kb.IsKeyDown(Keys.Right) && !oldkb.IsKeyDown(Keys.Right)) || (kb.IsKeyDown(Keys.D) && !oldkb.IsKeyDown(Keys.D)))
+                    {
+                        if (current - 1 < 0)
+                            current = 1;
+                        else
+                            current--;
+                    }
+                    else if ((kb.IsKeyDown(Keys.Left) && !oldkb.IsKeyDown(Keys.Left)) || (kb.IsKeyDown(Keys.A) && !oldkb.IsKeyDown(Keys.A)))
+                    {
+                        if (current + 1 > 1)
+                            current = 0;
+                        else
+                            current++;
+                    }
+
+                    if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
+                    {
+                        switch (current)
+                        {
+                            case 0:
+                                if (wallet.afford(cost[0]) && upgradeable[0])
+                                {
+                                    dwayne.UpgradeFireRate();
+                                    wallet.withdraw(cost[0]);
+                                    cost[0] += 10;
+
+                                    if (dwayne.getFireRate() == 5)
+                                        upgradeable[0] = false;
+                                }
+                                break;
+                            case 1:
+                                if (wallet.afford(cost[1]) && upgradeable[1])
+                                {
+                                    dwayne.UpgradeNumBullets();
+                                    wallet.withdraw(cost[1]);
+                                    cost[1] += 10;
+
+                                    if (dwayne.getNumBullets() == 4)
+                                        upgradeable[1] = false;
+                                }
+                                break;
+                        }
+                    }
+
+                    for (int x = 0; x < 2; x++)
+                    {
+                        if (x == current)
+                            shop[x] = Color.Yellow;
+                        else
+                            shop[x] = Color.DarkSalmon;
                     }
                     break;
 
@@ -340,169 +421,8 @@ namespace Block_s_Quest
 
             }
 
-            /*
-            if (gameState == GameState.Pause)
-            {
-                if(kb.IsKeyDown(Keys.Up) && !oldkb.IsKeyDown(Keys.Up))
-                {
-                    if(currentP-1 < 0)
-                        currentP = 2;
-                    else
-                        currentP--;
-                }
-                else if (kb.IsKeyDown(Keys.Down) && !oldkb.IsKeyDown(Keys.Down))
-                {
-                    if (currentP + 1 > 2)
-                        currentP = 0;
-                    else
-                        currentP++;
-                }
 
-                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
-                {
-                    switch(currentP)
-                    {
-                        case 0:
-                            gameState = GameState.Shop;
-                            break;
-                        case 1:
-                            gameState = GameState.Normal;
-                            break;
-                        case 2:
-                            this.Exit();
-                            break;
-                    }
-                    currentP = 0;
-
-                }
-
-                for (int x = 0; x < 3; x++)
-                {
-                    if (x == currentP)
-                        pause[x] = Color.Blue;
-                    else
-                        pause[x] = Color.White;
-                }
-                    
-
-            }
-
-            if (gameState == GameState.MainMenu)
-            {
-                dwayne.setPos(-900, -900);
-                if (selectionRectangle.Y < 500)
-                {
-                    selectionRectangle.Y = 700;
-                }
-                if (selectionRectangle.Y > 700)
-                {
-                    selectionRectangle.Y = 500;
-                }
-                if (kb.IsKeyDown(Keys.Up) && !oldkb.IsKeyDown(Keys.Up))
-                {
-                    selectionRectangle.Y -= 100;
-                }
-                if (kb.IsKeyDown(Keys.Down) && !oldkb.IsKeyDown(Keys.Down))
-                {
-                    selectionRectangle.Y += 100;
-                }
-                if (selectionRectangle.Y == 500)
-                {
-                    op1 = Color.Blue;
-                    if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
-                    {
-                        gameState = GameState.Overworld;
-                    }
-                }
-                else
-                {
-                    op1 = Color.White;
-                }
-            }
-            else if(gameState == GameState.Overworld)
-            {
-                ow.Update(gameTime, kb, oldkb);
-                if(kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
-                {
-                    if(ow.isLevel())
-                    {
-                        level = ow.returnLevel();
-                    }
-                    gameState = GameState.Normal;
-                }
-                dwayne.setPos(950, 875);
-            }
-            else       
-            {
-                //Checks for collisoin of enemies with bullets
-                for (int i = dwayne.getBullets().Count - 1; i >= 0; i--)
-                {
-                    bullets = dwayne.getBullets();
-                    enemy = level.getEnemies();
-
-                    //Removes Bullet if off Screen
-                    if (bullets[i].getRect().Y + 20 < 0)
-                        bullets.Remove(bullets[i]);
-                    else
-                    {
-                        for (int j = enemy.Count - 1; j >= 0; j--)
-                        {
-                            if (bullets[i].getRect().Intersects(enemy[j].getRect()))
-                            {
-                                gui.score++;
-                                enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
-                            }
-                        }
-                    }      
-                }
-                for (int i = collectables.Count-1; i >= 0; i--)
-                {
-                    if (dwayne.getRect().Intersects(collectables[i].getRect()))
-                    {
-                        collectables.Remove(collectables[i]);
-                        level.setCollectables(collectables);
-                    }
-                }
-                for (int i = 0; i < bullets.Count; i++)
-                {
-                    if (bullets[i].getRect().Y <= 0)
-                    {
-                        bullets.Remove(bullets[i]);
-                    }
-                }
-                
-                if (levelIndex == 4)
-                {
-                     spawnTimer++;
-                     if (spawnTimer % 180 == 0 && level.BossEnemy())
-                     {
-                        level.spawnEnemy(level.bossRect);
-                        
-                     }
-                }
-                level.Update();
-
-                if (dwayne.isDead(enemy))
-                {
-                    gameState = GameState.GameOver;
-                }
-                dwayne.Update(kb, gui);
-
-                //Changes to next Level
-                if (level.LevelEnd())
-                {
-                    //gameState = GameState.Overworld;
-                    levelIndex++;
-                    gui.score = 0;
-
-                    if (levelIndex <= maxLevel)
-                        LoadLevel();
-                    else
-                        gameState = GameState.Win;
-                }
-            }
-            */
-
+            //Conditions
             if (winTimer >= 180)
             {
                 gameState = GameState.MainMenu;
@@ -595,6 +515,21 @@ namespace Block_s_Quest
                     spriteBatch.DrawString(font, "Shop", new Vector2(750, 500), pause[0]);
                     spriteBatch.DrawString(font, "Resume", new Vector2(750, 600), pause[1]);
                     spriteBatch.DrawString(font, "Exit", new Vector2(750, 700), pause[2]);
+                    break;
+                case GameState.Shop:
+                    spriteBatch.DrawString(font1, "SHOP", new Vector2(800, 300), Color.White);
+                    for(int x=0;x<2;x++)
+                    {
+                        spriteBatch.Draw(bulletT, new Rectangle(items[x].X-20,items[x].Y-20,140,140), shop[x]);
+                        spriteBatch.Draw(bulletT, items[x], Color.White);
+                        spriteBatch.DrawString(font, itemName[x], new Vector2(items[x].X, items[x].Y + 150),Color.White);
+
+                        if(upgradeable[x])
+                            spriteBatch.DrawString(font, "Price: $" + cost[x], new Vector2(items[x].X, items[x].Y + 250), Color.White);
+                        else
+                            spriteBatch.DrawString(font, "Max Upgrade Reached", new Vector2(items[x].X, items[x].Y + 250), Color.White);
+                    }
+                    spriteBatch.DrawString(font, "$" + wallet.getBalance(), new Vector2(800, 500), Color.White);
                     break;
                 default:
                     background = Color.DarkSalmon;
