@@ -312,7 +312,7 @@ namespace Block_s_Quest
                         switch (current)
                         {
                             case 0:
-                                if (wallet.getBalance() >= cost[0])
+                                if (wallet.afford(cost[0]))
                                 {
                                     dwayne.UpgradeFireRate();
                                     wallet.withdraw(cost[0]);
@@ -320,7 +320,7 @@ namespace Block_s_Quest
                                 }
                                 break;
                             case 1:
-                                if (wallet.getBalance() >= cost[1])
+                                if (wallet.afford(cost[1]))
                                 {
                                     dwayne.UpgradeNumBullets();
                                     wallet.withdraw(cost[1]);
