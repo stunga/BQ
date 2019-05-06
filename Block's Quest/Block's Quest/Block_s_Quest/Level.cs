@@ -150,8 +150,33 @@ namespace Block_s_Quest
                 //Road
                 case 'r':
                     return LoadVarietyTile("Road", x, y);
-                //Node
-                case 'l':
+                //Levels
+                case '1':
+                    levelIndex = 1;
+                    return LoadVarietyTile("Node", x, y);
+                case '2':
+                    levelIndex = 2;
+                    return LoadVarietyTile("Node", x, y);
+                case '3':
+                    levelIndex = 3;
+                    return LoadVarietyTile("Node", x, y);
+                case '4':
+                    levelIndex = 4;
+                    return LoadVarietyTile("Node", x, y);
+                case '5':
+                    levelIndex = 5;
+                    return LoadVarietyTile("Node", x, y);
+                case '6':
+                    levelIndex = 6;
+                    return LoadVarietyTile("Node", x, y);
+                case '7':
+                    levelIndex = 7;
+                    return LoadVarietyTile("Node", x, y);
+                case '8':
+                    levelIndex = 8;
+                    return LoadVarietyTile("Node", x, y);
+                case '9':
+                    levelIndex = 9;
                     return LoadVarietyTile("Node", x, y);
                 //Start
                 case '+':

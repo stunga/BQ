@@ -73,5 +73,16 @@ namespace Block_s_Quest
             return grid[x, y];
         }
 
+        //Used to deactivate a level
+        public void deactivate(int x, int y)
+        {
+            path[x, y].deactivate();
+        }
+
+        public bool isActive(int x, int y)
+        {
+            return path[x, y].isActive();
+        }
+
     }
 }

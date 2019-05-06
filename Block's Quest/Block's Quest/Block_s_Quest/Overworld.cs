@@ -18,7 +18,8 @@ namespace Block_s_Quest
         Path path;
         List<Level> levels = new List<Level>();
         Level currlevel;
-        int x, y;
+        int x, y, bosslevelindex;
+        int currlevelindex = 0;
 
         //Needed for level class
         public Overworld()
@@ -28,11 +29,23 @@ namespace Block_s_Quest
         //Basic Constructor
         public Overworld(Texture2D t, Texture2D p, Path pa, IServiceProvider Services)
         {
+            x = 0;
+            y = 0;
             background = t;
             playert = p;
             path = pa;
-            int levelcounter = 1;
             player = pa.getStart();
+            for(int i = 0; i < 20; i++)
+            {
+                for(int j = 0; j < 10; j++)
+                {
+                    if (path.isLevel(i, j))
+                    {
+                        levels.Add(path.load(i, j));
+                    }
+                }
+            }
+            bosslevelindex = levels.Count - 1;
         }
 
         public void Update(GameTime gt, KeyboardState kb, KeyboardState oldkb)
@@ -59,6 +72,16 @@ namespace Block_s_Quest
                 player = path.move(x, y - 1);
             }
 
+            //Tracks current level index
+            //if(isLevel())
+            //{
+            //    foreach(Level l in levels)
+            //    {
+            //        if (returnLevel() == l)
+            //            currlevelindex = levels.IndexOf(l);
+            //    }
+            //}
+
             //Makes sure that dwaynes rectangle is never null because of old glitch where he would be able to move to an empty space and it would crash the game
                 if (player == null)
                 player = prev;
@@ -73,6 +96,24 @@ namespace Block_s_Quest
         public bool isLevel()
         {
             if (path.isLevel(x, y))
+                return true;
+            else
+                return false;
+        }
+        
+        public void deactivate()
+        {
+            path.deactivate(x, y);
+        }
+
+        public bool isActive()
+        {
+            return path.isActive(x, y);
+        }
+
+        public bool isBoss()
+        {
+            if (currlevelindex == bosslevelindex)
                 return true;
             else
                 return false;

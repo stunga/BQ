@@ -116,7 +116,7 @@ namespace Block_s_Quest
             gameMusic = Content.Load<SoundEffect>("Bakugan - Aquos Arena");
             musicInstance = gameMusic.CreateInstance();
             dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content);
-            LoadLevel();
+            //LoadLevel();
             LoadOverWorld();
         }
         
@@ -125,6 +125,11 @@ namespace Block_s_Quest
         {
             level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
         }
+        //private void LoadLevel()
+        //{
+        //    level = new Level(Services, @"Content/Levels/Level/1.txt", Content.Load<Texture2D>("Tiles/Node"));
+        //    level.setTexture(diamondt);
+        //}
 
         private void LoadOverWorld()
         {
@@ -199,8 +204,14 @@ namespace Block_s_Quest
 
                 case GameState.Overworld:
                     ow.Update(gameTime, kb, oldkb);
-                    if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
-                        gameState = GameState.Normal;
+                    if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter) && ow.isActive()) 
+                    {
+                        if (ow.isLevel())
+                        {
+                            level = ow.returnLevel();
+                            gameState = GameState.Normal;
+                        }
+                    }
                     dwayne.setPos(950, 875);
                     break;
 
@@ -298,7 +309,7 @@ namespace Block_s_Quest
                             bullets.Remove(bullets[i]);
                         }
                     }
-                    if (levelIndex == 4 && level.BossEnemy())
+                    if (ow.isBoss())
                     {
                         spawnTimer++;
                         if (spawnTimer % 180 == 0)
@@ -317,14 +328,13 @@ namespace Block_s_Quest
                     //Changes to next Level
                     if (level.LevelEnd())
                     {
-                        //gameState = GameState.Overworld;
-                        levelIndex++;
+                        ow.deactivate();
                         gui.score = 0;
 
-                        if (levelIndex <= maxLevel)
-                            LoadLevel();
-                        else
+                        if (ow.isBoss())
                             gameState = GameState.Win;
+                        else
+                            gameState = GameState.Overworld;
                     }
                     break;
 
@@ -445,7 +455,14 @@ namespace Block_s_Quest
                         }
                     }      
                 }
-               
+                for (int i = collectables.Count-1; i >= 0; i--)
+                {
+                    if (dwayne.getRect().Intersects(collectables[i].getRect()))
+                    {
+                        collectables.Remove(collectables[i]);
+                        level.setCollectables(collectables);
+                    }
+                }
                 for (int i = 0; i < bullets.Count; i++)
                 {
                     if (bullets[i].getRect().Y <= 0)

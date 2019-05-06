@@ -26,6 +26,7 @@ namespace Block_s_Quest
         //LEVEL NODE SPECIFIC DATA
         Level level;
         bool active = true;
+        int index;
 
         //GENERAL METHODS
         //Default constructor
@@ -58,11 +59,12 @@ namespace Block_s_Quest
 
         //LEVEL NODE SPECIFIC METHODS
         //Level node constructor
-        public Road(int x, int y, int index, IServiceProvider Services, Texture2D tex)
+        public Road(int x, int y, int i, IServiceProvider Services, Texture2D tex)
         {
             rec = new Rectangle(x, y, 64, 64);
             tileType = TileType.levelnode;
             ContentManager Content = new ContentManager(Services, "Content");
+            index = i;
             level = new Level(Services, @"Content/Levels/Level" + index + ".txt", Content.Load<Texture2D>("Tiles/Node"));
         }
 
@@ -84,6 +86,11 @@ namespace Block_s_Quest
         public Level enterLevel()
         {
             return level;
+        }
+
+        public int returnIndex()
+        {
+            return index;
         }
     }
 }
