@@ -48,6 +48,7 @@ namespace Block_s_Quest
         int current = 0;
         Wallet wallet = new Wallet();
         int[] cost = new int[2];
+        bool[] upgradeable = new bool[2];
         //Boolean soundEffectPlayed;
 
         enum GameState
@@ -96,6 +97,7 @@ namespace Block_s_Quest
 
             for (int x = 0; x < 2; x++)
             {
+                upgradeable[x] = true;
                 cost[x] = 10;
                 items[x] = new Rectangle(500 + (x * 200), 600, 100, 100);
                 shop[x] = Color.DarkSalmon;
@@ -312,19 +314,25 @@ namespace Block_s_Quest
                         switch (current)
                         {
                             case 0:
-                                if (wallet.afford(cost[0]))
+                                if (wallet.afford(cost[0]) && upgradeable[0])
                                 {
                                     dwayne.UpgradeFireRate();
                                     wallet.withdraw(cost[0]);
                                     cost[0] += 10;
+
+                                    if (dwayne.getFireRate() == 5)
+                                        upgradeable[0] = false;
                                 }
                                 break;
                             case 1:
-                                if (wallet.afford(cost[1]))
+                                if (wallet.afford(cost[1]) && upgradeable[1])
                                 {
                                     dwayne.UpgradeNumBullets();
                                     wallet.withdraw(cost[1]);
                                     cost[1] += 10;
+
+                                    if (dwayne.getNumBullets() == 4)
+                                        upgradeable[1] = false;
                                 }
                                 break;
                         }
@@ -515,7 +523,11 @@ namespace Block_s_Quest
                         spriteBatch.Draw(bulletT, new Rectangle(items[x].X-20,items[x].Y-20,140,140), shop[x]);
                         spriteBatch.Draw(bulletT, items[x], Color.White);
                         spriteBatch.DrawString(font, itemName[x], new Vector2(items[x].X, items[x].Y + 150),Color.White);
-                        spriteBatch.DrawString(font, "Price: $" + cost[x], new Vector2(items[x].X, items[x].Y + 250), Color.White);
+
+                        if(upgradeable[x])
+                            spriteBatch.DrawString(font, "Price: $" + cost[x], new Vector2(items[x].X, items[x].Y + 250), Color.White);
+                        else
+                            spriteBatch.DrawString(font, "Max Upgrade Reached", new Vector2(items[x].X, items[x].Y + 250), Color.White);
                     }
                     spriteBatch.DrawString(font, "$" + wallet.getBalance(), new Vector2(800, 500), Color.White);
                     break;
