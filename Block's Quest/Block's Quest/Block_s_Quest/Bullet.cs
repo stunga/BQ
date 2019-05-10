@@ -23,6 +23,7 @@ namespace Block_s_Quest
             earth,
             water
         };
+        bool active = true;
 
         bullType type = bullType.chi;
         Color col;
@@ -76,6 +77,18 @@ namespace Block_s_Quest
             }
 
         }
+
+        //***USED TO PREVENT INFINITE DAMAGE WHILE BULLET IS INTERSECTING AN ENEMY***
+        public bool isActive()
+        {
+            return active;
+        }
+
+        public void deactivate()
+        {
+            active = false;
+        }
+        //***************************************************************************
 
         public void Update()
         {

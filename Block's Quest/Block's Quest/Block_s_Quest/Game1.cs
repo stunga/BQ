@@ -125,7 +125,7 @@ namespace Block_s_Quest
             shopt = this.Content.Load<Texture2D>("shop");
             dpadt = this.Content.Load<Texture2D>("dpad");
             font = this.Content.Load<SpriteFont>("SpriteFont1");
-            gui = new UI(font, bulletT, shopt, diamondt, dpadt);
+            gui = new UI(font, bulletT, shopt, diamondt, dpadt, wallet);
             gui.show();
             font = Content.Load<SpriteFont>("SpriteFont1");
             font1 = Content.Load<SpriteFont>("SpriteFont2");
@@ -350,6 +350,7 @@ namespace Block_s_Quest
 
                 //GamePlay
                 default:
+                    gui.updateWallet(wallet);
                     //Checks for collisoin of enemies with bullets
                     for (int i = dwayne.getBullets().Count - 1; i >= 0; i--)
                     {
@@ -363,7 +364,8 @@ namespace Block_s_Quest
                         {
                             for (int j = enemy.Count - 1; j >= 0; j--)
                             {
-                                if (bullets[i].getRect().Intersects(enemy[j].getRect()))
+                                //Kill enemies
+                                if (bullets[i].getRect().Intersects(enemy[j].getRect()) && bullets[i].isActive())
                                 {
                                     gui.score++;
                                     if (enemy[j].decreaseHitPoints(bullets[i].getBulletDamage()) <= 0)
@@ -371,6 +373,7 @@ namespace Block_s_Quest
                                         collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, Diamond.type.blue));
                                     }
                                     enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
+                                    bullets[i].deactivate();
                                 }
                             }
                         }
@@ -380,8 +383,8 @@ namespace Block_s_Quest
                         collectables[i].Update();
                         if (dwayne.getRect().Intersects(collectables[i].getRect()))
                         {
+                            wallet.addDiamond(collectables[i]);
                             collectables.Remove(collectables[i]);
-                            gui.UpdateDiamondCount();
                         }
                     }
                     for (int i = 0; i < bullets.Count; i++)

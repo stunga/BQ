@@ -22,8 +22,9 @@ namespace Block_s_Quest
         Color firec, chic, waterc, earthc;
         bool isShowing = false;
         bool transparent = false;
+        Wallet wallet;
 
-        public UI(SpriteFont f, Texture2D e, Texture2D s, Texture2D d, Texture2D dp)
+        public UI(SpriteFont f, Texture2D e, Texture2D s, Texture2D d, Texture2D dp, Wallet w)
         {
             font = f;
             element = e;
@@ -35,7 +36,6 @@ namespace Block_s_Quest
             chic = Color.Magenta;
             waterc = Color.DarkBlue;
             earthc = Color.Gray;
-            diamondamount = 0;
             diamondamountloc = new Vector2(50, 12);
             dpad = new Rectangle(40, 870, 100, 100);
             earth = new Rectangle(75, 880, 25, 20);
@@ -45,6 +45,8 @@ namespace Block_s_Quest
             shop = new Rectangle(800, 10, 100, 50);
             score = 0;
             scoreloc = new Vector2(1700, 20);
+            wallet = w;
+            diamondamount = wallet.getBalance();
         }
 
         public void show()
@@ -72,14 +74,17 @@ namespace Block_s_Quest
             transparent = true;
         }
 
+        public void updateWallet(Wallet w)
+        {
+            wallet = w;
+            diamondamount = wallet.getBalance();
+        }
+
         public void Update(int s)
         {
             score = s;
         }
-        public void UpdateDiamondCount()
-        {
-            diamondamount++;
-        }
+
         public void setCol(Color c, Color e, Color f, Color w)
         {
             chic = c;

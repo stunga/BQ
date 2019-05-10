@@ -36,7 +36,7 @@ namespace Block_s_Quest
         }
         public void Update()
         {
-            if (this.rec.Y < 1000-this.rec.Height)
+            if (this.rec.Y < 960)
             {
                 Double acceleration = 1;
                 rec.Y += (velocityY / 9);
