@@ -23,7 +23,7 @@ namespace Block_s_Quest
         Random rand = new Random();
         int randInt;
         Boolean move;
-        public Boss(Texture2D i, int vX, Color col, int hitP, Rectangle r): base(i, vX, col, hitP, r)
+        public Boss(Texture2D i, int vX, Color col, int hitP, Rectangle r): base(i, vX, hitP, r)
         {
             image = i;
             hitpoints = hitP;
@@ -33,6 +33,7 @@ namespace Block_s_Quest
             velocityY = 10;
             rectangle.X = 850;
             rectangle.Y = 0;
+            base.setType(5);
         }
         public new void decreaseHitPoints(int bulletDamage)
         {

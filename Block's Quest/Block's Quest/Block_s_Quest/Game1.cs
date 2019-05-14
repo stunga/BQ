@@ -368,12 +368,15 @@ namespace Block_s_Quest
                                 if (bullets[i].getRect().Intersects(enemy[j].getRect()) && bullets[i].isActive())
                                 {
                                     gui.score++;
-                                    if (enemy[j].decreaseHitPoints(bullets[i].getBulletDamage()) <= 0)
+                                    if (enemy[j].living())
                                     {
                                         collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, Diamond.type.blue));
+                                        if (enemy[j].getType() == bullets[i].getType())
+                                            enemy[j].decreaseHitPoints(bullets[i].getBulletDamage() * 2);
+                                        else
+                                            enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
+                                        bullets[i].deactivate();
                                     }
-                                    enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
-                                    bullets[i].deactivate();
                                 }
                             }
                         }
