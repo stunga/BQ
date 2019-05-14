@@ -19,8 +19,7 @@ namespace Block_s_Quest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Dwayne dwayne;
-        Texture2D dwaynet, bulletT, diamondt, shopt, dpadt;
-        KeyboardState kb;
+        Texture2D dwaynet, bulletT, diamondt, shopt, dpadt, escp;
         Level level,owBuild;
         int levelIndex, maxLevel;
         KeyboardState oldkb;
@@ -122,6 +121,7 @@ namespace Block_s_Quest
             dwaynet = this.Content.Load<Texture2D>("Dwayne Angry Face");
             bulletT = this.Content.Load<Texture2D>("Bullet");
             diamondt = this.Content.Load<Texture2D>("Diamonds");
+            escp = this.Content.Load<Texture2D>("Escp");
             shopt = this.Content.Load<Texture2D>("shop");
             dpadt = this.Content.Load<Texture2D>("dpad");
             font = this.Content.Load<SpriteFont>("SpriteFont1");
@@ -531,6 +531,7 @@ namespace Block_s_Quest
                     break;
                 case GameState.Shop:
                     spriteBatch.DrawString(font1, "SHOP", new Vector2(800, 300), Color.White);
+                    spriteBatch.Draw(escp, new Rectangle(800, 50, 100, 100), Color.White);
                     for(int x=0;x<2;x++)
                     {
                         spriteBatch.Draw(bulletT, new Rectangle(items[x].X-20,items[x].Y-20,140,140), shop[x]);
