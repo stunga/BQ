@@ -371,7 +371,6 @@ namespace Block_s_Quest
                                     if (enemy[j].living())
                                     {
                                         collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, Diamond.type.green));
-
                                         if (enemy[j].getType() == bullets[i].getType())
                                             enemy[j].decreaseHitPoints(bullets[i].getBulletDamage() * 2);
                                         else
