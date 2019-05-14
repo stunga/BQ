@@ -19,8 +19,7 @@ namespace Block_s_Quest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Dwayne dwayne;
-        Texture2D dwaynet, bulletT, diamondt, shopt, dpadt;
-        KeyboardState kb;
+        Texture2D dwaynet, bulletT, diamondt, shopt, dpadt, escp;
         Level level,owBuild;
         int levelIndex, maxLevel;
         KeyboardState oldkb;
@@ -122,6 +121,7 @@ namespace Block_s_Quest
             dwaynet = this.Content.Load<Texture2D>("Dwayne Angry Face");
             bulletT = this.Content.Load<Texture2D>("Bullet");
             diamondt = this.Content.Load<Texture2D>("Diamonds");
+            escp = this.Content.Load<Texture2D>("Escp");
             shopt = this.Content.Load<Texture2D>("shop");
             dpadt = this.Content.Load<Texture2D>("dpad");
             font = this.Content.Load<SpriteFont>("SpriteFont1");
@@ -383,13 +383,14 @@ namespace Block_s_Quest
                     }
                     for (int i = collectables.Count - 1; i >= 0; i--)
                     {
-                        collectables[i].Update();
                         if (dwayne.getRect().Intersects(collectables[i].getRect()))
                         {
                             wallet.addDiamond(collectables[i]);
                             collectables.Remove(collectables[i]);
                         }
                     }
+
+                    //Removes Bullets
                     for (int i = 0; i < bullets.Count; i++)
                     {
                         if (bullets[i].getRect().Y <= 0)
@@ -397,6 +398,8 @@ namespace Block_s_Quest
                             bullets.Remove(bullets[i]);
                         }
                     }
+
+                    //Spawn Enemies from Boss
                     if (ow.isBoss() && level.BossEnemy())
                     {
                         spawnTimer++;
@@ -405,8 +408,9 @@ namespace Block_s_Quest
                             level.spawnEnemy(level.bossRect);
                         }
                     }
+
                     level.Update();
-                    
+
                     if (dwayne.isDead(enemy))
                     {
                         gameState = GameState.GameOver;
@@ -425,7 +429,6 @@ namespace Block_s_Quest
                             gameState = GameState.Overworld;
                     }
                     break;
-
             }
 
 
@@ -525,6 +528,7 @@ namespace Block_s_Quest
                     break;
                 case GameState.Shop:
                     spriteBatch.DrawString(font1, "SHOP", new Vector2(800, 300), Color.White);
+                    spriteBatch.Draw(escp, new Rectangle(800, 50, 100, 100), Color.White);
                     for(int x=0;x<2;x++)
                     {
                         spriteBatch.Draw(bulletT, new Rectangle(items[x].X-20,items[x].Y-20,140,140), shop[x]);
@@ -544,14 +548,9 @@ namespace Block_s_Quest
                     dwayne.Draw(spriteBatch, gameTime);
                     gui.show();
                     gui.Draw(spriteBatch, gameTime);
+                    foreach (Diamond d in collectables)
+                        spriteBatch.Draw(diamondt, d.getRect(), d.getColor());
                     break;
-            }
-            if (gameState == GameState.Normal|| gameState == GameState.Hardcore|| gameState == GameState.Insane)
-            {
-                foreach (Diamond d in collectables)
-                {
-                    spriteBatch.Draw(diamondt, d.getRect(), d.getColor());
-                }
             }
             spriteBatch.End();
             base.Draw(gameTime);
