@@ -52,17 +52,17 @@ namespace Block_s_Quest
                 case 1:
                     type = bullType.chi;
                     col = Color.LightBlue;
-                    bulletDamage = 3;
+                    bulletDamage = 1;
                     break;
                 case 2:
                     type = bullType.earth;
                     col = Color.Gray;
-                    bulletDamage = 2;
+                    bulletDamage = 1;
                     break;
                 case 3:
                     type = bullType.fire;
                     col = Color.OrangeRed;
-                    bulletDamage = 4;
+                    bulletDamage = 1;
                     break;
                 case 4:
                     type = bullType.water;
@@ -72,7 +72,7 @@ namespace Block_s_Quest
                 default:
                     type = bullType.chi;
                     col = Color.LightBlue;
-                    bulletDamage = 3;
+                    bulletDamage = 1;
                     break;
             }
 

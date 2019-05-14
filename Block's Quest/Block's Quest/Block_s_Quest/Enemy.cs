@@ -40,6 +40,7 @@ namespace Block_s_Quest
             }
             return hitpoints;
         }
+
         public Rectangle getRect()
         {
             return rect;
@@ -81,6 +82,11 @@ namespace Block_s_Quest
             {
                 spriteBatch.Draw(img, rect, color);
             }
+        }
+
+        public int getHit()
+        {
+            return hitpoints;
         }
     }
 }

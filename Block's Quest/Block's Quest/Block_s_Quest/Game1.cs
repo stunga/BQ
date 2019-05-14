@@ -367,26 +367,33 @@ namespace Block_s_Quest
                                 //Kill enemies
                                 if (bullets[i].getRect().Intersects(enemy[j].getRect()) && bullets[i].isActive())
                                 {
-                                    gui.score++;
-                                    if (enemy[j].decreaseHitPoints(bullets[i].getBulletDamage()) <= 0)
-                                    {
-                                        collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, Diamond.type.blue));
-                                    }
                                     enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
                                     bullets[i].deactivate();
+
+                                    if (enemy[j].getHit()==0)
+                                    {
+                                        collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, Diamond.type.blue));
+                                        gui.score++;
+                                    }
                                 }
                             }
                         }
                     }
+
+                    foreach (Diamond d in collectables)
+                        d.Update();
+
+                    //Updates Diamonds
                     for (int i = collectables.Count - 1; i >= 0; i--)
                     {
-                        collectables[i].Update();
                         if (dwayne.getRect().Intersects(collectables[i].getRect()))
                         {
                             wallet.addDiamond(collectables[i]);
                             collectables.Remove(collectables[i]);
                         }
                     }
+
+                    //Removes Bullets
                     for (int i = 0; i < bullets.Count; i++)
                     {
                         if (bullets[i].getRect().Y <= 0)
@@ -394,6 +401,8 @@ namespace Block_s_Quest
                             bullets.Remove(bullets[i]);
                         }
                     }
+
+                    //Spawn Enemies from Boss
                     if (ow.isBoss() && level.BossEnemy())
                     {
                         spawnTimer++;
@@ -402,8 +411,9 @@ namespace Block_s_Quest
                             level.spawnEnemy(level.bossRect);
                         }
                     }
+
                     level.Update();
-                    
+
                     if (dwayne.isDead(enemy))
                     {
                         gameState = GameState.GameOver;
@@ -422,7 +432,6 @@ namespace Block_s_Quest
                             gameState = GameState.Overworld;
                     }
                     break;
-
             }
 
 
@@ -541,14 +550,9 @@ namespace Block_s_Quest
                     dwayne.Draw(spriteBatch, gameTime);
                     gui.show();
                     gui.Draw(spriteBatch, gameTime);
+                    foreach (Diamond d in collectables)
+                        spriteBatch.Draw(diamondt, d.getRect(), d.getColor());
                     break;
-            }
-            if (gameState == GameState.Normal|| gameState == GameState.Hardcore|| gameState == GameState.Insane)
-            {
-                foreach (Diamond d in collectables)
-                {
-                    spriteBatch.Draw(diamondt, d.getRect(), d.getColor());
-                }
             }
             spriteBatch.End();
             base.Draw(gameTime);
