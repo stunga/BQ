@@ -48,11 +48,15 @@ namespace Block_s_Quest
         Wallet wallet = new Wallet();
         int[] cost = new int[2];
         bool[] upgradeable = new bool[2];
+        String levelclear = "Level Clear!";
+        Vector2 clearloc;
+        int timer = 300;
+        SpriteFont largefont;
         //Boolean soundEffectPlayed;
 
         enum GameState
         {
-            MainMenu, Normal, Hardcore, Insane, GameOver, Win, Overworld, Pause, Shop
+            MainMenu, Normal, Hardcore, Insane, GameOver, Win, Overworld, Pause, Shop, LevelClear
         };
 
         enum bullType
@@ -104,7 +108,7 @@ namespace Block_s_Quest
 
             itemName[0] = "Upgrade \n Fire Rate";
             itemName[1] = "Upgrade \n # of Bullets";
-
+            clearloc = new Vector2(750, 450);
             base.Initialize();
         }
 
@@ -133,6 +137,7 @@ namespace Block_s_Quest
             gameMusic = Content.Load<SoundEffect>("Bakugan - Aquos Arena");
             musicInstance = gameMusic.CreateInstance();
             dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content);
+            largefont = Content.Load<SpriteFont>("LARGEFONT");
             //LoadLevel();
             LoadOverWorld();
         }
@@ -347,7 +352,42 @@ namespace Block_s_Quest
                             shop[x] = Color.DarkSalmon;
                     }
                     break;
+                case GameState.LevelClear:
+                    //Diamonds
+                    gui.updateWallet(wallet);
+                    foreach (Diamond d in collectables)
+                        d.Update();
 
+                    for (int i = collectables.Count - 1; i >= 0; i--)
+                    {
+                        if (dwayne.getRect().Intersects(collectables[i].getRect()))
+                        {
+                            wallet.addDiamond(collectables[i]);
+                            collectables.Remove(collectables[i]);
+                        }
+                    }
+
+                    //Bullets
+                    for (int i = 0; i < bullets.Count; i++)
+                    {
+                        if (bullets[i].getRect().Y <= 0)
+                        {
+                            bullets.Remove(bullets[i]);
+                        }
+                    }
+
+                    //Level
+                    level.Update();
+                    dwayne.Update(kb, gui);
+
+                    timer--;
+                    //Ends after either 5 seconds or when player skips
+                    if(timer <= 0 || (kb.IsKeyUp(Keys.Enter) && oldkb.IsKeyDown(Keys.Enter)))
+                    {
+                        timer = 300;
+                        gameState = GameState.Overworld;
+                    }
+                    break;
                 //GamePlay
                 default:
                     gui.updateWallet(wallet);
@@ -364,7 +404,6 @@ namespace Block_s_Quest
                         {
                             for (int j = enemy.Count - 1; j >= 0; j--)
                             {
-                                //
                                 //Kill enemies
                                 if (bullets[i].getRect().Intersects(enemy[j].getRect()) && bullets[i].isActive())
                                 {
@@ -431,7 +470,7 @@ namespace Block_s_Quest
                         if (ow.isBoss())
                             gameState = GameState.Win;
                         else
-                            gameState = GameState.Overworld;
+                            gameState = GameState.LevelClear;
                     }
                     break;
             }
@@ -546,6 +585,16 @@ namespace Block_s_Quest
                             spriteBatch.DrawString(font, "Max Upgrade Reached", new Vector2(items[x].X, items[x].Y + 250), Color.White);
                     }
                     spriteBatch.DrawString(font, "$" + wallet.getBalance(), new Vector2(800, 500), Color.White);
+                    break;
+                case GameState.LevelClear:
+                    background = Color.DarkSalmon;
+                    spriteBatch.DrawString(largefont, levelclear, clearloc, Color.White);
+                    level.Draw(gameTime, spriteBatch);
+                    dwayne.Draw(spriteBatch, gameTime);
+                    gui.show();
+                    gui.Draw(spriteBatch, gameTime);
+                    foreach (Diamond d in collectables)
+                        spriteBatch.Draw(diamondt, d.getRect(), d.getColor());
                     break;
                 default:
                     background = Color.DarkSalmon;
