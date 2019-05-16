@@ -76,13 +76,13 @@ namespace Block_s_Quest
         public Diamond.type getDiamondType()
         {
             Random rand = new Random();
-            int r = rand.Next(1*levelIndex,100);
+            int r = rand.Next(0,100);
 
-            if (r > 95 && r <= 100)
+            if (r > 100-(2*levelIndex) && r <= 100)
                 return Diamond.type.orange;
-            else if (r > 90 && r <= 95)
+            else if (r > 95-(2*levelIndex) && r <= 95)
                 return Diamond.type.purple;
-            else if (r > 80 && r <= 90)
+            else if (r > 90-(2*levelIndex) && r <= 90)
                 return Diamond.type.red;
             else if (r > 65 && r <= 80)
                 return Diamond.type.yellow;
@@ -343,7 +343,7 @@ namespace Block_s_Quest
                                 {
                                     dwayne.UpgradeFireRate();
                                     wallet.withdraw(cost[0]);
-                                    cost[0] += 10;
+                                    cost[0] += 20;
 
                                     if (dwayne.getFireRate() == 5)
                                         upgradeable[0] = false;
@@ -354,7 +354,7 @@ namespace Block_s_Quest
                                 {
                                     dwayne.UpgradeNumBullets();
                                     wallet.withdraw(cost[1]);
-                                    cost[1] += 10;
+                                    cost[1] += 20;
 
                                     if (dwayne.getNumBullets() == 4)
                                         upgradeable[1] = false;
@@ -592,7 +592,7 @@ namespace Block_s_Quest
                 case GameState.Shop:
                     spriteBatch.DrawString(font1, "SHOP", new Vector2(800, 300), Color.White);
                     spriteBatch.Draw(escp, new Rectangle(800, 50, 100, 100), Color.White);
-                    for(int x=0;x<2;x++)
+                    for (int x=0;x<2;x++)
                     {
                         spriteBatch.Draw(bulletT, new Rectangle(items[x].X-20,items[x].Y-20,140,140), shop[x]);
                         spriteBatch.Draw(bulletT, items[x], Color.White);
