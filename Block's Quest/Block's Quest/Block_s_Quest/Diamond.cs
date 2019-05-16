@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Block_s_Quest
 {
-    class Diamond
+    public class Diamond
     {
         public enum type
         {
@@ -27,6 +27,7 @@ namespace Block_s_Quest
         Texture tex;
         Color color;
         int velocityX = 5, velocityY = 0;
+
         //Constructor
         public Diamond(int x, int y, Texture t, type c)
         {
@@ -34,6 +35,7 @@ namespace Block_s_Quest
             tex = t;
             col = c;
         }
+
         public void Update()
         {
             if (this.rec.Y < 960)
@@ -53,6 +55,7 @@ namespace Block_s_Quest
                 velocityY = 0;    
             }
         }
+
         public Color getColor()
         {
             switch(col)
@@ -78,10 +81,12 @@ namespace Block_s_Quest
             }
             return color;
         }
+
         public Rectangle getRect()
         {
             return rec;
         }
+
         //Get the value of this diamond
         public int getValue()
         {
