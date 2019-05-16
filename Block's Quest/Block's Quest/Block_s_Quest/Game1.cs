@@ -364,6 +364,7 @@ namespace Block_s_Quest
                         {
                             for (int j = enemy.Count - 1; j >= 0; j--)
                             {
+                                //
                                 //Kill enemies
                                 if (bullets[i].getRect().Intersects(enemy[j].getRect()) && bullets[i].isActive())
                                 {
