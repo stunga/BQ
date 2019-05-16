@@ -69,6 +69,25 @@ namespace Block_s_Quest
             Content.RootDirectory = "Content";
         }
 
+        public Diamond.type getDiamondType()
+        {
+            Random rand = new Random();
+            int r = rand.Next(1*levelIndex,100);
+
+            if (r > 95 && r <= 100)
+                return Diamond.type.orange;
+            else if (r > 90 && r <= 95)
+                return Diamond.type.purple;
+            else if (r > 80 && r <= 90)
+                return Diamond.type.red;
+            else if (r > 65 && r <= 80)
+                return Diamond.type.yellow;
+            else if (r > 50 && r <= 65)
+                return Diamond.type.blue;
+            else
+                return Diamond.type.green;
+        }
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -371,7 +390,7 @@ namespace Block_s_Quest
                                     gui.score++;
                                     if (enemy[j].living())
                                     {
-                                        collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, Diamond.type.green));
+                                        collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, getDiamondType()));
                                         if (enemy[j].getType() == bullets[i].getType())
                                             enemy[j].decreaseHitPoints(bullets[i].getBulletDamage() * 2);
                                         else
