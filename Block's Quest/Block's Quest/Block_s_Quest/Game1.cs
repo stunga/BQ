@@ -463,7 +463,7 @@ namespace Block_s_Quest
                     }
 
                     //Spawn Enemies from Boss
-                    if (ow.isBoss() && level.BossEnemy())
+                    if (level.BossEnemy())
                     {
                         spawnTimer++;
                         if (spawnTimer % 180 == 0)
