@@ -367,13 +367,15 @@ namespace Block_s_Quest
                                 //Kill enemies
                                 if (bullets[i].getRect().Intersects(enemy[j].getRect()) && bullets[i].isActive())
                                 {
-                                    enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
-                                    bullets[i].deactivate();
-
-                                    if (enemy[j].getHit()==0)
+                                    gui.score++;
+                                    if (enemy[j].living())
                                     {
-                                        collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, Diamond.type.blue));
-                                        gui.score++;
+                                        collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, Diamond.type.green));
+                                        if (enemy[j].getType() == bullets[i].getType())
+                                            enemy[j].decreaseHitPoints(bullets[i].getBulletDamage() * 2);
+                                        else
+                                            enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
+                                        bullets[i].deactivate();
                                     }
                                 }
                             }
@@ -383,7 +385,6 @@ namespace Block_s_Quest
                     foreach (Diamond d in collectables)
                         d.Update();
 
-                    //Updates Diamonds
                     for (int i = collectables.Count - 1; i >= 0; i--)
                     {
                         if (dwayne.getRect().Intersects(collectables[i].getRect()))

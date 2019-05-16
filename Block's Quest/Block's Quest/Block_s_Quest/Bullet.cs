@@ -18,10 +18,10 @@ namespace Block_s_Quest
         int bulletDamage;
         enum bullType
         {
-            fire,
-            chi,
-            earth,
-            water
+            fire=3,
+            chi=1,
+            earth=2,
+            water=4
         };
         bool active = true;
 
@@ -35,6 +35,12 @@ namespace Block_s_Quest
             type = bullType.chi;
             col = Color.LightBlue;
         }
+
+        public int getType()
+        {
+            return (int)type;
+        }
+
         public Rectangle getRect()
         {
             return bulletRec;
@@ -52,29 +58,25 @@ namespace Block_s_Quest
                 case 1:
                     type = bullType.chi;
                     col = Color.LightBlue;
-                    bulletDamage = 1;
                     break;
                 case 2:
                     type = bullType.earth;
                     col = Color.Gray;
-                    bulletDamage = 1;
                     break;
                 case 3:
                     type = bullType.fire;
                     col = Color.OrangeRed;
-                    bulletDamage = 1;
                     break;
                 case 4:
                     type = bullType.water;
                     col = Color.DarkBlue;
-                    bulletDamage = 1;
                     break;
                 default:
                     type = bullType.chi;
                     col = Color.LightBlue;
-                    bulletDamage = 1;
                     break;
             }
+            bulletDamage = 1;
 
         }
 

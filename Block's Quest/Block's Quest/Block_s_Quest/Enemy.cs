@@ -10,6 +10,15 @@ namespace Block_s_Quest
 {
     class Enemy
     {
+        enum enemyType
+        {
+            fire=3,
+            chi=1,
+            earth=2,
+            water=4,
+            boss=5
+        };
+        enemyType type;
         private Texture2D img;
         private int velocityX;
         private int velocityY;
@@ -18,17 +27,81 @@ namespace Block_s_Quest
         private Rectangle rect;
         public Boolean isAlive = true;
         Boolean spawnCoins;
-        public Enemy(Texture2D i, int vX, Color col, int hitP, Rectangle r)
+
+        public Enemy(Texture2D i, int vX, int hitP, Rectangle r)
         {
             img = i;
             velocityX = vX;
-            color = col;
+            color = Color.LightBlue;
             hitpoints = hitP;
             rect = r;
             velocityY = 0;
+            type = enemyType.chi;
         }
-        public int decreaseHitPoints(int bulletDamage)
+        public Enemy(Texture2D i, int vX, int hitP, Rectangle r, int t)
         {
+            img = i;
+            velocityX = vX;
+            hitpoints = hitP;
+            rect = r;
+            velocityY = 0;
+
+            switch(t)
+            {
+                case 1:
+                    type = enemyType.chi;
+                    color = Color.LightBlue;
+                    break;
+                case 2:
+                    type = enemyType.earth;
+                    color = Color.Gray;
+                    break;
+                case 3:
+                    type = enemyType.fire;
+                    color = Color.OrangeRed;
+                    break;
+                case 4:
+                    type = enemyType.water;
+                    color = Color.DarkBlue;
+                    break;
+            }
+        }
+
+        public void setType(int i)
+        {
+            switch (i)
+            {
+                case 1:
+                    type = enemyType.chi;
+                    color = Color.LightBlue;
+                    break;
+                case 2:
+                    type = enemyType.earth;
+                    color = Color.Gray;
+                    break;
+                case 3:
+                    type = enemyType.fire;
+                    color = Color.OrangeRed;
+                    break;
+                case 4:
+                    type = enemyType.water;
+                    color = Color.DarkBlue;
+                    break;
+                case 5:
+                    type = enemyType.boss;
+                    color = Color.White;
+                    break;
+            }
+        }
+
+        public int getType()
+        {
+            return (int)type;
+        }
+
+        public void decreaseHitPoints(int bulletDamage)
+        {
+            
             this.hitpoints -= bulletDamage;
             if (this.hitpoints <= 0)
             {
@@ -38,12 +111,16 @@ namespace Block_s_Quest
             {
                 isAlive = true;
             }
-            return hitpoints;
         }
 
         public Rectangle getRect()
         {
             return rect;
+        }
+
+        public bool living()
+        {
+            return isAlive;
         }
 
         public void enemyKilled()
