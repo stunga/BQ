@@ -491,7 +491,7 @@ namespace Block_s_Quest
                     if (level.BossEnemy())
                     {
                         spawnTimer++;
-                        if (spawnTimer % 180 == 0)
+                        if (spawnTimer % 120 == 0)
                         {
                             level.spawnEnemy(level.bossRect);
                         }
