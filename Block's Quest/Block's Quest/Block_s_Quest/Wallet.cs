@@ -54,5 +54,11 @@ namespace Block_s_Quest
                 return false;
         }
 
+        public void Reset()
+        {
+            balance = 0;
+        }
+
+
     }
 }

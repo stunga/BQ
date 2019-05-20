@@ -23,7 +23,8 @@ namespace Block_s_Quest
         public Rectangle bossRect = new Rectangle();
         private Overworld ow = new Overworld();
         Road[,] path = new Road[20, 10];
-        int levelIndex = 1;
+        int levelIndex;
+        int enemyType;
         IServiceProvider Services;
 
         private Vector2 start;
@@ -58,6 +59,8 @@ namespace Block_s_Quest
             enemyT = eT;
             bossT = Content.Load<Texture2D>("Boss");
             tileSheets = new Dictionary<string, Texture2D>();
+            enemyType = random.Next(1,4);
+
             //tileSheets.Add("Blocks", Content.Load<Texture2D>("Tiles/Blocks"));
 
             TileSourceRecs = new Dictionary<int, Rectangle>();
@@ -205,7 +208,7 @@ namespace Block_s_Quest
         private Tile LoadEnemyTile(int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 180) + 64);
-            enemies.Add(new Enemy(enemyT, 5, 2, new Rectangle(_x*80,_y*100, 100, 100)));
+            enemies.Add(new Enemy(enemyT, 5, 2, new Rectangle(_x*80,_y*100, 50, 50), enemyType));
             return new Tile(String.Empty, 0);
         }
         private Tile LoadVarietyTile(String tileSheetName, int x, int y)
