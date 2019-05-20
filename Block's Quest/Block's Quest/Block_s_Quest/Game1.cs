@@ -178,7 +178,7 @@ namespace Block_s_Quest
 
         private void LoadLevel()
         {
-            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", this.Content.Load<Texture2D>("New Piskel(1)"));
+            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
         }
 
         //private void LoadLevel()
@@ -221,7 +221,7 @@ namespace Block_s_Quest
             {
                 dwayne.Shoot();
                 bullets = dwayne.getBullets();
-                bullets.Remove(bullets[0]);
+                bullets[0].deactivate();
                 bug = false;
             }
 

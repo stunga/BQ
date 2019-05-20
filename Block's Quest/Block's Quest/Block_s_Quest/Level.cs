@@ -56,7 +56,7 @@ namespace Block_s_Quest
         {
             Services = serviceProvider;
             content = new ContentManager(serviceProvider, "Content");
-            enemyT = eT;
+            enemyT = this.Content.Load<Texture2D>("New Piskel (1)");
             bossT = Content.Load<Texture2D>("Boss");
             tileSheets = new Dictionary<string, Texture2D>();
             enemyType = random.Next(1,4);
