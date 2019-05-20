@@ -205,7 +205,7 @@ namespace Block_s_Quest
         private Tile LoadEnemyTile(int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 180) + 64);
-            enemies.Add(new Enemy(enemyT, 5, 2, new Rectangle(_x*80,_y*100, 50, 50)));
+            enemies.Add(new Enemy(enemyT, 5, 2, new Rectangle(_x*80,_y*100, 100, 100)));
             return new Tile(String.Empty, 0);
         }
         private Tile LoadVarietyTile(String tileSheetName, int x, int y)
@@ -228,7 +228,7 @@ namespace Block_s_Quest
         public void spawnEnemy(Rectangle bossRec)
         {
             if (bossRec.Y <= 650)
-            enemies.Add(new Enemy(enemyT, 5, 4, new Rectangle(bossRec.X, bossRec.Y + 70, 50, 50), 1));
+            enemies.Add(new Enemy(enemyT, 5, 4, new Rectangle(bossRec.X, bossRec.Y + 70, 100, 100), 1));
         }
         private Tile LoadStartTile(int x, int y)
         {

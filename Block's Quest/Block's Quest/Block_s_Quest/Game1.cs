@@ -164,7 +164,7 @@ namespace Block_s_Quest
 
         private void LoadLevel()
         {
-            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
+            level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", this.Content.Load<Texture2D>("New Piskel(1)"));
         }
         //private void LoadLevel()
         //{
