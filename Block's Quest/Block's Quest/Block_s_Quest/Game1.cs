@@ -429,11 +429,17 @@ namespace Block_s_Quest
                                     gui.score++;
                                     if (enemy[j].living())
                                     {
-                                        collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, getDiamondType()));
                                         if (enemy[j].getType() == bullets[i].getType())
+                                        {
                                             enemy[j].decreaseHitPoints(bullets[i].getBulletDamage() * 2);
+                                            collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, getDiamondType()));
+                                            collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, getDiamondType()));
+                                        }
                                         else
+                                        {
                                             enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
+                                            collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, getDiamondType()));
+                                        }
                                         bullets[i].deactivate();
                                     }
                                 }

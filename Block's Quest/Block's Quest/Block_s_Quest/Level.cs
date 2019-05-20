@@ -228,7 +228,7 @@ namespace Block_s_Quest
         public void spawnEnemy(Rectangle bossRec)
         {
             if (bossRec.Y <= 650)
-            enemies.Add(new Enemy(enemyT, 5, 10, new Rectangle(bossRec.X, bossRec.Y + 70, 50, 50)));
+            enemies.Add(new Enemy(enemyT, 5, 4, new Rectangle(bossRec.X, bossRec.Y + 70, 50, 50), 1));
         }
         private Tile LoadStartTile(int x, int y)
         {
