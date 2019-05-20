@@ -92,6 +92,20 @@ namespace Block_s_Quest
                 return Diamond.type.green;
         }
 
+        public void ResetGame()
+        {
+            dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content); ;
+            levelIndex = 1;
+            LoadOverWorld();
+            for (int x = 0; x < 2; x++)
+            {
+                upgradeable[x] = true;
+                cost[x] = 10;
+            }
+            wallet.Reset();
+
+        }
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -166,6 +180,7 @@ namespace Block_s_Quest
         {
             level = new Level(Services, @"Content/Levels/Level"+levelIndex+".txt", bulletT);
         }
+
         //private void LoadLevel()
         //{
         //    level = new Level(Services, @"Content/Levels/Level/1.txt", Content.Load<Texture2D>("Tiles/Node"));
@@ -222,6 +237,10 @@ namespace Block_s_Quest
             //Gives Diamonds
             if (kb.IsKeyDown(Keys.P) && !oldkb.IsKeyDown(Keys.P))
                 wallet.deposit(10);
+
+            //Tester for Reset
+            if (kb.IsKeyDown(Keys.R) && !oldkb.IsKeyDown(Keys.R))
+                ResetGame();
 
             //Pause
             if (kb.IsKeyDown(Keys.Escape) && !oldkb.IsKeyDown(Keys.Escape) && gameState != GameState.GameOver && gameState != GameState.Win)
@@ -433,7 +452,7 @@ namespace Block_s_Quest
                                         {
                                             enemy[j].decreaseHitPoints(bullets[i].getBulletDamage() * 2);
                                             collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, getDiamondType()));
-                                            collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, getDiamondType()));
+                                            collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y-10, diamondt, getDiamondType()));
                                         }
                                         else
                                         {
@@ -469,7 +488,7 @@ namespace Block_s_Quest
                     }
 
                     //Spawn Enemies from Boss
-                    if (ow.isBoss() && level.BossEnemy())
+                    if (level.BossEnemy())
                     {
                         spawnTimer++;
                         if (spawnTimer % 180 == 0)
@@ -483,6 +502,7 @@ namespace Block_s_Quest
                     if (dwayne.isDead(enemy))
                     {
                         gameState = GameState.GameOver;
+                        ResetGame();
                     }
                     dwayne.Update(kb, gui);
 
@@ -493,7 +513,10 @@ namespace Block_s_Quest
                         gui.score = 0;
 
                         if (ow.isBoss())
+                        {
                             gameState = GameState.Win;
+                            ResetGame();
+                        }
                         else
                             gameState = GameState.LevelClear;
                     }

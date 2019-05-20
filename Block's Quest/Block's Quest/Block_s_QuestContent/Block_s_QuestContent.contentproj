@@ -129,9 +129,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Levels\Level4.txt">
+    <None Include="Levels\Level5.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>Level4</Name>
+      <Name>Level5</Name>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -155,8 +155,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Levels\Level5.txt">
-      <Name>Level5</Name>
+    <None Include="Levels\Level4.txt">
+      <Name>Level4</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
