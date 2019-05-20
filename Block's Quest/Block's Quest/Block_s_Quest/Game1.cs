@@ -211,6 +211,7 @@ namespace Block_s_Quest
         {
             
             KeyboardState kb = Keyboard.GetState();
+            GamePadState game1 = GamePad.GetState(PlayerIndex.One);
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit(); 
@@ -226,24 +227,24 @@ namespace Block_s_Quest
             }
 
             //Tester for Fire Rate Upgrade
-            if (kb.IsKeyDown(Keys.I) && !oldkb.IsKeyDown(Keys.I))
+            if (kb.IsKeyDown(Keys.I) && !oldkb.IsKeyDown(Keys.I) || game1.Buttons.X == ButtonState.Pressed)
                 dwayne.UpgradeFireRate();
 
             //Tester for # Bullets Upgrade
-            if (kb.IsKeyDown(Keys.O) && !oldkb.IsKeyDown(Keys.O))
+            if (kb.IsKeyDown(Keys.O) && !oldkb.IsKeyDown(Keys.O) || game1.Buttons.Y == ButtonState.Pressed)
                 dwayne.UpgradeNumBullets();
 
             //Tester for Wallet Class/Shop
             //Gives Diamonds
-            if (kb.IsKeyDown(Keys.P) && !oldkb.IsKeyDown(Keys.P))
+            if (kb.IsKeyDown(Keys.P) && !oldkb.IsKeyDown(Keys.P) || game1.Buttons.LeftShoulder == ButtonState.Pressed)
                 wallet.deposit(10);
 
             //Tester for Reset
-            if (kb.IsKeyDown(Keys.R) && !oldkb.IsKeyDown(Keys.R))
+            if (kb.IsKeyDown(Keys.R) && !oldkb.IsKeyDown(Keys.R) || game1.Buttons.RightShoulder == ButtonState.Pressed)
                 ResetGame();
 
             //Pause
-            if (kb.IsKeyDown(Keys.Escape) && !oldkb.IsKeyDown(Keys.Escape) && gameState != GameState.GameOver && gameState != GameState.Win)
+            if (kb.IsKeyDown(Keys.Escape) && !oldkb.IsKeyDown(Keys.Escape) && gameState != GameState.GameOver && gameState != GameState.Win || game1.Buttons.Start == ButtonState.Pressed && gameState != GameState.GameOver && gameState != GameState.Win)
             {
                 if (gameState != GameState.Shop && gameState != GameState.Pause)
                     prevState = gameState;
@@ -266,7 +267,7 @@ namespace Block_s_Quest
                         if (selectionRectangle.Y == 500)
                         {
                             op1 = Color.Blue;
-                            if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter))
+                            if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter) || game1.Buttons.A == ButtonState.Pressed)
                                 gameState = GameState.Overworld;
                         }
                         else
@@ -275,7 +276,7 @@ namespace Block_s_Quest
 
                 case GameState.Overworld:
                     ow.Update(gameTime, kb, oldkb);
-                    if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter) && ow.isActive()) 
+                    if (kb.IsKeyDown(Keys.Enter) && oldkb.IsKeyUp(Keys.Enter) && ow.isActive() || game1.Buttons.A == ButtonState.Pressed && ow.isActive()) 
                     {
                         if (ow.isLevel())
                         {
@@ -295,14 +296,14 @@ namespace Block_s_Quest
                     break;
 
                 case GameState.Pause:
-                    if ((kb.IsKeyDown(Keys.Up) && !oldkb.IsKeyDown(Keys.Up)) || (kb.IsKeyDown(Keys.W) && !oldkb.IsKeyDown(Keys.W)))
+                    if ((kb.IsKeyDown(Keys.Up) && !oldkb.IsKeyDown(Keys.Up)) || (kb.IsKeyDown(Keys.W) && !oldkb.IsKeyDown(Keys.W)) || game1.DPad.Up == ButtonState.Pressed)
                     {
                         if (current - 1 < 0)
                             current = 2;
                         else
                             current--;
                     }
-                    else if ((kb.IsKeyDown(Keys.Down) && !oldkb.IsKeyDown(Keys.Down)) || (kb.IsKeyDown(Keys.S) && !oldkb.IsKeyDown(Keys.S)))
+                    else if ((kb.IsKeyDown(Keys.Down) && !oldkb.IsKeyDown(Keys.Down)) || (kb.IsKeyDown(Keys.S) && !oldkb.IsKeyDown(Keys.S)) || game1.DPad.Down == ButtonState.Pressed)
                     {
                         if (current + 1 > 2)
                             current = 0;
@@ -310,7 +311,7 @@ namespace Block_s_Quest
                             current++;
                     }
 
-                    if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
+                    if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) || game1.Buttons.A == ButtonState.Pressed)
                     {
                         switch (current)
                         {
@@ -338,14 +339,14 @@ namespace Block_s_Quest
                     break;
 
                 case GameState.Shop:
-                    if ((kb.IsKeyDown(Keys.Right) && !oldkb.IsKeyDown(Keys.Right)) || (kb.IsKeyDown(Keys.D) && !oldkb.IsKeyDown(Keys.D)))
+                    if ((kb.IsKeyDown(Keys.Right) && !oldkb.IsKeyDown(Keys.Right)) || (kb.IsKeyDown(Keys.D) && !oldkb.IsKeyDown(Keys.D)) || game1.DPad.Right == ButtonState.Pressed)
                     {
                         if (current - 1 < 0)
                             current = 1;
                         else
                             current--;
                     }
-                    else if ((kb.IsKeyDown(Keys.Left) && !oldkb.IsKeyDown(Keys.Left)) || (kb.IsKeyDown(Keys.A) && !oldkb.IsKeyDown(Keys.A)))
+                    else if ((kb.IsKeyDown(Keys.Left) && !oldkb.IsKeyDown(Keys.Left)) || (kb.IsKeyDown(Keys.A) && !oldkb.IsKeyDown(Keys.A)) || game1.DPad.Left == ButtonState.Pressed)
                     {
                         if (current + 1 > 1)
                             current = 0;
@@ -353,7 +354,7 @@ namespace Block_s_Quest
                             current++;
                     }
 
-                    if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter))
+                    if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) || game1.Buttons.A == ButtonState.Pressed)
                     {
                         switch (current)
                         {
@@ -420,7 +421,7 @@ namespace Block_s_Quest
 
                     timer--;
                     //Ends after either 5 seconds or when player skips
-                    if(timer <= 0 || (kb.IsKeyUp(Keys.Enter) && oldkb.IsKeyDown(Keys.Enter)))
+                    if(timer <= 0 || (kb.IsKeyUp(Keys.Enter) && oldkb.IsKeyDown(Keys.Enter)) || game1.Buttons.A == ButtonState.Pressed)
                     {
                         timer = 300;
                         gameState = GameState.Overworld;
@@ -541,7 +542,7 @@ namespace Block_s_Quest
             if (selectionRectangle.Y == 500)
             {
                 op1 = Color.Blue;
-                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState==GameState.MainMenu)
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState==GameState.MainMenu || game1.Buttons.A == ButtonState.Pressed && gameState == GameState.MainMenu)
                 {
                     gameState = GameState.Normal;
                     dwayne.setPos(950, 875);
@@ -554,7 +555,7 @@ namespace Block_s_Quest
             if (selectionRectangle.Y == 600)
             {
                 op2 = Color.Blue;
-                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu)
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu || game1.Buttons.A == ButtonState.Pressed && gameState == GameState.MainMenu)
                 {
                     gameState = GameState.Hardcore;
                     dwayne.setPos(950, 875);
@@ -567,7 +568,7 @@ namespace Block_s_Quest
             if (selectionRectangle.Y == 700)
             {
                 op3 = Color.Blue;
-                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu)
+                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu || game1.Buttons.A == ButtonState.Pressed && gameState == GameState.MainMenu)
                 {
                     gameState = GameState.Insane;
                     dwayne.setPos(950, 875);
