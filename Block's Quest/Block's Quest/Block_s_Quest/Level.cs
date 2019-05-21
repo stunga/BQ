@@ -80,6 +80,7 @@ namespace Block_s_Quest
         {
             Services = serviceProvider;
             content = new ContentManager(serviceProvider, "Content");
+            enemyType = random.Next(1, 4);
 
             tileSheets = new Dictionary<string, Texture2D>();
             tileSheets.Add("Road", Content.Load<Texture2D>("Tiles/Road"));

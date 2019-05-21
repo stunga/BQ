@@ -97,6 +97,7 @@ namespace Block_s_Quest
             dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content); ;
             levelIndex = 1;
             LoadOverWorld();
+            gui.score = 0;
             for (int x = 0; x < 2; x++)
             {
                 upgradeable[x] = true;
@@ -452,13 +453,19 @@ namespace Block_s_Quest
                                         if (enemy[j].getType() == bullets[i].getType())
                                         {
                                             enemy[j].decreaseHitPoints(bullets[i].getBulletDamage() * 2);
-                                            collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, getDiamondType()));
-                                            collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y-10, diamondt, getDiamondType()));
+
+                                            if(enemy[j].living()==false)
+                                            {
+                                                collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, getDiamondType()));
+                                                collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y - 10, diamondt, getDiamondType()));
+                                            }
                                         }
                                         else
                                         {
                                             enemy[j].decreaseHitPoints(bullets[i].getBulletDamage());
-                                            collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, getDiamondType()));
+
+                                            if(enemy[j].living() == false)
+                                                collectables.Add(new Diamond(enemy[j].getRect().X, enemy[j].getRect().Y, diamondt, getDiamondType()));
                                         }
                                         bullets[i].deactivate();
                                     }
@@ -510,9 +517,6 @@ namespace Block_s_Quest
                     //Changes to next Level
                     if (level.LevelEnd())
                     {
-                        ow.deactivate();
-                        gui.score = 0;
-
                         if (ow.isBoss())
                         {
                             gameState = GameState.Win;
@@ -520,6 +524,8 @@ namespace Block_s_Quest
                         }
                         else
                             gameState = GameState.LevelClear;
+
+                        ow.deactivate();
                     }
                     break;
             }

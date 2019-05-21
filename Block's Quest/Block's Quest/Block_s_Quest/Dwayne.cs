@@ -206,7 +206,10 @@ namespace Block_s_Quest
         {
             sb.Draw(tex, rec, Color.White);
             for (int x = 0; x < bullet.Count; x++)
-                bullet[x].Draw(sb, gt);
+            {
+                if(bullet[x].isActive())
+                    bullet[x].Draw(sb, gt);
+            }
         }
 
         public Rectangle getRect()
