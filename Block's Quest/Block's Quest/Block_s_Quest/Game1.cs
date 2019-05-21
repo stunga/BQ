@@ -222,7 +222,8 @@ namespace Block_s_Quest
             GamePadState game1 = GamePad.GetState(PlayerIndex.One);
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit(); 
+                this.Exit();
+
             if (musicInstance.State != SoundState.Playing)
                 musicInstance.Play();
 
