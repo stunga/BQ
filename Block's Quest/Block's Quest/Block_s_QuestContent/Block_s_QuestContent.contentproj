@@ -129,9 +129,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Levels\Level5.txt">
+    <None Include="Levels\Level4.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>Level5</Name>
+      <Name>Level4</Name>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -155,14 +155,38 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Levels\Level4.txt">
-      <Name>Level4</Name>
+    <None Include="Levels\Level5.txt">
+      <Name>Level5</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="New Piskel %281%29.png">
       <Name>New Piskel %281%29</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UB 1.png">
+      <Name>UB 1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="UB 2.png">
+      <Name>UB 2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="UB 3.png">
+      <Name>UB 3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="URate.png">
+      <Name>URate</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

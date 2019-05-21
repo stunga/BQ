@@ -206,12 +206,14 @@ namespace Block_s_Quest
             }
             return false;
         }
+
         private Tile LoadEnemyTile(int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 180) + 64);
             enemies.Add(new Enemy(enemyT, 5, 2, new Rectangle(_x*80,_y*100, 100, 100), enemyType));
             return new Tile(String.Empty, 0);
         }
+
         private Tile LoadVarietyTile(String tileSheetName, int x, int y)
         {
             if (tileSheetName.Equals("Node"))
@@ -229,11 +231,13 @@ namespace Block_s_Quest
             return new Tile(tileSheetName, 0);
 
         }
+
         public void spawnEnemy(Rectangle bossRec)
         {
             if (bossRec.Y <= 650)
             enemies.Add(new Enemy(enemyT, 5, 4, new Rectangle(bossRec.X, bossRec.Y + 70, 100, 100), enemyType));
         }
+
         private Tile LoadStartTile(int x, int y)
         {
             Road r = new Road(x, y, 0);

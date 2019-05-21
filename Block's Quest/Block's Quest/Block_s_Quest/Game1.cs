@@ -19,7 +19,7 @@ namespace Block_s_Quest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Dwayne dwayne;
-        Texture2D dwaynet, bulletT, diamondt, shopt, dpadt, escp;
+        Texture2D dwaynet, bulletT, diamondt, shopt, dpadt, escp,URateT;
         Level level,owBuild;
         int levelIndex, maxLevel;
         KeyboardState oldkb;
@@ -52,6 +52,9 @@ namespace Block_s_Quest
         Vector2 clearloc;
         int timer = 300;
         SpriteFont largefont;
+        Texture2D[] UB = new Texture2D[3];
+        int curretnUB = 0;
+        int finalscore = 0;
         //Boolean soundEffectPlayed;
 
         enum GameState
@@ -98,6 +101,7 @@ namespace Block_s_Quest
             levelIndex = 1;
             LoadOverWorld();
             gui.score = 0;
+            curretnUB = 0;
             for (int x = 0; x < 2; x++)
             {
                 upgradeable[x] = true;
@@ -172,6 +176,9 @@ namespace Block_s_Quest
             musicInstance = gameMusic.CreateInstance();
             dwayne = new Dwayne(dwaynet, bulletT, shootEffect, this.Content);
             largefont = Content.Load<SpriteFont>("LARGEFONT");
+            for(int x=0;x<3;x++)
+                UB[x]= this.Content.Load<Texture2D>("UB "+(x+1));
+            URateT= this.Content.Load<Texture2D>("URate");
             //LoadLevel();
             LoadOverWorld();
         }
@@ -375,10 +382,12 @@ namespace Block_s_Quest
                                 {
                                     dwayne.UpgradeNumBullets();
                                     wallet.withdraw(cost[1]);
-                                    cost[1] += 20;
+                                    cost[1] += 40;
 
                                     if (dwayne.getNumBullets() == 4)
                                         upgradeable[1] = false;
+                                    else
+                                        curretnUB++;
                                 }
                                 break;
                         }
@@ -391,6 +400,7 @@ namespace Block_s_Quest
                         else
                             shop[x] = Color.DarkSalmon;
                     }
+
                     break;
                 case GameState.LevelClear:
                     //Diamonds
@@ -486,6 +496,8 @@ namespace Block_s_Quest
                         }
                     }
 
+                    enemy = level.getEnemies();
+
                     //Removes Bullets
                     for (int i = 0; i < bullets.Count; i++)
                     {
@@ -496,7 +508,7 @@ namespace Block_s_Quest
                     }
 
                     //Spawn Enemies from Boss
-                    if (level.BossEnemy())
+                    if (level.BossEnemy() && enemy[0].isAlive==true)
                     {
                         spawnTimer++;
                         if (spawnTimer % 120 == 0)
@@ -517,15 +529,16 @@ namespace Block_s_Quest
                     //Changes to next Level
                     if (level.LevelEnd())
                     {
-                        if (ow.isBoss())
+                        ow.deactivate();
+
+                        if (level.BossEnemy())
                         {
                             gameState = GameState.Win;
+                            finalscore = gui.score;
                             ResetGame();
                         }
                         else
                             gameState = GameState.LevelClear;
-
-                        ow.deactivate();
                     }
                     break;
             }
@@ -617,7 +630,8 @@ namespace Block_s_Quest
                     break;
                 case GameState.Win:
                     background = Color.LightSeaGreen;
-                    spriteBatch.DrawString(font1, "YOU WIN", new Vector2(650, 500), Color.White);
+                    spriteBatch.DrawString(font1, "YOU WIN", new Vector2(700, 500), Color.White);
+                    spriteBatch.DrawString(font, "Score: "+finalscore, new Vector2(700, 600), Color.White);
                     break;
                 case GameState.Pause:
                     spriteBatch.DrawString(font1, "PAUSE", new Vector2(800, 300), Color.White);
@@ -631,7 +645,6 @@ namespace Block_s_Quest
                     for (int x=0;x<2;x++)
                     {
                         spriteBatch.Draw(bulletT, new Rectangle(items[x].X-20,items[x].Y-20,140,140), shop[x]);
-                        spriteBatch.Draw(bulletT, items[x], Color.White);
                         spriteBatch.DrawString(font, itemName[x], new Vector2(items[x].X, items[x].Y + 150),Color.White);
 
                         if(upgradeable[x])
@@ -639,6 +652,8 @@ namespace Block_s_Quest
                         else
                             spriteBatch.DrawString(font, "Max Upgrade Reached", new Vector2(items[x].X, items[x].Y + 250), Color.White);
                     }
+                    spriteBatch.Draw(URateT, items[0], Color.White);
+                    spriteBatch.Draw(UB[curretnUB], items[1], Color.White);
                     spriteBatch.DrawString(font, "$" + wallet.getBalance(), new Vector2(800, 500), Color.White);
                     break;
                 case GameState.LevelClear:

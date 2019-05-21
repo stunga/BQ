@@ -45,7 +45,7 @@ namespace Block_s_Quest
                     }
                 }
             }
-            bosslevelindex = levels.Count - 1;
+            bosslevelindex = levels.Count;
         }
 
         public void Update(GameTime gt, KeyboardState kb, KeyboardState oldkb)
