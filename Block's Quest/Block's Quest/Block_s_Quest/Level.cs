@@ -16,6 +16,7 @@ namespace Block_s_Quest
     {
         public Texture2D enemyT, bossT;
         private Tile[,] tiles;
+        Random rand = new Random();
         private Dictionary<string, Texture2D> tileSheets;
         public Dictionary<int, Rectangle> TileSourceRecs;
         private List<Enemy> enemies = new List<Enemy>();
@@ -210,6 +211,7 @@ namespace Block_s_Quest
         private Tile LoadEnemyTile(int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 180) + 64);
+            enemyType = rand.Next(1, 4);
             enemies.Add(new Enemy(enemyT, 5, 2, new Rectangle(_x*80,_y*100, 100, 100), enemyType));
             return new Tile(String.Empty, 0);
         }
@@ -234,7 +236,7 @@ namespace Block_s_Quest
 
         public void spawnEnemy(Rectangle bossRec)
         {
-            if (bossRec.Y <= 650)
+            enemyType = rand.Next(1, 4);
             enemies.Add(new Enemy(enemyT, 5, 4, new Rectangle(bossRec.X, bossRec.Y + 70, 100, 100), enemyType));
         }
 

@@ -577,28 +577,14 @@ namespace Block_s_Quest
                 op2 = Color.Blue;
                 if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu || game1.Buttons.A == ButtonState.Pressed && gameState == GameState.MainMenu)
                 {
-                    gameState = GameState.Hardcore;
-                    dwayne.setPos(950, 875);
+                    this.Exit();
                 }
+
             }
             else
             {
                 op2 = Color.White;
             }
-            if (selectionRectangle.Y == 700)
-            {
-                op3 = Color.Blue;
-                if (kb.IsKeyDown(Keys.Enter) && !oldkb.IsKeyDown(Keys.Enter) && gameState == GameState.MainMenu || game1.Buttons.A == ButtonState.Pressed && gameState == GameState.MainMenu)
-                {
-                    gameState = GameState.Insane;
-                    dwayne.setPos(950, 875);
-                }
-            }
-            else
-            {
-                op3 = Color.White;
-            }
-            
             oldkb = kb;
             base.Update(gameTime);
         }
@@ -616,9 +602,8 @@ namespace Block_s_Quest
                 case GameState.MainMenu:
                     background = Color.DarkSalmon;
                     spriteBatch.DrawString(font1, "The Block's Quest", new Vector2(550, 0), Color.White);
-                    spriteBatch.DrawString(font, "Normal Mode", new Vector2(750, 500), op1);
-                    spriteBatch.DrawString(font, "Hardcore Mode", new Vector2(750, 600), op2);
-                    spriteBatch.DrawString(font, "Insane Mode", new Vector2(750, 700), op3);
+                    spriteBatch.DrawString(font, "Play", new Vector2(750, 500), op1);
+                    spriteBatch.DrawString(font, "Exit", new Vector2(750, 600), op2);
                     gui.hide();
                     break;
                 case GameState.Overworld:
