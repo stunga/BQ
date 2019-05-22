@@ -57,7 +57,7 @@ namespace Block_s_Quest
             Services = serviceProvider;
             content = new ContentManager(serviceProvider, "Content");
             enemyT = this.Content.Load<Texture2D>("New Piskel (1)");
-            bossT = Content.Load<Texture2D>("Boss");
+            bossT = Content.Load<Texture2D>("New Boss");
             tileSheets = new Dictionary<string, Texture2D>();
             enemyType = random.Next(1,4);
 
@@ -249,7 +249,7 @@ namespace Block_s_Quest
         private Tile LoadBossTile (int _x, int _y, string _enemy)
         {
             Vector2 position = new Vector2((_x * 64) + 48, (_y * 180) + 64);
-            enemies.Add(new Boss(bossT, 11, Color.White, 25, new Rectangle(450,200, 100, 100)));
+            enemies.Add(new Boss(bossT, 11, Color.White, 25, new Rectangle(450,200, 125, 125)));
             return new Tile(String.Empty, 0);
         }
         //public Tile LoadCollectable(Rectangle rec, Diamond.type type)
